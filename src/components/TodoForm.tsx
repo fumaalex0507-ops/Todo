@@ -46,23 +46,21 @@ export function TodoForm({ editingTodo, onSubmit, onCancelEdit }: TodoFormProps)
 
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
-      <div className="todo-form__row">
-        <input
-          className="todo-form__title"
-          type="text"
-          placeholder="やることを入力…"
-          value={form.title}
-          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-          required
-        />
-        <button type="submit" className="btn btn--primary">
-          {editingTodo ? '更新' : '追加'}
-        </button>
-        {editingTodo && (
-          <button type="button" className="btn btn--ghost" onClick={onCancelEdit}>
-            キャンセル
-          </button>
-        )}
+      <div className="todo-form__field">
+        <span>カテゴリ</span>
+        <div className="todo-form__category-chips">
+          {CATEGORY_PRESETS.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`chip chip--category ${form.category === c ? 'chip--active' : ''}`}
+              style={categoryColorStyle(c)}
+              onClick={() => setForm((f) => ({ ...f, category: c }))}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="todo-form__row todo-form__row--details">
@@ -92,21 +90,23 @@ export function TodoForm({ editingTodo, onSubmit, onCancelEdit }: TodoFormProps)
         </label>
       </div>
 
-      <div className="todo-form__field">
-        <span>カテゴリ</span>
-        <div className="todo-form__category-chips">
-          {CATEGORY_PRESETS.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={`chip chip--category ${form.category === c ? 'chip--active' : ''}`}
-              style={categoryColorStyle(c)}
-              onClick={() => setForm((f) => ({ ...f, category: c }))}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
+      <div className="todo-form__row">
+        <input
+          className="todo-form__title"
+          type="text"
+          placeholder="やることを入力…"
+          value={form.title}
+          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+          required
+        />
+        <button type="submit" className="btn btn--primary">
+          {editingTodo ? '更新' : '追加'}
+        </button>
+        {editingTodo && (
+          <button type="button" className="btn btn--ghost" onClick={onCancelEdit}>
+            キャンセル
+          </button>
+        )}
       </div>
 
       <label className="todo-form__field todo-form__field--memo">
