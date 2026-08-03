@@ -828,6 +828,13 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   border-bottom: 1px solid var(--border);
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(100% / 7 - 1px),
+    var(--border) calc(100% / 7 - 1px),
+    var(--border) calc(100% / 7)
+  );
 }
 
 .calendar-week:last-child {
