@@ -547,21 +547,23 @@
 
 .weather-tiles {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
 }
 
 .weather-tile {
-  flex: 1 1 130px;
+  flex: 1 1 110px;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 8px;
+  padding: 6px 10px;
   background: var(--bg);
 }
 
 .weather-tile--link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   text-decoration: none;
   transition: border-color 0.15s ease;
 }
@@ -571,14 +573,18 @@
 }
 
 .weather-tile__name {
-  margin: 0 0 6px;
-  font-size: 13px;
+  margin: 0;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .weather-tile__link {
-  font-size: 12px;
+  flex-shrink: 0;
+  font-size: 11px;
   font-weight: 600;
   color: var(--accent);
 }

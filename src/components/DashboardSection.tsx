@@ -44,6 +44,16 @@ export function DashboardSection() {
     <>
       <p className="app__subtitle">今日のやること・目標をまとめて確認できます</p>
 
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">月間目標</h2>
+        <GoalProgressList goals={goals} period="monthly" onToggleAchieved={toggleAchieved} />
+      </div>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">週間目標</h2>
+        <GoalProgressList goals={goals} period="weekly" onToggleAchieved={toggleAchieved} />
+      </div>
+
       <WeatherCard />
 
       <div className="dashboard-card">
@@ -71,16 +81,6 @@ export function DashboardSection() {
           </div>
         )}
         <WeightChart entries={entries} targetWeight={activeWeightGoal?.targetWeight ?? null} />
-      </div>
-
-      <div className="dashboard-card">
-        <h2 className="dashboard-card__title">週間目標</h2>
-        <GoalProgressList goals={goals} period="weekly" onToggleAchieved={toggleAchieved} />
-      </div>
-
-      <div className="dashboard-card">
-        <h2 className="dashboard-card__title">月間目標</h2>
-        <GoalProgressList goals={goals} period="monthly" onToggleAchieved={toggleAchieved} />
       </div>
     </>
   )
