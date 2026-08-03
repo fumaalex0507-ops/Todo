@@ -1,11 +1,10 @@
-import { useEffect, useId, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { categoryColorStyle } from '../lib/categoryColor'
 import { today } from '../lib/date'
 import { CATEGORY_PRESETS } from '../types'
 import type { Priority, Todo, TodoInput } from '../types'
 
 interface TodoFormProps {
-  categories: string[]
   editingTodo: Todo | null
   onSubmit: (input: TodoInput) => void
   onCancelEdit: () => void
@@ -21,14 +20,8 @@ function createEmptyForm(): TodoInput {
   }
 }
 
-export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: TodoFormProps) {
+export function TodoForm({ editingTodo, onSubmit, onCancelEdit }: TodoFormProps) {
   const [form, setForm] = useState<TodoInput>(createEmptyForm)
-  const datalistId = useId()
-
-  const categoryOptions = useMemo(() => {
-    const set = new Set<string>([...CATEGORY_PRESETS, ...categories])
-    return Array.from(set)
-  }, [categories])
 
   useEffect(() => {
     if (editingTodo) {
@@ -97,36 +90,23 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
             <option value="low">低</option>
           </select>
         </label>
-
-        <label className="todo-form__field">
-          <span>カテゴリ</span>
-          <input
-            type="text"
-            list={datalistId}
-            placeholder="例: 仕事"
-            value={form.category}
-            onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-          />
-          <datalist id={datalistId}>
-            {categoryOptions.map((c) => (
-              <option key={c} value={c} />
-            ))}
-          </datalist>
-        </label>
       </div>
 
-      <div className="todo-form__category-chips">
-        {CATEGORY_PRESETS.map((c) => (
-          <button
-            key={c}
-            type="button"
-            className={`chip chip--category ${form.category === c ? 'chip--active' : ''}`}
-            style={categoryColorStyle(c)}
-            onClick={() => setForm((f) => ({ ...f, category: c }))}
-          >
-            {c}
-          </button>
-        ))}
+      <div className="todo-form__field">
+        <span>カテゴリ</span>
+        <div className="todo-form__category-chips">
+          {CATEGORY_PRESETS.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`chip chip--category ${form.category === c ? 'chip--active' : ''}`}
+              style={categoryColorStyle(c)}
+              onClick={() => setForm((f) => ({ ...f, category: c }))}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
 
       <label className="todo-form__field todo-form__field--memo">

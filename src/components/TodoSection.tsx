@@ -62,7 +62,6 @@ export function TodoSection() {
       </p>
 
       <TodoForm
-        categories={categories}
         editingTodo={editingTodo}
         onSubmit={(input) => {
           if (editingTodo) {
