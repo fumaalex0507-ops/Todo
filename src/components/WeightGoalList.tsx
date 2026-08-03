@@ -1,4 +1,5 @@
-import { computeWeightProgress } from '../lib/goalProgress'
+import { computeDateProgress, computeWeightProgress } from '../lib/goalProgress'
+import { DualProgressBars } from './DualProgressBars'
 import type { Goal, WeightEntry, WeightGoal } from '../types'
 
 interface WeightGoalListProps {
@@ -19,6 +20,7 @@ export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelet
     <ul className="goal-progress-list">
       {filtered.map((goal) => {
         const progress = computeWeightProgress(goal, weightEntries)
+        const dateProgress = computeDateProgress(goal)
         return (
           <li key={goal.id} className={`goal-progress-item ${goal.achieved ? 'goal-progress-item--done' : ''}`}>
             <label className="todo-item__checkbox">
@@ -31,15 +33,10 @@ export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelet
             </label>
 
             <div className="goal-progress-item__body">
-              <div className="goal-progress-item__head">
-                <span className="goal-progress-item__title">
-                  目標体重 {goal.targetWeight}kg({goal.targetDate}まで)
-                </span>
-                <span className="goal-progress-item__percent">{Math.round(progress.percent)}%</span>
-              </div>
-              <div className="progress-bar">
-                <div className="progress-bar__fill" style={{ width: `${progress.percent}%` }} />
-              </div>
+              <p className="goal-progress-item__title">
+                目標体重 {goal.targetWeight}kg({goal.startDate}〜{goal.targetDate})
+              </p>
+              <DualProgressBars weightPercent={progress.percent} datePercent={dateProgress} />
               <p className="goal-progress-item__detail">
                 開始 {goal.startWeight}kg
                 {progress.current != null ? ` → 現在 ${progress.current}kg` : ''}

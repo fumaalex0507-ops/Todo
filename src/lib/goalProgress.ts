@@ -1,3 +1,4 @@
+import { today } from './date'
 import type { WeightEntry, WeightGoal } from '../types'
 
 export interface WeightProgress {
@@ -24,4 +25,17 @@ export function computeWeightProgress(goal: WeightGoal, entries: WeightEntry[]):
   const percent = Math.max(0, Math.min(100, (progressDistance / totalDistance) * 100))
 
   return { percent, current, baseline }
+}
+
+export function computeDateProgress(goal: WeightGoal): number {
+  if (!goal.targetDate) return 0
+
+  const start = new Date(`${goal.startDate}T00:00:00`).getTime()
+  const target = new Date(`${goal.targetDate}T00:00:00`).getTime()
+  const now = new Date(`${today()}T00:00:00`).getTime()
+
+  if (target === start) return now >= target ? 100 : 0
+
+  const percent = ((now - start) / (target - start)) * 100
+  return Math.max(0, Math.min(100, percent))
 }

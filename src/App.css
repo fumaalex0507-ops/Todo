@@ -679,19 +679,6 @@
   margin-bottom: 14px;
 }
 
-.goal-progress-item__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
-}
-
-.goal-progress-item__percent {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent);
-}
-
 .goal-progress-item__detail {
   margin: 4px 0 0;
   font-size: 12px;
@@ -709,4 +696,41 @@
   height: 100%;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}
+
+.progress-bar__fill--date {
+  background: var(--text-muted);
+}
+
+.dual-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 4px 0;
+}
+
+.dual-progress__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dual-progress__row .progress-bar {
+  flex: 1;
+}
+
+.dual-progress__label {
+  flex-shrink: 0;
+  width: 28px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.dual-progress__percent {
+  flex-shrink: 0;
+  width: 34px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
 }

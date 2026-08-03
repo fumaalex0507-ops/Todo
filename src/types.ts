@@ -36,6 +36,7 @@ export interface WeightGoal {
   createdAt: number
   type: 'weight'
   startWeight: number
+  startDate: string
   targetWeight: number
   targetDate: string | null
 }
@@ -54,6 +55,7 @@ export type Goal = WeightGoal | TextGoal
 export interface WeightGoalInput {
   type: 'weight'
   startWeight: number
+  startDate: string
   targetWeight: number
   targetDate: string | null
 }

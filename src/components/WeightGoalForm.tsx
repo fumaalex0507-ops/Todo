@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { today } from '../lib/date'
 import type { GoalInput } from '../types'
 
 interface WeightGoalFormProps {
@@ -8,6 +9,7 @@ interface WeightGoalFormProps {
 
 export function WeightGoalForm({ latestWeight, onSubmit }: WeightGoalFormProps) {
   const [startWeight, setStartWeight] = useState(() => (latestWeight != null ? String(latestWeight) : ''))
+  const [startDate, setStartDate] = useState(today)
   const [targetWeight, setTargetWeight] = useState('')
   const [targetDate, setTargetDate] = useState('')
 
@@ -15,9 +17,9 @@ export function WeightGoalForm({ latestWeight, onSubmit }: WeightGoalFormProps) 
     event.preventDefault()
     const startNum = Number(startWeight)
     const targetNum = Number(targetWeight)
-    if (!startWeight || Number.isNaN(startNum)) return
+    if (!startWeight || Number.isNaN(startNum) || !startDate) return
     if (!targetWeight || Number.isNaN(targetNum) || !targetDate) return
-    onSubmit({ type: 'weight', startWeight: startNum, targetWeight: targetNum, targetDate })
+    onSubmit({ type: 'weight', startWeight: startNum, startDate, targetWeight: targetNum, targetDate })
     setTargetWeight('')
     setTargetDate('')
   }
@@ -33,6 +35,15 @@ export function WeightGoalForm({ latestWeight, onSubmit }: WeightGoalFormProps) 
             placeholder="68.0"
             value={startWeight}
             onChange={(e) => setStartWeight(e.target.value)}
+            required
+          />
+        </label>
+        <label className="todo-form__field">
+          <span>開始日</span>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
             required
           />
         </label>

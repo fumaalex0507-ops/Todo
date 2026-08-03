@@ -26,6 +26,7 @@ export function useGoals() {
               createdAt,
               type: 'weight',
               startWeight: input.startWeight,
+              startDate: input.startDate,
               targetWeight: input.targetWeight,
               targetDate: input.targetDate,
             }
