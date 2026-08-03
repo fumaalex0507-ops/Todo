@@ -13,7 +13,7 @@ export function TodoSection() {
   const { templates } = useTodoTemplates()
 
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('createdAt')
