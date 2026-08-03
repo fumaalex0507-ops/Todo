@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useGoals } from '../hooks/useGoals'
+import { useGoalDeadlines } from '../hooks/useGoalDeadlines'
+import { formatMonthDay } from '../lib/date'
 import { GoalForm } from './GoalForm'
 import { GoalList } from './GoalList'
 import type { TextGoal } from '../types'
 
 export function GoalsSection() {
   const { goals, addGoal, updateGoal, deleteGoal, reorderGoals } = useGoals()
+  const { deadlines, setDeadline } = useGoalDeadlines()
   const [editingGoal, setEditingGoal] = useState<TextGoal | null>(null)
 
   const handleReorder = (draggedId: string, targetId: string) => {
@@ -23,7 +26,17 @@ export function GoalsSection() {
       <p className="app__subtitle">週間・月間の目標を記録しましょう</p>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">週間目標</h2>
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">
+            週間目標{deadlines.weekly ? `(~${formatMonthDay(deadlines.weekly)})` : ''}
+          </h2>
+          <input
+            type="date"
+            className="dashboard-card__deadline"
+            value={deadlines.weekly ?? ''}
+            onChange={(e) => setDeadline('weekly', e.target.value || null)}
+          />
+        </div>
         <GoalForm
           period="weekly"
           editingGoal={editingGoal?.period === 'weekly' ? editingGoal : null}
@@ -50,7 +63,17 @@ export function GoalsSection() {
       </div>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">月間目標</h2>
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">
+            月間目標{deadlines.monthly ? `(~${formatMonthDay(deadlines.monthly)})` : ''}
+          </h2>
+          <input
+            type="date"
+            className="dashboard-card__deadline"
+            value={deadlines.monthly ?? ''}
+            onChange={(e) => setDeadline('monthly', e.target.value || null)}
+          />
+        </div>
         <GoalForm
           period="monthly"
           editingGoal={editingGoal?.period === 'monthly' ? editingGoal : null}

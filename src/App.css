@@ -664,6 +664,16 @@
   margin-bottom: 0;
 }
 
+.dashboard-card__deadline {
+  flex-shrink: 0;
+  padding: 4px 6px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 .weather-tiles {
   display: flex;
   gap: 6px;

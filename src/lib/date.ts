@@ -12,6 +12,11 @@ export function toDateStr(d: Date) {
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
 }
 
+export function formatMonthDay(dateStr: string): string {
+  const d = new Date(`${dateStr}T00:00:00`)
+  return `${d.getMonth() + 1}/${d.getDate()}`
+}
+
 export function mostRecentMonday(): string {
   const now = new Date()
   const day = now.getDay()

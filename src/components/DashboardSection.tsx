@@ -3,7 +3,8 @@ import { useTodos } from '../hooks/useTodos'
 import { useGoals } from '../hooks/useGoals'
 import { useWeightEntries } from '../hooks/useWeightEntries'
 import { useDailyRatings } from '../hooks/useDailyRatings'
-import { today } from '../lib/date'
+import { useGoalDeadlines } from '../hooks/useGoalDeadlines'
+import { today, formatMonthDay } from '../lib/date'
 import { computeDateProgress, computeWeightProgress } from '../lib/goalProgress'
 import { WeatherCard } from './WeatherCard'
 import { TodoList } from './TodoList'
@@ -20,6 +21,7 @@ export function DashboardSection() {
   const { goals } = useGoals()
   const { entries } = useWeightEntries()
   const { ratings, setRating } = useDailyRatings()
+  const { deadlines } = useGoalDeadlines()
   const todayStr = today()
 
   const todayTodos = useMemo(() => {
@@ -54,12 +56,16 @@ export function DashboardSection() {
       <p className="app__subtitle">今日のやること・目標をまとめて確認できます</p>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">月間目標</h2>
+        <h2 className="dashboard-card__title">
+          月間目標{deadlines.monthly ? `(~${formatMonthDay(deadlines.monthly)})` : ''}
+        </h2>
         <GoalProgressList goals={goals} period="monthly" />
       </div>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">週間目標</h2>
+        <h2 className="dashboard-card__title">
+          週間目標{deadlines.weekly ? `(~${formatMonthDay(deadlines.weekly)})` : ''}
+        </h2>
         <GoalProgressList goals={goals} period="weekly" />
       </div>
 
