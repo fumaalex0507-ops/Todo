@@ -1,10 +1,19 @@
 import { useMemo, useState } from 'react'
+import { rangeStartDate, type DateRangeKey } from '../lib/date'
 import type { WeightEntry } from '../types'
 
 interface WeightChartProps {
   entries: WeightEntry[]
   targetWeight?: number | null
 }
+
+const RANGE_OPTIONS: { key: DateRangeKey; label: string }[] = [
+  { key: '1w', label: '過去1週間' },
+  { key: '1m', label: '過去1か月' },
+  { key: 'thisMonth', label: '当月' },
+  { key: '3m', label: '過去3か月' },
+  { key: 'all', label: 'すべて' },
+]
 
 const WIDTH = 600
 const HEIGHT = 220
@@ -21,11 +30,13 @@ function formatShort(dateStr: string) {
 
 export function WeightChart({ entries, targetWeight }: WeightChartProps) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null)
+  const [range, setRange] = useState<DateRangeKey>('1m')
 
-  const sorted = useMemo(
-    () => [...entries].sort((a, b) => a.date.localeCompare(b.date)),
-    [entries],
-  )
+  const sorted = useMemo(() => {
+    const startDate = rangeStartDate(range)
+    const inRange = startDate ? entries.filter((e) => e.date >= startDate) : entries
+    return [...inRange].sort((a, b) => a.date.localeCompare(b.date))
+  }, [entries, range])
 
   const { points, yMin, yMax, yTicks } = useMemo(() => {
     if (sorted.length === 0) {
@@ -74,8 +85,30 @@ export function WeightChart({ entries, targetWeight }: WeightChartProps) {
     }
   }, [sorted, targetWeight])
 
+  const rangeSelector = (
+    <div className="weight-chart__range">
+      {RANGE_OPTIONS.map((opt) => (
+        <button
+          key={opt.key}
+          type="button"
+          className={`chip chip--sm ${range === opt.key ? 'chip--active' : ''}`}
+          onClick={() => setRange(opt.key)}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  )
+
   if (sorted.length === 0) {
-    return <p className="todo-list__empty">まだ記録がありません</p>
+    return (
+      <div className="weight-chart">
+        {rangeSelector}
+        <p className="todo-list__empty">
+          {entries.length === 0 ? 'まだ記録がありません' : 'この期間の記録はありません'}
+        </p>
+      </div>
+    )
   }
 
   const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ')
@@ -104,6 +137,7 @@ export function WeightChart({ entries, targetWeight }: WeightChartProps) {
 
   return (
     <div className="weight-chart">
+      {rangeSelector}
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="weight-chart__svg"

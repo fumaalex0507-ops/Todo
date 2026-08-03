@@ -256,6 +256,13 @@
   position: relative;
 }
 
+.weight-chart__range {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
 .weight-chart__svg {
   width: 100%;
   height: auto;
