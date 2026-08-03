@@ -1,19 +1,25 @@
-import { useState } from 'react'
-import type { GoalInput, GoalPeriod } from '../types'
+import { useEffect, useState } from 'react'
+import type { GoalInput, GoalPeriod, TextGoal } from '../types'
 
 interface GoalFormProps {
   period: GoalPeriod
+  editingGoal: TextGoal | null
   onSubmit: (input: GoalInput) => void
+  onCancelEdit: () => void
 }
 
-export function GoalForm({ period, onSubmit }: GoalFormProps) {
+export function GoalForm({ period, editingGoal, onSubmit, onCancelEdit }: GoalFormProps) {
   const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    setTitle(editingGoal ? editingGoal.title : '')
+  }, [editingGoal])
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (!title.trim()) return
     onSubmit({ type: 'text', period, title })
-    setTitle('')
+    if (!editingGoal) setTitle('')
   }
 
   return (
@@ -28,8 +34,13 @@ export function GoalForm({ period, onSubmit }: GoalFormProps) {
           required
         />
         <button type="submit" className="btn btn--primary">
-          追加
+          {editingGoal ? '更新' : '追加'}
         </button>
+        {editingGoal && (
+          <button type="button" className="btn btn--ghost" onClick={onCancelEdit}>
+            キャンセル
+          </button>
+        )}
       </div>
     </form>
   )

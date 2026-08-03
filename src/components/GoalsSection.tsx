@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { useGoals } from '../hooks/useGoals'
 import { GoalForm } from './GoalForm'
 import { GoalList } from './GoalList'
+import type { TextGoal } from '../types'
 
 export function GoalsSection() {
-  const { goals, addGoal, toggleAchieved, deleteGoal } = useGoals()
+  const { goals, addGoal, updateGoal, toggleAchieved, deleteGoal } = useGoals()
+  const [editingGoal, setEditingGoal] = useState<TextGoal | null>(null)
 
   return (
     <>
@@ -11,23 +14,55 @@ export function GoalsSection() {
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">週間目標</h2>
-        <GoalForm period="weekly" onSubmit={addGoal} />
+        <GoalForm
+          period="weekly"
+          editingGoal={editingGoal?.period === 'weekly' ? editingGoal : null}
+          onSubmit={(input) => {
+            if (editingGoal?.period === 'weekly') {
+              updateGoal(editingGoal.id, input)
+              setEditingGoal(null)
+            } else {
+              addGoal(input)
+            }
+          }}
+          onCancelEdit={() => setEditingGoal(null)}
+        />
         <GoalList
           goals={goals}
           period="weekly"
           onToggleAchieved={toggleAchieved}
-          onDelete={deleteGoal}
+          onEdit={setEditingGoal}
+          onDelete={(id) => {
+            deleteGoal(id)
+            if (editingGoal?.id === id) setEditingGoal(null)
+          }}
         />
       </div>
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">月間目標</h2>
-        <GoalForm period="monthly" onSubmit={addGoal} />
+        <GoalForm
+          period="monthly"
+          editingGoal={editingGoal?.period === 'monthly' ? editingGoal : null}
+          onSubmit={(input) => {
+            if (editingGoal?.period === 'monthly') {
+              updateGoal(editingGoal.id, input)
+              setEditingGoal(null)
+            } else {
+              addGoal(input)
+            }
+          }}
+          onCancelEdit={() => setEditingGoal(null)}
+        />
         <GoalList
           goals={goals}
           period="monthly"
           onToggleAchieved={toggleAchieved}
-          onDelete={deleteGoal}
+          onEdit={setEditingGoal}
+          onDelete={(id) => {
+            deleteGoal(id)
+            if (editingGoal?.id === id) setEditingGoal(null)
+          }}
         />
       </div>
     </>

@@ -106,6 +106,12 @@ export function TodoItem({
         {todo.memo && <p className="todo-item__memo">{todo.memo}</p>}
       </div>
 
+      {onEdit && (
+        <button type="button" className="btn btn--ghost" onClick={() => onEdit(todo)}>
+          編集
+        </button>
+      )}
+
       <button
         type="button"
         className="todo-item__delete"

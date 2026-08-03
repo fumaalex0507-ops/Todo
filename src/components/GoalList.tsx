@@ -4,10 +4,11 @@ interface GoalListProps {
   goals: Goal[]
   period: GoalPeriod
   onToggleAchieved: (id: string) => void
+  onEdit: (goal: TextGoal) => void
   onDelete: (id: string) => void
 }
 
-export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalListProps) {
+export function GoalList({ goals, period, onToggleAchieved, onEdit, onDelete }: GoalListProps) {
   const filtered = goals.filter(
     (g): g is TextGoal => g.type === 'text' && g.period === period,
   )
@@ -32,6 +33,10 @@ export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalList
           <div className="todo-item__body">
             <p className="todo-item__title">{goal.title}</p>
           </div>
+
+          <button type="button" className="btn btn--ghost" onClick={() => onEdit(goal)}>
+            編集
+          </button>
 
           <button
             type="button"

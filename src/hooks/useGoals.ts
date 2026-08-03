@@ -43,6 +43,30 @@ export function useGoals() {
     [setGoals],
   )
 
+  const updateGoal = useCallback(
+    (id: string, input: GoalInput) => {
+      setGoals((prev) =>
+        prev.map((g) => {
+          if (g.id !== id) return g
+          if (input.type === 'weight' && g.type === 'weight') {
+            return {
+              ...g,
+              startWeight: input.startWeight,
+              startDate: input.startDate,
+              targetWeight: input.targetWeight,
+              targetDate: input.targetDate,
+            }
+          }
+          if (input.type === 'text' && g.type === 'text') {
+            return { ...g, period: input.period, title: input.title.trim() }
+          }
+          return g
+        }),
+      )
+    },
+    [setGoals],
+  )
+
   const toggleAchieved = useCallback(
     (id: string) => {
       setGoals((prev) =>
@@ -59,5 +83,5 @@ export function useGoals() {
     [setGoals],
   )
 
-  return { goals, addGoal, toggleAchieved, deleteGoal }
+  return { goals, addGoal, updateGoal, toggleAchieved, deleteGoal }
 }
