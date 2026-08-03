@@ -7,6 +7,7 @@ import { fetchHolidays } from '../lib/holidays'
 import { eventColorStyle } from '../lib/eventColor'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
+import { StarRating } from './StarRating'
 import type { Event } from '../types'
 
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土']
@@ -79,7 +80,7 @@ function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
 export function CalendarSection() {
   const { todos, toggleComplete, deleteTodo } = useTodos()
   const { events, addEvent, updateEvent, deleteEvent } = useEvents()
-  const { ratings } = useDailyRatings()
+  const { ratings, setRating } = useDailyRatings()
 
   const [viewDate, setViewDate] = useState(() => {
     const t = new Date()
@@ -232,7 +233,10 @@ export function CalendarSection() {
       </div>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">{selectedDate} の予定・Todo</h2>
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">{selectedDate} の予定・Todo</h2>
+          <StarRating value={ratings[selectedDate] ?? 0} onChange={(n) => setRating(selectedDate, n)} />
+        </div>
 
         {selectedTodos.length > 0 && (
           <>
