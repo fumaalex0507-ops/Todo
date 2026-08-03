@@ -8,7 +8,7 @@ import type { SortKey, StatusFilter, Todo } from '../types'
 const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, low: 2 }
 
 export function TodoSection() {
-  const { todos, addTodo, updateTodo, deleteTodo, toggleComplete } = useTodos()
+  const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, reorderTodos } = useTodos()
 
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
@@ -39,6 +39,8 @@ export function TodoSection() {
       )
     }
 
+    if (sortKey === 'manual') return list
+
     return [...list].sort((a, b) => {
       if (sortKey === 'dueDate') {
         if (!a.dueDate && !b.dueDate) return b.createdAt - a.createdAt
@@ -54,6 +56,19 @@ export function TodoSection() {
   }, [todos, statusFilter, categoryFilter, searchQuery, sortKey])
 
   const remainingCount = useMemo(() => todos.filter((t) => !t.completed).length, [todos])
+
+  const reorderable =
+    sortKey === 'manual' && statusFilter === 'all' && categoryFilter === 'all' && !searchQuery.trim()
+
+  const handleReorder = (draggedId: string, targetId: string) => {
+    const ids = todos.map((t) => t.id)
+    const fromIndex = ids.indexOf(draggedId)
+    const toIndex = ids.indexOf(targetId)
+    if (fromIndex === -1 || toIndex === -1) return
+    ids.splice(fromIndex, 1)
+    ids.splice(ids.indexOf(targetId), 0, draggedId)
+    reorderTodos(ids)
+  }
 
   return (
     <>
@@ -86,6 +101,10 @@ export function TodoSection() {
         onSortKeyChange={setSortKey}
       />
 
+      {sortKey === 'manual' && !reorderable && (
+        <p className="todo-list__hint">絞り込み・検索がない状態でドラッグして並び替えできます</p>
+      )}
+
       <TodoList
         todos={visibleTodos}
         onToggle={toggleComplete}
@@ -94,6 +113,8 @@ export function TodoSection() {
           deleteTodo(id)
           if (editingTodo?.id === id) setEditingTodo(null)
         }}
+        reorderable={reorderable}
+        onReorder={handleReorder}
       />
     </>
   )

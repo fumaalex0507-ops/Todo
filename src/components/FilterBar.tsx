@@ -74,6 +74,7 @@ export function FilterBar({
           <option value="createdAt">追加順</option>
           <option value="dueDate">期限日順</option>
           <option value="priority">優先度順</option>
+          <option value="manual">手動(ドラッグで並び替え)</option>
         </select>
       </div>
     </div>

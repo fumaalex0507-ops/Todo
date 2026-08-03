@@ -424,6 +424,30 @@
   opacity: 0.55;
 }
 
+.todo-item--dragging {
+  opacity: 0.4;
+}
+
+.todo-item--drag-over {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+.todo-item__handle {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  cursor: grab;
+  font-size: 14px;
+  line-height: 1;
+  align-self: center;
+}
+
+.todo-list__hint {
+  margin: -4px 0 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 .todo-item__checkbox {
   position: relative;
   display: inline-flex;

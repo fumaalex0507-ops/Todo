@@ -2,7 +2,7 @@ export type Priority = 'high' | 'medium' | 'low'
 
 export type StatusFilter = 'all' | 'active' | 'completed'
 
-export type SortKey = 'dueDate' | 'priority' | 'createdAt'
+export type SortKey = 'dueDate' | 'priority' | 'createdAt' | 'manual'
 
 export interface Todo {
   id: string

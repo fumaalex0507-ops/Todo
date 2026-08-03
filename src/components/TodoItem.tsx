@@ -6,6 +6,13 @@ interface TodoItemProps {
   onToggle: (id: string) => void
   onEdit?: (todo: Todo) => void
   onDelete: (id: string) => void
+  draggable?: boolean
+  isDragging?: boolean
+  isDragOver?: boolean
+  onDragStart?: () => void
+  onDragOver?: () => void
+  onDrop?: () => void
+  onDragEnd?: () => void
 }
 
 const priorityLabel: Record<Todo['priority'], string> = {
@@ -26,11 +33,46 @@ function isOverdue(dueDate: string | null, completed: boolean) {
   return new Date(`${dueDate}T00:00:00`) < today
 }
 
-export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
+export function TodoItem({
+  todo,
+  onToggle,
+  onEdit,
+  onDelete,
+  draggable,
+  isDragging,
+  isDragOver,
+  onDragStart,
+  onDragOver,
+  onDrop,
+  onDragEnd,
+}: TodoItemProps) {
   const overdue = isOverdue(todo.dueDate, todo.completed)
 
   return (
-    <li className={`todo-item ${todo.completed ? 'todo-item--done' : ''}`}>
+    <li
+      className={[
+        'todo-item',
+        todo.completed ? 'todo-item--done' : '',
+        isDragging ? 'todo-item--dragging' : '',
+        isDragOver ? 'todo-item--drag-over' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      draggable={draggable}
+      onDragStart={draggable ? onDragStart : undefined}
+      onDragOver={
+        draggable
+          ? (e) => {
+              e.preventDefault()
+              onDragOver?.()
+            }
+          : undefined
+      }
+      onDrop={draggable ? onDrop : undefined}
+      onDragEnd={draggable ? onDragEnd : undefined}
+    >
+      {draggable && <span className="todo-item__handle" aria-hidden="true">⠿</span>}
+
       <label className="todo-item__checkbox">
         <input
           type="checkbox"

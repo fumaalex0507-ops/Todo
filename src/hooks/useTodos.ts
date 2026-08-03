@@ -73,5 +73,14 @@ export function useTodos() {
     [setTodos],
   )
 
-  return { todos, addTodo, updateTodo, deleteTodo, toggleComplete }
+  const reorderTodos = useCallback(
+    (orderedIds: string[]) => {
+      setTodos((prev) =>
+        orderedIds.map((id) => prev.find((todo) => todo.id === id)).filter((t): t is Todo => !!t),
+      )
+    },
+    [setTodos],
+  )
+
+  return { todos, addTodo, updateTodo, deleteTodo, toggleComplete, reorderTodos }
 }
