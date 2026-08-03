@@ -12,6 +12,7 @@ interface DayCell {
   dateStr: string
   day: number
   inMonth: boolean
+  weekday: number
 }
 
 function buildMonthGrid(year: number, month: number): DayCell[] {
@@ -26,6 +27,7 @@ function buildMonthGrid(year: number, month: number): DayCell[] {
       dateStr: toDateStr(d),
       day: d.getDate(),
       inMonth: d.getMonth() === month,
+      weekday: d.getDay(),
     }
   })
 }
@@ -101,14 +103,23 @@ export function CalendarSection() {
         </div>
 
         <div className="calendar-grid calendar-grid__weekdays">
-          {WEEKDAYS.map((w) => (
-            <div key={w} className="calendar-weekday">
+          {WEEKDAYS.map((w, i) => (
+            <div
+              key={w}
+              className={[
+                'calendar-weekday',
+                i === 0 ? 'calendar-weekday--sun' : '',
+                i === 6 ? 'calendar-weekday--sat' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
               {w}
             </div>
           ))}
         </div>
 
-        <div className="calendar-grid">
+        <div className="calendar-grid calendar-grid--days">
           {grid.map((cell) => {
             const hasTodo = todosByDate.has(cell.dateStr)
             const hasEvent = eventsByDate.has(cell.dateStr)
@@ -118,6 +129,8 @@ export function CalendarSection() {
                 type="button"
                 className={[
                   'calendar-day',
+                  cell.weekday === 0 ? 'calendar-day--sun' : '',
+                  cell.weekday === 6 ? 'calendar-day--sat' : '',
                   !cell.inMonth ? 'calendar-day--muted' : '',
                   cell.dateStr === today() ? 'calendar-day--today' : '',
                   cell.dateStr === selectedDate ? 'calendar-day--selected' : '',

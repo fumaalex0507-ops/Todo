@@ -25,6 +25,9 @@
   --progress-weight-strong: #4338ca;
   --progress-date: #ea580c;
   --progress-date-strong: #c2410c;
+
+  --weekend-sun: #dc2626;
+  --weekend-sat: #2563eb;
 }
 
 :root[data-theme='dark'] {
@@ -51,6 +54,9 @@
   --progress-weight-strong: #a5b4fc;
   --progress-date: #fb923c;
   --progress-date-strong: #fdba74;
+
+  --weekend-sun: #f87171;
+  --weekend-sat: #60a5fa;
 }
 
 * {
