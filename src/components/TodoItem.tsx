@@ -87,9 +87,6 @@ export function TodoItem({
         onClick={onEdit ? () => onEdit(todo) : undefined}
       >
         <div className="todo-item__meta">
-          <span className={`badge badge--priority-${todo.priority}`}>
-            {priorityLabel[todo.priority]}
-          </span>
           {todo.category && (
             <span className="badge badge--category" style={categoryColorStyle(todo.category)}>
               {todo.category}
@@ -101,6 +98,9 @@ export function TodoItem({
               {formatDate(todo.dueDate)}
             </span>
           )}
+          <span className={`badge badge--priority-${todo.priority}`}>
+            {priorityLabel[todo.priority]}
+          </span>
         </div>
         <p className="todo-item__title">{todo.title}</p>
         {todo.memo && <p className="todo-item__memo">{todo.memo}</p>}
