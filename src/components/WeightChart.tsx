@@ -8,10 +8,11 @@ interface WeightChartProps {
 
 const WIDTH = 600
 const HEIGHT = 220
-const PAD_LEFT = 36
+const PAD_LEFT = 40
 const PAD_RIGHT = 16
 const PAD_TOP = 16
 const PAD_BOTTOM = 28
+const Y_TICK_COUNT = 4
 
 function formatShort(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`)
@@ -26,9 +27,14 @@ export function WeightChart({ entries, targetWeight }: WeightChartProps) {
     [entries],
   )
 
-  const { points, yMin, yMax } = useMemo(() => {
+  const { points, yMin, yMax, yTicks } = useMemo(() => {
     if (sorted.length === 0) {
-      return { points: [] as { x: number; y: number }[], yMin: 0, yMax: 0 }
+      return {
+        points: [] as { x: number; y: number }[],
+        yMin: 0,
+        yMax: 0,
+        yTicks: [] as { y: number; label: string }[],
+      }
     }
     const weights = sorted.map((e) => e.weight)
     let min = Math.min(...weights)
@@ -55,10 +61,16 @@ export function WeightChart({ entries, targetWeight }: WeightChartProps) {
 
     const yFor = (w: number) => PAD_TOP + plotHeight * (1 - (w - min) / (max - min))
 
+    const ticks = Array.from({ length: Y_TICK_COUNT + 1 }, (_, i) => {
+      const value = min + ((max - min) * i) / Y_TICK_COUNT
+      return { y: yFor(value), label: value.toFixed(1) }
+    }).reverse()
+
     return {
       points: sorted.map((e, i) => ({ x: xForIdx(i), y: yFor(e.weight) })),
       yMin: min,
       yMax: max,
+      yTicks: ticks,
     }
   }, [sorted, targetWeight])
 
@@ -98,6 +110,21 @@ export function WeightChart({ entries, targetWeight }: WeightChartProps) {
         onPointerMove={handleMove}
         onPointerLeave={() => setHoverIndex(null)}
       >
+        {yTicks.map((tick) => (
+          <g key={tick.label + tick.y}>
+            <line
+              x1={PAD_LEFT}
+              y1={tick.y}
+              x2={WIDTH - PAD_RIGHT}
+              y2={tick.y}
+              className="weight-chart__grid"
+            />
+            <text x={PAD_LEFT - 6} y={tick.y} textAnchor="end" dominantBaseline="middle" className="weight-chart__y-label">
+              {tick.label}
+            </text>
+          </g>
+        ))}
+
         <line
           x1={PAD_LEFT}
           y1={HEIGHT - PAD_BOTTOM}
