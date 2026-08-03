@@ -695,11 +695,11 @@
 .progress-bar__fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  background: linear-gradient(90deg, var(--progress-weight), var(--progress-weight-strong));
 }
 
 .progress-bar__fill--date {
-  background: var(--text-muted);
+  background: linear-gradient(90deg, var(--progress-date), var(--progress-date-strong));
 }
 
 .dual-progress {
@@ -732,5 +732,12 @@
   text-align: right;
   font-size: 11px;
   font-weight: 700;
-  color: var(--text);
+}
+
+.dual-progress__percent--weight {
+  color: var(--progress-weight-strong);
+}
+
+.dual-progress__percent--date {
+  color: var(--progress-date-strong);
 }

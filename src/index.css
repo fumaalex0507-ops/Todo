@@ -20,6 +20,11 @@
   --priority-low-bg: #dcfce7;
 
   --overdue: #dc2626;
+
+  --progress-weight: #4f46e5;
+  --progress-weight-strong: #4338ca;
+  --progress-date: #ea580c;
+  --progress-date-strong: #c2410c;
 }
 
 :root[data-theme='dark'] {
@@ -41,6 +46,11 @@
   --priority-low-bg: #14301f;
 
   --overdue: #f87171;
+
+  --progress-weight: #818cf8;
+  --progress-weight-strong: #a5b4fc;
+  --progress-date: #fb923c;
+  --progress-date-strong: #fdba74;
 }
 
 * {
