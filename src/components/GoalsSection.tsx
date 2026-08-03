@@ -5,7 +5,7 @@ import { GoalList } from './GoalList'
 import type { TextGoal } from '../types'
 
 export function GoalsSection() {
-  const { goals, addGoal, updateGoal, toggleAchieved, deleteGoal, reorderGoals } = useGoals()
+  const { goals, addGoal, updateGoal, deleteGoal, reorderGoals } = useGoals()
   const [editingGoal, setEditingGoal] = useState<TextGoal | null>(null)
 
   const handleReorder = (draggedId: string, targetId: string) => {
@@ -40,7 +40,6 @@ export function GoalsSection() {
         <GoalList
           goals={goals}
           period="weekly"
-          onToggleAchieved={toggleAchieved}
           onEdit={setEditingGoal}
           onDelete={(id) => {
             deleteGoal(id)
@@ -68,7 +67,6 @@ export function GoalsSection() {
         <GoalList
           goals={goals}
           period="monthly"
-          onToggleAchieved={toggleAchieved}
           onEdit={setEditingGoal}
           onDelete={(id) => {
             deleteGoal(id)

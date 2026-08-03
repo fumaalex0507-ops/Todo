@@ -4,13 +4,12 @@ import type { Goal, GoalPeriod, TextGoal } from '../types'
 interface GoalListProps {
   goals: Goal[]
   period: GoalPeriod
-  onToggleAchieved: (id: string) => void
   onEdit: (goal: TextGoal) => void
   onDelete: (id: string) => void
   onReorder: (draggedId: string, targetId: string) => void
 }
 
-export function GoalList({ goals, period, onToggleAchieved, onEdit, onDelete, onReorder }: GoalListProps) {
+export function GoalList({ goals, period, onEdit, onDelete, onReorder }: GoalListProps) {
   const [draggedId, setDraggedId] = useState<string | null>(null)
   const [overId, setOverId] = useState<string | null>(null)
 
@@ -29,7 +28,6 @@ export function GoalList({ goals, period, onToggleAchieved, onEdit, onDelete, on
           key={goal.id}
           className={[
             'todo-item',
-            goal.achieved ? 'todo-item--done' : '',
             draggedId === goal.id ? 'todo-item--dragging' : '',
             overId === goal.id && draggedId !== goal.id ? 'todo-item--drag-over' : '',
           ]
@@ -52,15 +50,6 @@ export function GoalList({ goals, period, onToggleAchieved, onEdit, onDelete, on
           }}
         >
           <span className="todo-item__handle" aria-hidden="true">⠿</span>
-
-          <label className="todo-item__checkbox">
-            <input
-              type="checkbox"
-              checked={goal.achieved}
-              onChange={() => onToggleAchieved(goal.id)}
-            />
-            <span aria-hidden="true" />
-          </label>
 
           <div className="todo-item__body">
             <p className="todo-item__title">{goal.title}</p>

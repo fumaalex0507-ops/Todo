@@ -67,15 +67,6 @@ export function useGoals() {
     [setGoals],
   )
 
-  const toggleAchieved = useCallback(
-    (id: string) => {
-      setGoals((prev) =>
-        prev.map((g) => (g.id === id ? { ...g, achieved: !g.achieved } : g)),
-      )
-    },
-    [setGoals],
-  )
-
   const deleteGoal = useCallback(
     (id: string) => {
       setGoals((prev) => prev.filter((g) => g.id !== id))
@@ -92,5 +83,5 @@ export function useGoals() {
     [setGoals],
   )
 
-  return { goals, addGoal, updateGoal, toggleAchieved, deleteGoal, reorderGoals }
+  return { goals, addGoal, updateGoal, deleteGoal, reorderGoals }
 }

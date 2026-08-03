@@ -17,7 +17,7 @@ const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, l
 
 export function DashboardSection() {
   const { todos, toggleComplete, deleteTodo } = useTodos()
-  const { goals, toggleAchieved } = useGoals()
+  const { goals } = useGoals()
   const { entries } = useWeightEntries()
   const { ratings, setRating } = useDailyRatings()
   const todayStr = today()
@@ -55,12 +55,12 @@ export function DashboardSection() {
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">月間目標</h2>
-        <GoalProgressList goals={goals} period="monthly" onToggleAchieved={toggleAchieved} />
+        <GoalProgressList goals={goals} period="monthly" />
       </div>
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">週間目標</h2>
-        <GoalProgressList goals={goals} period="weekly" onToggleAchieved={toggleAchieved} />
+        <GoalProgressList goals={goals} period="weekly" />
       </div>
 
       <WeatherCard />
