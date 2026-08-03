@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { useTheme } from './hooks/useTheme'
 import { NavTabs, type TabKey } from './components/NavTabs'
 import { DashboardSection } from './components/DashboardSection'
@@ -27,7 +27,7 @@ function App() {
       <NavTabs active={tab} onChange={setTab} />
 
       <header className="app__header">
-        <div className="app__title">
+        <div className="app__title" style={{ '--page-theme': `var(--theme-${tab})` } as CSSProperties}>
           <h1>{titleByTab[tab]}</h1>
         </div>
       </header>

@@ -31,10 +31,10 @@
   height: 20%;
   background: linear-gradient(
     90deg,
-    color-mix(in oklab, var(--accent) 70%, transparent) 0%,
-    color-mix(in oklab, var(--accent) 70%, transparent) 52%,
-    color-mix(in oklab, var(--accent) 45%, transparent) 70%,
-    color-mix(in oklab, var(--accent) 20%, transparent) 85%,
+    color-mix(in oklab, var(--page-theme) 70%, transparent) 0%,
+    color-mix(in oklab, var(--page-theme) 70%, transparent) 52%,
+    color-mix(in oklab, var(--page-theme) 45%, transparent) 70%,
+    color-mix(in oklab, var(--page-theme) 20%, transparent) 85%,
     transparent 100%
   );
   clip-path: polygon(
