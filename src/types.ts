@@ -98,3 +98,8 @@ export interface EventInput {
   title: string
   memo: string
 }
+
+export interface TodoTemplate {
+  id: string
+  title: string
+}

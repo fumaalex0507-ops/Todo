@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTodos } from '../hooks/useTodos'
+import { useTodoTemplates } from '../hooks/useTodoTemplates'
 import { TodoForm } from './TodoForm'
 import { TodoList } from './TodoList'
 import { FilterBar } from './FilterBar'
@@ -9,6 +10,7 @@ const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, l
 
 export function TodoSection() {
   const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, reorderTodos } = useTodos()
+  const { templates } = useTodoTemplates()
 
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
@@ -78,6 +80,7 @@ export function TodoSection() {
 
       <TodoForm
         editingTodo={editingTodo}
+        templates={templates}
         onSubmit={(input) => {
           if (editingTodo) {
             updateTodo(editingTodo.id, input)

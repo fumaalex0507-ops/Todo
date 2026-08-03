@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocations } from '../hooks/useLocations'
+import { useTodoTemplates } from '../hooks/useTodoTemplates'
 import type { Location, Theme } from '../types'
 
 interface SettingsSectionProps {
@@ -15,9 +16,11 @@ const themeOptions: { value: Theme; label: string }[] = [
 
 export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) {
   const { locations, addLocation, updateLocation, removeLocation } = useLocations()
+  const { templates, addTemplate, deleteTemplate } = useTodoTemplates()
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [templateTitle, setTemplateTitle] = useState('')
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -25,6 +28,13 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
     addLocation(name.trim(), url.trim())
     setName('')
     setUrl('')
+  }
+
+  const handleTemplateSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    if (!templateTitle.trim()) return
+    addTemplate(templateTitle)
+    setTemplateTitle('')
   }
 
   return (
@@ -45,6 +55,49 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">Todoリスト登録</h2>
+        <p className="app__subtitle">
+          よく使う項目を登録すると、Todo追加時にプルダウンから選べます
+        </p>
+        <form className="todo-form" onSubmit={handleTemplateSubmit}>
+          <div className="todo-form__row">
+            <input
+              className="todo-form__title"
+              type="text"
+              placeholder="例: ゴミ出し"
+              value={templateTitle}
+              onChange={(e) => setTemplateTitle(e.target.value)}
+              required
+            />
+            <button type="submit" className="btn btn--primary">
+              追加
+            </button>
+          </div>
+        </form>
+        {templates.length === 0 ? (
+          <p className="todo-list__empty">まだ登録されていません</p>
+        ) : (
+          <ul className="settings-location-list">
+            {templates.map((t) => (
+              <li key={t.id} className="settings-location-row">
+                <div className="settings-location-row__info">
+                  <p className="settings-location-row__name">{t.title}</p>
+                </div>
+                <button
+                  type="button"
+                  className="todo-item__delete"
+                  aria-label="削除"
+                  onClick={() => deleteTemplate(t.id)}
+                >
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className="dashboard-card">

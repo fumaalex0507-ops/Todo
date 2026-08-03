@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { categoryColorStyle } from '../lib/categoryColor'
 import { today } from '../lib/date'
 import { CATEGORY_PRESETS } from '../types'
-import type { Priority, Todo, TodoInput } from '../types'
+import type { Priority, Todo, TodoInput, TodoTemplate } from '../types'
 
 interface TodoFormProps {
   editingTodo: Todo | null
+  templates: TodoTemplate[]
   onSubmit: (input: TodoInput) => void
   onCancelEdit: () => void
 }
@@ -20,7 +21,7 @@ function createEmptyForm(): TodoInput {
   }
 }
 
-export function TodoForm({ editingTodo, onSubmit, onCancelEdit }: TodoFormProps) {
+export function TodoForm({ editingTodo, templates, onSubmit, onCancelEdit }: TodoFormProps) {
   const [form, setForm] = useState<TodoInput>(createEmptyForm)
 
   useEffect(() => {
@@ -89,6 +90,23 @@ export function TodoForm({ editingTodo, onSubmit, onCancelEdit }: TodoFormProps)
           </select>
         </label>
       </div>
+
+      {templates.length > 0 && (
+        <select
+          className="filter-bar__select"
+          value=""
+          onChange={(e) => {
+            if (e.target.value) setForm((f) => ({ ...f, title: e.target.value }))
+          }}
+        >
+          <option value="">よく使う項目から選択…</option>
+          {templates.map((t) => (
+            <option key={t.id} value={t.title}>
+              {t.title}
+            </option>
+          ))}
+        </select>
+      )}
 
       <div className="todo-form__row">
         <input
