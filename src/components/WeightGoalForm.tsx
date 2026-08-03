@@ -2,18 +2,22 @@ import { useState } from 'react'
 import type { GoalInput } from '../types'
 
 interface WeightGoalFormProps {
+  latestWeight: number | null
   onSubmit: (input: GoalInput) => void
 }
 
-export function WeightGoalForm({ onSubmit }: WeightGoalFormProps) {
+export function WeightGoalForm({ latestWeight, onSubmit }: WeightGoalFormProps) {
+  const [startWeight, setStartWeight] = useState(() => (latestWeight != null ? String(latestWeight) : ''))
   const [targetWeight, setTargetWeight] = useState('')
   const [targetDate, setTargetDate] = useState('')
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    const weightNum = Number(targetWeight)
-    if (!targetWeight || Number.isNaN(weightNum) || !targetDate) return
-    onSubmit({ type: 'weight', targetWeight: weightNum, targetDate })
+    const startNum = Number(startWeight)
+    const targetNum = Number(targetWeight)
+    if (!startWeight || Number.isNaN(startNum)) return
+    if (!targetWeight || Number.isNaN(targetNum) || !targetDate) return
+    onSubmit({ type: 'weight', startWeight: startNum, targetWeight: targetNum, targetDate })
     setTargetWeight('')
     setTargetDate('')
   }
@@ -21,6 +25,17 @@ export function WeightGoalForm({ onSubmit }: WeightGoalFormProps) {
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
       <div className="todo-form__row todo-form__row--details">
+        <label className="todo-form__field">
+          <span>スタート時体重(kg)</span>
+          <input
+            type="number"
+            step="0.1"
+            placeholder="68.0"
+            value={startWeight}
+            onChange={(e) => setStartWeight(e.target.value)}
+            required
+          />
+        </label>
         <label className="todo-form__field">
           <span>目標体重(kg)</span>
           <input

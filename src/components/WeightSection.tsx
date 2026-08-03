@@ -41,7 +41,7 @@ export function WeightSection() {
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">体重目標</h2>
-        <WeightGoalForm onSubmit={addGoal} />
+        <WeightGoalForm latestWeight={latestWeight} onSubmit={addGoal} />
         <WeightGoalList
           goals={goals}
           weightEntries={entries}

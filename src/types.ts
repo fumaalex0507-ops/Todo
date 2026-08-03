@@ -35,6 +35,7 @@ export interface WeightGoal {
   achieved: boolean
   createdAt: number
   type: 'weight'
+  startWeight: number
   targetWeight: number
   targetDate: string | null
 }
@@ -52,6 +53,7 @@ export type Goal = WeightGoal | TextGoal
 
 export interface WeightGoalInput {
   type: 'weight'
+  startWeight: number
   targetWeight: number
   targetDate: string | null
 }

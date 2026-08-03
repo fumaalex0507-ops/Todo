@@ -40,9 +40,10 @@ export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelet
               <div className="progress-bar">
                 <div className="progress-bar__fill" style={{ width: `${progress.percent}%` }} />
               </div>
-              {progress.current != null && (
-                <p className="goal-progress-item__detail">現在 {progress.current}kg</p>
-              )}
+              <p className="goal-progress-item__detail">
+                開始 {goal.startWeight}kg
+                {progress.current != null ? ` → 現在 ${progress.current}kg` : ''}
+              </p>
             </div>
 
             <button
