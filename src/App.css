@@ -1,7 +1,7 @@
 .app {
-  max-width: 640px;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 20px 16px 64px;
+  padding: 18px 16px 56px;
 }
 
 .app__header {
@@ -9,38 +9,39 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .app__title h1 {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
+  letter-spacing: -0.01em;
   margin: 0;
   color: var(--text);
 }
 
 .app__subtitle {
-  margin: 0 0 16px;
-  font-size: 14px;
+  margin: 0 0 14px;
+  font-size: 13px;
   color: var(--text-muted);
 }
 
 /* Nav tabs */
 .nav-tabs {
   display: flex;
-  gap: 6px;
-  margin-bottom: 20px;
-  padding: 4px;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 3px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 9px;
 }
 
 .nav-tabs__btn {
   flex: 1;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
   background: transparent;
   color: var(--text-muted);
   font-size: 13px;
@@ -50,18 +51,16 @@
 .nav-tabs__btn--active {
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: var(--accent-contrast);
-  box-shadow: 0 4px 12px -4px color-mix(in oklab, var(--accent) 60%, transparent);
 }
 
 .theme-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
-  border-radius: 999px;
+  padding: 6px 10px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  box-shadow: var(--shadow);
   font-size: 13px;
   color: var(--text-muted);
   flex-shrink: 0;
@@ -81,13 +80,13 @@
 .todo-form {
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 14px;
   box-shadow: var(--shadow);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .todo-form__row {
@@ -97,17 +96,17 @@
 }
 
 .todo-form__row--details {
-  gap: 12px;
+  gap: 10px;
 }
 
 .todo-form__title {
   flex: 1 1 200px;
   min-width: 0;
-  padding: 10px 14px;
-  border-radius: 10px;
+  padding: 8px 12px;
+  border-radius: 7px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .todo-form__field {
@@ -122,11 +121,11 @@
 .todo-form__field input,
 .todo-form__field select,
 .todo-form__field textarea {
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 7px 9px;
+  border-radius: 7px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .todo-form__field--memo {
@@ -139,10 +138,10 @@
 }
 
 .btn {
-  padding: 10px 18px;
-  border-radius: 10px;
+  padding: 8px 16px;
+  border-radius: 7px;
   border: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -150,7 +149,6 @@
 .btn--primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: var(--accent-contrast);
-  box-shadow: 0 4px 12px -4px color-mix(in oklab, var(--accent) 60%, transparent);
 }
 
 .btn--ghost {
@@ -163,21 +161,21 @@
 .filter-bar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .filter-bar__status {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .chip {
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -189,20 +187,20 @@
 }
 
 .chip--sm {
-  padding: 4px 10px;
-  font-size: 12px;
+  padding: 3px 9px;
+  font-size: 11px;
 }
 
 .todo-form__category-chips {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
 .chip--category {
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: 700;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
   border: none;
   color: #fff;
   background: var(--badge-color-light);
@@ -213,29 +211,29 @@
 }
 
 .chip--category.chip--active {
-  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 4px var(--badge-color-light);
+  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 3.5px var(--badge-color-light);
 }
 
 :root[data-theme='dark'] .chip--category.chip--active {
-  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 4px var(--badge-color-dark);
+  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 3.5px var(--badge-color-dark);
 }
 
 /* Segmented control */
 .segmented {
   display: flex;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 7px;
   overflow: hidden;
   flex: 1 1 200px;
 }
 
 .segmented__btn {
   flex: 1;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border: none;
   background: var(--surface-solid);
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -248,10 +246,10 @@
 .weight-chart-card {
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 14px;
   box-shadow: var(--shadow);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .weight-chart {
@@ -308,9 +306,9 @@
   transform: translate(-50%, -130%);
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 12px;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
   pointer-events: none;
@@ -324,7 +322,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .weight-log__row {
@@ -333,9 +331,9 @@
   gap: 10px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 13px;
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 12px;
 }
 
 .weight-log__date {
@@ -349,26 +347,26 @@
 
 .filter-bar__controls {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .filter-bar__search {
   flex: 1 1 140px;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 7px 10px;
+  border-radius: 7px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  font-size: 14px;
+  font-size: 13px;
   min-width: 0;
 }
 
 .filter-bar__select {
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 7px 9px;
+  border-radius: 7px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* List */
@@ -378,14 +376,14 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 }
 
 .todo-list__empty {
   text-align: center;
   color: var(--text-muted);
-  padding: 40px 0;
-  font-size: 14px;
+  padding: 36px 0;
+  font-size: 13px;
 }
 
 .todo-item {
@@ -394,8 +392,8 @@
   gap: 10px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 14px;
+  border-radius: 10px;
+  padding: 10px 12px;
   box-shadow: var(--shadow);
   transition: opacity 0.15s ease;
 }
@@ -407,13 +405,13 @@
 .todo-item__checkbox {
   position: relative;
   display: inline-flex;
-  margin-top: 3px;
+  margin-top: 2px;
   flex-shrink: 0;
 }
 
 .todo-item__checkbox input {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--accent);
   cursor: pointer;
 }
@@ -426,7 +424,7 @@
 
 .todo-item__title {
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   word-break: break-word;
 }
@@ -436,23 +434,23 @@
 }
 
 .todo-item__memo {
-  margin: 4px 0 0;
-  font-size: 13px;
+  margin: 3px 0 0;
+  font-size: 12px;
   color: var(--text-muted);
   word-break: break-word;
 }
 
 .todo-item__meta {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 .badge {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
 }
 
@@ -492,13 +490,13 @@
 
 .todo-item__delete {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: none;
   background: transparent;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   display: flex;
   align-items: center;
