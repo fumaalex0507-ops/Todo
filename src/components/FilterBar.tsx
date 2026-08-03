@@ -13,9 +13,9 @@ interface FilterBarProps {
 }
 
 const statusOptions: { value: StatusFilter; label: string }[] = [
-  { value: 'all', label: 'すべて' },
   { value: 'active', label: '未完了' },
   { value: 'completed', label: '完了' },
+  { value: 'all', label: 'すべて' },
 ]
 
 export function FilterBar({
