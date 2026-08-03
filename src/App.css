@@ -948,6 +948,15 @@
   color: var(--progress-date-strong);
 }
 
+.calendar-event-row__range {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--progress-date) 18%, var(--surface-solid));
+  color: var(--progress-date-strong);
+}
+
 .calendar-event-row__title {
   font-weight: 600;
 }

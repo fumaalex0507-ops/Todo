@@ -9,26 +9,33 @@ interface EventFormProps {
 }
 
 export function EventForm({ date, editingEvent, onSubmit, onCancelEdit }: EventFormProps) {
+  const [startDate, setStartDate] = useState(date)
+  const [endDate, setEndDate] = useState('')
   const [time, setTime] = useState('')
   const [title, setTitle] = useState('')
   const [memo, setMemo] = useState('')
 
   useEffect(() => {
     if (editingEvent) {
+      setStartDate(editingEvent.date)
+      setEndDate(editingEvent.endDate ?? '')
       setTime(editingEvent.time ?? '')
       setTitle(editingEvent.title)
       setMemo(editingEvent.memo)
     } else {
+      setStartDate(date)
+      setEndDate('')
       setTime('')
       setTitle('')
       setMemo('')
     }
-  }, [editingEvent])
+  }, [editingEvent, date])
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (!title.trim()) return
-    onSubmit({ date, time: time || null, title, memo })
+    onSubmit({ date: startDate, endDate: endDate || null, time: time || null, title, memo })
+    setEndDate('')
     setTime('')
     setTitle('')
     setMemo('')
@@ -56,6 +63,24 @@ export function EventForm({ date, editingEvent, onSubmit, onCancelEdit }: EventF
       </div>
 
       <div className="todo-form__row todo-form__row--details">
+        <label className="todo-form__field">
+          <span>開始日</span>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            required
+          />
+        </label>
+        <label className="todo-form__field">
+          <span>終了日(任意・期間予定の場合)</span>
+          <input
+            type="date"
+            value={endDate}
+            min={startDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </label>
         <label className="todo-form__field">
           <span>時間(任意)</span>
           <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />

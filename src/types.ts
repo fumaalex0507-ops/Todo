@@ -84,6 +84,7 @@ export interface Location {
 export interface Event {
   id: string
   date: string
+  endDate: string | null
   time: string | null
   title: string
   memo: string
@@ -92,6 +93,7 @@ export interface Event {
 
 export interface EventInput {
   date: string
+  endDate: string | null
   time: string | null
   title: string
   memo: string

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTodos } from '../hooks/useTodos'
 import { useEvents } from '../hooks/useEvents'
-import { today, toDateStr } from '../lib/date'
+import { today, toDateStr, dateRange } from '../lib/date'
 import { fetchHolidays } from '../lib/holidays'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
@@ -73,9 +73,11 @@ export function CalendarSection() {
   const eventsByDate = useMemo(() => {
     const map = new Map<string, Event[]>()
     events.forEach((e) => {
-      const list = map.get(e.date) ?? []
-      list.push(e)
-      map.set(e.date, list)
+      dateRange(e.date, e.endDate ?? e.date).forEach((d) => {
+        const list = map.get(d) ?? []
+        list.push(e)
+        map.set(d, list)
+      })
     })
     map.forEach((list) => list.sort((a, b) => (a.time ?? '').localeCompare(b.time ?? '')))
     return map
@@ -89,7 +91,7 @@ export function CalendarSection() {
   const selectedEvents = useMemo(
     () =>
       events
-        .filter((e) => e.date === selectedDate)
+        .filter((e) => selectedDate >= e.date && selectedDate <= (e.endDate ?? e.date))
         .sort((a, b) => (a.time ?? '').localeCompare(b.time ?? '')),
     [events, selectedDate],
   )
@@ -199,6 +201,11 @@ export function CalendarSection() {
             {selectedEvents.map((ev) => (
               <li key={ev.id} className="calendar-event-row">
                 <div className="calendar-event-row__info">
+                  {ev.endDate && (
+                    <span className="calendar-event-row__range">
+                      {ev.date}〜{ev.endDate}
+                    </span>
+                  )}
                   {ev.time && <span className="calendar-event-row__time">{ev.time}</span>}
                   <span className="calendar-event-row__title">{ev.title}</span>
                   {ev.memo && <span className="calendar-event-row__memo">{ev.memo}</span>}

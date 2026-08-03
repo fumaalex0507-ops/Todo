@@ -12,6 +12,18 @@ export function toDateStr(d: Date) {
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
 }
 
+export function dateRange(startStr: string, endStr: string): string[] {
+  const start = new Date(`${startStr}T00:00:00`)
+  const end = new Date(`${endStr}T00:00:00`)
+  const dates: string[] = []
+  const cur = new Date(start)
+  while (cur <= end) {
+    dates.push(toDateStr(cur))
+    cur.setDate(cur.getDate() + 1)
+  }
+  return dates
+}
+
 export function rangeStartDate(key: DateRangeKey): string | null {
   const now = new Date()
 

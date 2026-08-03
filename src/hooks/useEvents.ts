@@ -18,6 +18,7 @@ export function useEvents() {
       const newEvent: Event = {
         id: createId(),
         date: input.date,
+        endDate: input.endDate && input.endDate > input.date ? input.endDate : null,
         time: input.time,
         title: input.title.trim(),
         memo: input.memo.trim(),
@@ -33,7 +34,14 @@ export function useEvents() {
       setEvents((prev) =>
         prev.map((e) =>
           e.id === id
-            ? { ...e, date: input.date, time: input.time, title: input.title.trim(), memo: input.memo.trim() }
+            ? {
+                ...e,
+                date: input.date,
+                endDate: input.endDate && input.endDate > input.date ? input.endDate : null,
+                time: input.time,
+                title: input.title.trim(),
+                memo: input.memo.trim(),
+              }
             : e,
         ),
       )
