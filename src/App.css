@@ -967,8 +967,12 @@
   color: var(--weekend-sat);
 }
 
-.calendar-day--today {
-  border-color: var(--page-theme);
+.calendar-day__today-outline {
+  pointer-events: none;
+  align-self: stretch;
+  border: 2px solid var(--page-theme);
+  border-radius: 8px;
+  margin: 1px;
 }
 
 .calendar-day--selected {

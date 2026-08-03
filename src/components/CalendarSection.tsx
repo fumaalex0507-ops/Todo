@@ -173,6 +173,7 @@ export function CalendarSection() {
         <div className="calendar-weeks">
           {weeks.map((week) => {
             const bars = computeWeekBars(week, events)
+            const todayCell = week.find((c) => c.dateStr === today())
             return (
               <div key={week[0].dateStr} className="calendar-week">
                 {week.map((cell) => {
@@ -189,7 +190,6 @@ export function CalendarSection() {
                         cell.weekday === 0 || holidayName ? 'calendar-day--sun' : '',
                         cell.weekday === 6 ? 'calendar-day--sat' : '',
                         !cell.inMonth ? 'calendar-day--muted' : '',
-                        cell.dateStr === today() ? 'calendar-day--today' : '',
                         cell.dateStr === selectedDate ? 'calendar-day--selected' : '',
                       ]
                         .filter(Boolean)
@@ -230,6 +230,16 @@ export function CalendarSection() {
                     {bar.event.title}
                   </div>
                 ))}
+
+                {todayCell && (
+                  <div
+                    className="calendar-day__today-outline"
+                    style={{
+                      gridColumn: todayCell.weekday + 1,
+                      gridRow: `1 / ${bars.length + 2}`,
+                    }}
+                  />
+                )}
               </div>
             )
           })}
