@@ -29,8 +29,29 @@
   right: -3px;
   top: calc(66% - 2px);
   height: 20%;
-  background: color-mix(in oklab, var(--accent) 70%, transparent);
-  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--accent) 70%, transparent) 0%,
+    color-mix(in oklab, var(--accent) 70%, transparent) 52%,
+    color-mix(in oklab, var(--accent) 45%, transparent) 70%,
+    color-mix(in oklab, var(--accent) 20%, transparent) 85%,
+    transparent 100%
+  );
+  clip-path: polygon(
+    0% 20%,
+    58% 0%,
+    66% 35%,
+    76% 10%,
+    84% 50%,
+    91% 22%,
+    97% 65%,
+    89% 45%,
+    82% 85%,
+    100% 60%,
+    92% 100%,
+    0% 100%
+  );
+  border-radius: 2px 0 0 2px;
   z-index: -1;
 }
 
