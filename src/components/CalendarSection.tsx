@@ -72,14 +72,18 @@ function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
         continuesToNext: end > weekEnd,
       }
     })
-    .sort(
-      (a, b) =>
+    .sort((a, b) => {
+      const aSpans = a.endCol > a.startCol ? 1 : 0
+      const bSpans = b.endCol > b.startCol ? 1 : 0
+      return (
+        aSpans - bSpans ||
         a.startCol - b.startCol ||
         b.endCol - a.endCol ||
-        (a.event.time ?? '').localeCompare(b.event.time ?? ''),
-    )
+        (a.event.time ?? '').localeCompare(b.event.time ?? '')
+      )
+    })
 
-  // 重ならない予定は同じ行を共有し、空いている行があればそこに詰める
+  // 単日の予定を上の行に優先して詰め、期間をまたぐ予定は下側の空いている行に配置する
   const rowLastCol: number[] = []
   for (const bar of bars) {
     let row = 0
