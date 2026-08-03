@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTodos } from '../hooks/useTodos'
 import { useEvents } from '../hooks/useEvents'
-import { today, toDateStr, dateRange } from '../lib/date'
+import { today, toDateStr } from '../lib/date'
 import { fetchHolidays } from '../lib/holidays'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
@@ -14,6 +14,14 @@ interface DayCell {
   day: number
   inMonth: boolean
   weekday: number
+}
+
+interface EventBar {
+  event: Event
+  startCol: number
+  endCol: number
+  continuesFromPrev: boolean
+  continuesToNext: boolean
 }
 
 function buildMonthGrid(year: number, month: number): DayCell[] {
@@ -31,6 +39,39 @@ function buildMonthGrid(year: number, month: number): DayCell[] {
       weekday: d.getDay(),
     }
   })
+}
+
+function chunkIntoWeeks(cells: DayCell[]): DayCell[][] {
+  const weeks: DayCell[][] = []
+  for (let i = 0; i < cells.length; i += 7) {
+    weeks.push(cells.slice(i, i + 7))
+  }
+  return weeks
+}
+
+function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
+  const weekStart = week[0].dateStr
+  const weekEnd = week[6].dateStr
+
+  return events
+    .filter((e) => e.date <= weekEnd && (e.endDate ?? e.date) >= weekStart)
+    .map((e) => {
+      const end = e.endDate ?? e.date
+      const startCol = e.date <= weekStart ? 0 : week.findIndex((c) => c.dateStr === e.date)
+      const endCol = end >= weekEnd ? 6 : week.findIndex((c) => c.dateStr === end)
+      return {
+        event: e,
+        startCol,
+        endCol,
+        continuesFromPrev: e.date < weekStart,
+        continuesToNext: end > weekEnd,
+      }
+    })
+    .sort(
+      (a, b) =>
+        a.event.date.localeCompare(b.event.date) ||
+        (a.event.time ?? '').localeCompare(b.event.time ?? ''),
+    )
 }
 
 export function CalendarSection() {
@@ -57,8 +98,8 @@ export function CalendarSection() {
 
   const holidays = holidaysByYear[viewDate.getFullYear()] ?? {}
 
-  const grid = useMemo(
-    () => buildMonthGrid(viewDate.getFullYear(), viewDate.getMonth()),
+  const weeks = useMemo(
+    () => chunkIntoWeeks(buildMonthGrid(viewDate.getFullYear(), viewDate.getMonth())),
     [viewDate],
   )
 
@@ -69,19 +110,6 @@ export function CalendarSection() {
     })
     return map
   }, [todos])
-
-  const eventsByDate = useMemo(() => {
-    const map = new Map<string, Event[]>()
-    events.forEach((e) => {
-      dateRange(e.date, e.endDate ?? e.date).forEach((d) => {
-        const list = map.get(d) ?? []
-        list.push(e)
-        map.set(d, list)
-      })
-    })
-    map.forEach((list) => list.sort((a, b) => (a.time ?? '').localeCompare(b.time ?? '')))
-    return map
-  }, [events])
 
   const selectedTodos = useMemo(
     () => todos.filter((t) => t.dueDate === selectedDate),
@@ -138,46 +166,56 @@ export function CalendarSection() {
           ))}
         </div>
 
-        <div className="calendar-grid calendar-grid--days">
-          {grid.map((cell) => {
-            const hasTodo = todosByDate.has(cell.dateStr)
-            const dayEvents = eventsByDate.get(cell.dateStr) ?? []
-            const holidayName = holidays[cell.dateStr]
-            const visibleEvents = dayEvents.slice(0, 2)
-            const extraCount = dayEvents.length - visibleEvents.length
+        <div className="calendar-weeks">
+          {weeks.map((week) => {
+            const bars = computeWeekBars(week, events)
             return (
-              <button
-                key={cell.dateStr}
-                type="button"
-                title={holidayName}
-                className={[
-                  'calendar-day',
-                  cell.weekday === 0 || holidayName ? 'calendar-day--sun' : '',
-                  cell.weekday === 6 ? 'calendar-day--sat' : '',
-                  !cell.inMonth ? 'calendar-day--muted' : '',
-                  cell.dateStr === today() ? 'calendar-day--today' : '',
-                  cell.dateStr === selectedDate ? 'calendar-day--selected' : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                onClick={() => setSelectedDate(cell.dateStr)}
-              >
-                <span className="calendar-day__head">
-                  <span className="calendar-day__num">{cell.day}</span>
-                  {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
-                </span>
-                {visibleEvents.length > 0 && (
-                  <span className="calendar-day__events">
-                    {visibleEvents.map((ev) => (
-                      <span key={ev.id} className="calendar-day__event">
-                        {ev.time ? `${ev.time} ` : ''}
-                        {ev.title}
-                      </span>
-                    ))}
-                    {extraCount > 0 && <span className="calendar-day__event-more">+{extraCount}</span>}
-                  </span>
-                )}
-              </button>
+              <div key={week[0].dateStr} className="calendar-week">
+                {week.map((cell) => {
+                  const hasTodo = todosByDate.has(cell.dateStr)
+                  const holidayName = holidays[cell.dateStr]
+                  return (
+                    <button
+                      key={cell.dateStr}
+                      type="button"
+                      title={holidayName}
+                      style={{ gridColumn: cell.weekday + 1, gridRow: 1 }}
+                      className={[
+                        'calendar-day',
+                        cell.weekday === 0 || holidayName ? 'calendar-day--sun' : '',
+                        cell.weekday === 6 ? 'calendar-day--sat' : '',
+                        !cell.inMonth ? 'calendar-day--muted' : '',
+                        cell.dateStr === today() ? 'calendar-day--today' : '',
+                        cell.dateStr === selectedDate ? 'calendar-day--selected' : '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                      onClick={() => setSelectedDate(cell.dateStr)}
+                    >
+                      <span className="calendar-day__num">{cell.day}</span>
+                      {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
+                    </button>
+                  )
+                })}
+
+                {bars.map((bar, i) => (
+                  <div
+                    key={bar.event.id}
+                    className={[
+                      'calendar-event-bar',
+                      bar.continuesFromPrev ? 'calendar-event-bar--open-start' : '',
+                      bar.continuesToNext ? 'calendar-event-bar--open-end' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    style={{ gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`, gridRow: i + 2 }}
+                    onClick={() => setSelectedDate(bar.event.date)}
+                  >
+                    {bar.event.time ? `${bar.event.time} ` : ''}
+                    {bar.event.title}
+                  </div>
+                ))}
+              </div>
             )
           })}
         </div>
