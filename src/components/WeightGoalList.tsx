@@ -8,8 +8,6 @@ interface WeightGoalListProps {
   onDelete: (id: string) => void
 }
 
-const periodLabel = { weekly: '週間', monthly: '月間' } as const
-
 export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelete }: WeightGoalListProps) {
   const filtered = goals.filter((g): g is WeightGoal => g.type === 'weight')
 
@@ -35,8 +33,7 @@ export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelet
             <div className="goal-progress-item__body">
               <div className="goal-progress-item__head">
                 <span className="goal-progress-item__title">
-                  {periodLabel[goal.period]}目標 {goal.targetWeight}kg
-                  {goal.targetDate ? `(${goal.targetDate}まで)` : ''}
+                  目標体重 {goal.targetWeight}kg({goal.targetDate}まで)
                 </span>
                 <span className="goal-progress-item__percent">{Math.round(progress.percent)}%</span>
               </div>

@@ -15,21 +15,27 @@ export function useGoals() {
 
   const addGoal = useCallback(
     (input: GoalInput) => {
-      const base = {
-        id: createId(),
-        period: input.period,
-        achieved: false,
-        createdAt: Date.now(),
-      }
+      const id = createId()
+      const achieved = false
+      const createdAt = Date.now()
       const newGoal: Goal =
         input.type === 'weight'
           ? {
-              ...base,
+              id,
+              achieved,
+              createdAt,
               type: 'weight',
               targetWeight: input.targetWeight,
               targetDate: input.targetDate,
             }
-          : { ...base, type: 'text', title: input.title.trim() }
+          : {
+              id,
+              achieved,
+              createdAt,
+              type: 'text',
+              period: input.period,
+              title: input.title.trim(),
+            }
       setGoals((prev) => [newGoal, ...prev])
     },
     [setGoals],

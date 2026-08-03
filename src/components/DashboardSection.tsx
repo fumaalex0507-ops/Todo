@@ -55,22 +55,12 @@ export function DashboardSection() {
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">週間目標</h2>
-        <GoalProgressList
-          goals={goals}
-          period="weekly"
-          weightEntries={entries}
-          onToggleAchieved={toggleAchieved}
-        />
+        <GoalProgressList goals={goals} period="weekly" onToggleAchieved={toggleAchieved} />
       </div>
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">月間目標</h2>
-        <GoalProgressList
-          goals={goals}
-          period="monthly"
-          weightEntries={entries}
-          onToggleAchieved={toggleAchieved}
-        />
+        <GoalProgressList goals={goals} period="monthly" onToggleAchieved={toggleAchieved} />
       </div>
     </>
   )

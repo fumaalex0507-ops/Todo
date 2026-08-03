@@ -9,7 +9,7 @@ interface GoalListProps {
 
 export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalListProps) {
   const filtered = goals.filter(
-    (g): g is TextGoal => g.period === period && g.type === 'text',
+    (g): g is TextGoal => g.type === 'text' && g.period === period,
   )
 
   if (filtered.length === 0) {

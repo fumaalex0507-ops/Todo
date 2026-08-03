@@ -30,21 +30,21 @@ export const CATEGORY_PRESETS = ['運動', '勉強', '仕事', '生活', 'その
 
 export type GoalPeriod = 'weekly' | 'monthly'
 
-interface GoalBase {
+export interface WeightGoal {
   id: string
-  period: GoalPeriod
   achieved: boolean
   createdAt: number
-}
-
-export interface WeightGoal extends GoalBase {
   type: 'weight'
   targetWeight: number
   targetDate: string | null
 }
 
-export interface TextGoal extends GoalBase {
+export interface TextGoal {
+  id: string
+  achieved: boolean
+  createdAt: number
   type: 'text'
+  period: GoalPeriod
   title: string
 }
 
@@ -52,7 +52,6 @@ export type Goal = WeightGoal | TextGoal
 
 export interface WeightGoalInput {
   type: 'weight'
-  period: GoalPeriod
   targetWeight: number
   targetDate: string | null
 }
