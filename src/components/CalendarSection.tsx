@@ -107,14 +107,6 @@ export function CalendarSection() {
     [viewDate],
   )
 
-  const todosByDate = useMemo(() => {
-    const map = new Map<string, number>()
-    todos.forEach((t) => {
-      if (t.dueDate) map.set(t.dueDate, (map.get(t.dueDate) ?? 0) + 1)
-    })
-    return map
-  }, [todos])
-
   const selectedTodos = useMemo(
     () => todos.filter((t) => t.dueDate === selectedDate),
     [todos, selectedDate],
@@ -177,7 +169,6 @@ export function CalendarSection() {
             return (
               <div key={week[0].dateStr} className="calendar-week">
                 {week.map((cell) => {
-                  const hasTodo = todosByDate.has(cell.dateStr)
                   const holidayName = holidays[cell.dateStr]
                   return (
                     <button
@@ -197,14 +188,11 @@ export function CalendarSection() {
                       onClick={() => setSelectedDate(cell.dateStr)}
                     >
                       <span className="calendar-day__num">{cell.day}</span>
-                      <span className="calendar-day__indicators">
-                        {ratings[cell.dateStr] > 0 && (
-                          <span className="calendar-day__rating">
-                            {'★'.repeat(ratings[cell.dateStr])}
-                          </span>
-                        )}
-                        {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
-                      </span>
+                      {ratings[cell.dateStr] > 0 && (
+                        <span className="calendar-day__rating">
+                          {'★'.repeat(ratings[cell.dateStr])}
+                        </span>
+                      )}
                     </button>
                   )
                 })}
