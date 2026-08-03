@@ -234,6 +234,7 @@
 .weight-chart-card {
   background: var(--surface-solid);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
   border-radius: 12px;
   padding: 14px;
   box-shadow: var(--shadow);
@@ -398,10 +399,23 @@
   gap: 10px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
   border-radius: 10px;
   padding: 10px 12px;
   box-shadow: var(--shadow);
   transition: opacity 0.15s ease;
+}
+
+.todo-item--priority-high {
+  border-left-color: var(--priority-high);
+}
+
+.todo-item--priority-medium {
+  border-left-color: var(--priority-medium);
+}
+
+.todo-item--priority-low {
+  border-left-color: var(--priority-low);
 }
 
 .todo-item--done {
@@ -544,10 +558,31 @@
 .dashboard-card {
   background: var(--surface-solid);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
   border-radius: 12px;
   padding: 14px;
   box-shadow: var(--shadow);
   margin-bottom: 16px;
+}
+
+.dashboard-card--goal {
+  border-left-color: var(--accent-strong);
+}
+
+.dashboard-card--weather {
+  border-left-color: var(--sky);
+}
+
+.dashboard-card--todo {
+  border-left-color: var(--accent);
+}
+
+.dashboard-card--weight {
+  border-left-color: var(--teal);
+}
+
+.dashboard-card--calendar {
+  border-left-color: var(--progress-date);
 }
 
 .dashboard-card__title {

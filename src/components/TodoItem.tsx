@@ -52,6 +52,7 @@ export function TodoItem({
     <li
       className={[
         'todo-item',
+        `todo-item--priority-${todo.priority}`,
         todo.completed ? 'todo-item--done' : '',
         isDragging ? 'todo-item--dragging' : '',
         isDragOver ? 'todo-item--drag-over' : '',

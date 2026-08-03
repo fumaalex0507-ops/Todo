@@ -4,8 +4,8 @@ export function WeatherCard() {
   const { locations } = useLocations()
 
   return (
-    <div className="dashboard-card">
-      <h2 className="dashboard-card__title">今日の天気</h2>
+    <div className="dashboard-card dashboard-card--weather">
+      <h2 className="dashboard-card__title">⛅ 今日の天気</h2>
 
       {locations.length === 0 ? (
         <p className="todo-list__empty">「設定」タブから地点を登録すると表示されます</p>

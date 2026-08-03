@@ -28,6 +28,9 @@
 
   --weekend-sun: #dc2626;
   --weekend-sat: #2563eb;
+
+  --teal: #0d9488;
+  --sky: #0284c7;
 }
 
 :root[data-theme='dark'] {
@@ -57,6 +60,9 @@
 
   --weekend-sun: #f87171;
   --weekend-sat: #60a5fa;
+
+  --teal: #2dd4bf;
+  --sky: #38bdf8;
 }
 
 * {

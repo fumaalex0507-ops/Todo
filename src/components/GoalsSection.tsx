@@ -9,8 +9,8 @@ export function GoalsSection() {
     <>
       <p className="app__subtitle">週間・月間の目標を記録しましょう</p>
 
-      <div className="dashboard-card">
-        <h2 className="dashboard-card__title">週間目標</h2>
+      <div className="dashboard-card dashboard-card--goal">
+        <h2 className="dashboard-card__title">🎯 週間目標</h2>
         <GoalForm period="weekly" onSubmit={addGoal} />
         <GoalList
           goals={goals}
@@ -20,8 +20,8 @@ export function GoalsSection() {
         />
       </div>
 
-      <div className="dashboard-card">
-        <h2 className="dashboard-card__title">月間目標</h2>
+      <div className="dashboard-card dashboard-card--goal">
+        <h2 className="dashboard-card__title">🎯 月間目標</h2>
         <GoalForm period="monthly" onSubmit={addGoal} />
         <GoalList
           goals={goals}

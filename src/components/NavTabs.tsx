@@ -5,13 +5,13 @@ interface NavTabsProps {
   onChange: (tab: TabKey) => void
 }
 
-const tabs: { key: TabKey; label: string }[] = [
-  { key: 'dashboard', label: 'ダッシュボード' },
-  { key: 'todo', label: 'Todo' },
-  { key: 'calendar', label: 'カレンダー' },
-  { key: 'goals', label: '目標' },
-  { key: 'weight', label: '体重管理' },
-  { key: 'settings', label: '設定' },
+const tabs: { key: TabKey; label: string; icon: string }[] = [
+  { key: 'dashboard', label: 'ダッシュボード', icon: '📊' },
+  { key: 'todo', label: 'Todo', icon: '✅' },
+  { key: 'calendar', label: 'カレンダー', icon: '📅' },
+  { key: 'goals', label: '目標', icon: '🎯' },
+  { key: 'weight', label: '体重管理', icon: '⚖️' },
+  { key: 'settings', label: '設定', icon: '⚙️' },
 ]
 
 export function NavTabs({ active, onChange }: NavTabsProps) {
@@ -24,7 +24,7 @@ export function NavTabs({ active, onChange }: NavTabsProps) {
           className={`nav-tabs__btn ${active === t.key ? 'nav-tabs__btn--active' : ''}`}
           onClick={() => onChange(t.key)}
         >
-          {t.label}
+          <span aria-hidden="true">{t.icon}</span> {t.label}
         </button>
       ))}
     </nav>

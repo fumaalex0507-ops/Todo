@@ -128,7 +128,7 @@ export function CalendarSection() {
     <>
       <p className="app__subtitle">Todoの期限と個人予定をまとめて確認できます</p>
 
-      <div className="dashboard-card">
+      <div className="dashboard-card dashboard-card--calendar">
         <div className="calendar-header">
           <button
             type="button"
