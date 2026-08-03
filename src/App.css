@@ -118,6 +118,10 @@
   flex: 1 1 120px;
 }
 
+.todo-form > .todo-form__field {
+  flex: initial;
+}
+
 .todo-form__field input,
 .todo-form__field select,
 .todo-form__field textarea {
