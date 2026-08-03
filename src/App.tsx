@@ -24,13 +24,13 @@ function App() {
 
   return (
     <div className="app">
+      <NavTabs active={tab} onChange={setTab} />
+
       <header className="app__header">
         <div className="app__title">
           <h1>{titleByTab[tab]}</h1>
         </div>
       </header>
-
-      <NavTabs active={tab} onChange={setTab} />
 
       <main className="app__main">
         {tab === 'dashboard' && <DashboardSection />}

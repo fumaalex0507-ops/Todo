@@ -31,7 +31,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
     <>
       <p className="app__subtitle">表示テーマや天気の表示地名を登録・編集できます</p>
 
-      <div className="dashboard-card dashboard-card--settings">
+      <div className="dashboard-card">
         <h2 className="dashboard-card__title">表示テーマ</h2>
         <div className="segmented">
           {themeOptions.map((opt) => (
@@ -47,7 +47,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
         </div>
       </div>
 
-      <div className="dashboard-card dashboard-card--weather">
+      <div className="dashboard-card">
         <h2 className="dashboard-card__title">地点を追加</h2>
         <form className="todo-form" onSubmit={handleSubmit}>
           <div className="todo-form__row todo-form__row--details">
@@ -78,7 +78,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
         </form>
       </div>
 
-      <div className="dashboard-card dashboard-card--weather">
+      <div className="dashboard-card">
         <h2 className="dashboard-card__title">登録済みの地点</h2>
         {locations.length === 0 && <p className="todo-list__empty">地点はまだ登録されていません</p>}
         <ul className="settings-location-list">

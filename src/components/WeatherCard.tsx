@@ -4,7 +4,7 @@ export function WeatherCard() {
   const { locations } = useLocations()
 
   return (
-    <div className="dashboard-card dashboard-card--weather">
+    <div className="dashboard-card">
       <h2 className="dashboard-card__title">今日の天気</h2>
 
       {locations.length === 0 ? (
