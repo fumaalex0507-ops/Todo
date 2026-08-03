@@ -6,6 +6,7 @@ import { today } from '../lib/date'
 import { WeatherCard } from './WeatherCard'
 import { TodoList } from './TodoList'
 import { GoalProgressList } from './GoalProgressList'
+import { WeightChart } from './WeightChart'
 import type { Todo } from '../types'
 
 const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, low: 2 }
@@ -25,6 +26,14 @@ export function DashboardSection() {
       })
   }, [todos])
 
+  const activeWeightGoal = useMemo(
+    () =>
+      goals
+        .filter((g) => g.type === 'weight' && !g.achieved)
+        .sort((a, b) => b.createdAt - a.createdAt)[0],
+    [goals],
+  )
+
   return (
     <>
       <p className="app__subtitle">今日のやること・目標をまとめて確認できます</p>
@@ -34,6 +43,14 @@ export function DashboardSection() {
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">今日のTodo</h2>
         <TodoList todos={todayTodos} onToggle={toggleComplete} onDelete={deleteTodo} />
+      </div>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">体重推移</h2>
+        <WeightChart
+          entries={entries}
+          targetWeight={activeWeightGoal?.type === 'weight' ? activeWeightGoal.targetWeight : null}
+        />
       </div>
 
       <div className="dashboard-card">

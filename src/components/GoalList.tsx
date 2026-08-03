@@ -1,4 +1,4 @@
-import type { Goal, GoalPeriod } from '../types'
+import type { Goal, GoalPeriod, TextGoal } from '../types'
 
 interface GoalListProps {
   goals: Goal[]
@@ -8,7 +8,9 @@ interface GoalListProps {
 }
 
 export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalListProps) {
-  const filtered = goals.filter((g) => g.period === period)
+  const filtered = goals.filter(
+    (g): g is TextGoal => g.period === period && g.type === 'text',
+  )
 
   if (filtered.length === 0) {
     return <p className="todo-list__empty">目標はまだありません</p>
@@ -28,11 +30,7 @@ export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalList
           </label>
 
           <div className="todo-item__body">
-            <p className="todo-item__title">
-              {goal.type === 'weight'
-                ? `目標体重 ${goal.targetWeight}kg${goal.targetDate ? `(${goal.targetDate}まで)` : ''}`
-                : goal.title}
-            </p>
+            <p className="todo-item__title">{goal.title}</p>
           </div>
 
           <button

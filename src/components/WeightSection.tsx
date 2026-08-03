@@ -4,10 +4,12 @@ import { useGoals } from '../hooks/useGoals'
 import { WeightForm } from './WeightForm'
 import { WeightChart } from './WeightChart'
 import { WeightLogList } from './WeightLogList'
+import { WeightGoalForm } from './WeightGoalForm'
+import { WeightGoalList } from './WeightGoalList'
 
 export function WeightSection() {
   const { entries, addEntry, deleteEntry } = useWeightEntries()
-  const { goals } = useGoals()
+  const { goals, addGoal, toggleAchieved, deleteGoal } = useGoals()
 
   const activeWeightGoal = useMemo(
     () =>
@@ -34,6 +36,17 @@ export function WeightSection() {
         <WeightChart
           entries={entries}
           targetWeight={activeWeightGoal?.type === 'weight' ? activeWeightGoal.targetWeight : null}
+        />
+      </div>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">体重目標</h2>
+        <WeightGoalForm onSubmit={addGoal} />
+        <WeightGoalList
+          goals={goals}
+          weightEntries={entries}
+          onToggleAchieved={toggleAchieved}
+          onDelete={deleteGoal}
         />
       </div>
 
