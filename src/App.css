@@ -423,7 +423,7 @@
 }
 
 .todo-item__title {
-  margin: 0;
+  margin: 5px 0 0;
   font-size: 14px;
   font-weight: 600;
   word-break: break-word;
@@ -444,7 +444,6 @@
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
-  margin-top: 7px;
 }
 
 .badge {

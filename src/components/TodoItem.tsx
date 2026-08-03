@@ -41,8 +41,6 @@ export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
       </label>
 
       <div className="todo-item__body" onClick={() => onEdit(todo)}>
-        <p className="todo-item__title">{todo.title}</p>
-        {todo.memo && <p className="todo-item__memo">{todo.memo}</p>}
         <div className="todo-item__meta">
           <span className={`badge badge--priority-${todo.priority}`}>
             {priorityLabel[todo.priority]}
@@ -59,6 +57,8 @@ export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
             </span>
           )}
         </div>
+        <p className="todo-item__title">{todo.title}</p>
+        {todo.memo && <p className="todo-item__memo">{todo.memo}</p>}
       </div>
 
       <button
