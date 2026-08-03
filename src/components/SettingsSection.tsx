@@ -21,6 +21,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
   const [url, setUrl] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [templateTitle, setTemplateTitle] = useState('')
+  const [showLocationForm, setShowLocationForm] = useState(false)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -28,6 +29,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
     addLocation(name.trim(), url.trim())
     setName('')
     setUrl('')
+    setShowLocationForm(false)
   }
 
   const handleTemplateSubmit = (event: React.FormEvent) => {
@@ -101,38 +103,47 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
       </div>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">地点を追加</h2>
-        <form className="todo-form" onSubmit={handleSubmit}>
-          <div className="todo-form__row todo-form__row--details">
-            <label className="todo-form__field">
-              <span>表示名</span>
-              <input
-                type="text"
-                placeholder="例: 横浜市都筑区荏田東"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </label>
-            <label className="todo-form__field">
-              <span>リンクURL</span>
-              <input
-                type="url"
-                placeholder="https://weathernews.jp/..."
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                required
-              />
-            </label>
-            <button type="submit" className="btn btn--primary">
-              追加
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">天気エリア登録</h2>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={() => setShowLocationForm((v) => !v)}
+          >
+            {showLocationForm ? '閉じる' : '追加'}
+          </button>
+        </div>
 
-      <div className="dashboard-card">
-        <h2 className="dashboard-card__title">登録済みの地点</h2>
+        {showLocationForm && (
+          <form className="todo-form" onSubmit={handleSubmit}>
+            <div className="todo-form__row todo-form__row--details">
+              <label className="todo-form__field">
+                <span>表示名</span>
+                <input
+                  type="text"
+                  placeholder="例: 横浜市都筑区荏田東"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </label>
+              <label className="todo-form__field">
+                <span>リンクURL</span>
+                <input
+                  type="url"
+                  placeholder="https://weathernews.jp/..."
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  required
+                />
+              </label>
+              <button type="submit" className="btn btn--primary">
+                追加
+              </button>
+            </div>
+          </form>
+        )}
+
         {locations.length === 0 && <p className="todo-list__empty">地点はまだ登録されていません</p>}
         <ul className="settings-location-list">
           {locations.map((loc) =>
