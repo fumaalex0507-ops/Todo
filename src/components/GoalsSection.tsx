@@ -5,8 +5,18 @@ import { GoalList } from './GoalList'
 import type { TextGoal } from '../types'
 
 export function GoalsSection() {
-  const { goals, addGoal, updateGoal, toggleAchieved, deleteGoal } = useGoals()
+  const { goals, addGoal, updateGoal, toggleAchieved, deleteGoal, reorderGoals } = useGoals()
   const [editingGoal, setEditingGoal] = useState<TextGoal | null>(null)
+
+  const handleReorder = (draggedId: string, targetId: string) => {
+    const ids = goals.map((g) => g.id)
+    const fromIndex = ids.indexOf(draggedId)
+    const toIndex = ids.indexOf(targetId)
+    if (fromIndex === -1 || toIndex === -1) return
+    ids.splice(fromIndex, 1)
+    ids.splice(ids.indexOf(targetId), 0, draggedId)
+    reorderGoals(ids)
+  }
 
   return (
     <>
@@ -36,6 +46,7 @@ export function GoalsSection() {
             deleteGoal(id)
             if (editingGoal?.id === id) setEditingGoal(null)
           }}
+          onReorder={handleReorder}
         />
       </div>
 
@@ -63,6 +74,7 @@ export function GoalsSection() {
             deleteGoal(id)
             if (editingGoal?.id === id) setEditingGoal(null)
           }}
+          onReorder={handleReorder}
         />
       </div>
     </>

@@ -83,5 +83,14 @@ export function useGoals() {
     [setGoals],
   )
 
-  return { goals, addGoal, updateGoal, toggleAchieved, deleteGoal }
+  const reorderGoals = useCallback(
+    (orderedIds: string[]) => {
+      setGoals((prev) =>
+        orderedIds.map((id) => prev.find((g) => g.id === id)).filter((g): g is Goal => !!g),
+      )
+    },
+    [setGoals],
+  )
+
+  return { goals, addGoal, updateGoal, toggleAchieved, deleteGoal, reorderGoals }
 }
