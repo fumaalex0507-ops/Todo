@@ -73,7 +73,7 @@ export function EventForm({ date, editingEvent, onSubmit, onCancelEdit }: EventF
           />
         </label>
         <label className="todo-form__field">
-          <span>終了日(任意・期間予定の場合)</span>
+          <span>終了日(任意)</span>
           <input
             type="date"
             value={endDate}
