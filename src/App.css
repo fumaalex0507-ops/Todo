@@ -66,16 +66,16 @@
   display: flex;
   gap: 4px;
   margin: 0 0 16px;
-  padding: 2px;
+  padding: 0;
   background: var(--surface-solid);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
   overflow-x: auto;
   scrollbar-width: none;
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: var(--shadow);
 }
 
 .nav-tabs::-webkit-scrollbar {
@@ -85,22 +85,21 @@
 .nav-tabs__btn {
   flex: 1 0 auto;
   white-space: nowrap;
-  padding: 4px 12px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 6px;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   background: transparent;
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
+  margin-bottom: -1px;
 }
 
 .nav-tabs__btn--active {
-  background: linear-gradient(
-    135deg,
-    var(--tab-theme),
-    color-mix(in oklab, var(--tab-theme) 75%, black 15%)
-  );
-  color: #fff;
+  background: transparent;
+  color: var(--tab-theme);
+  border-bottom-color: var(--tab-theme);
 }
 
 /* Form */
