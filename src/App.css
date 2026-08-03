@@ -506,3 +506,185 @@
   background: var(--priority-high-bg);
   color: var(--priority-high);
 }
+
+.todo-item__body--static {
+  cursor: default;
+}
+
+/* Dashboard */
+.dashboard-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.dashboard-card__title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.weather-tiles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.weather-tile {
+  position: relative;
+  flex: 1 1 130px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+}
+
+.weather-tile__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-tile__remove:hover {
+  background: var(--priority-high-bg);
+  color: var(--priority-high);
+}
+
+.weather-tile__name {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding-right: 16px;
+}
+
+.weather-tile__link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.weather-tile__link:hover {
+  text-decoration: underline;
+}
+
+.location-search {
+  position: relative;
+}
+
+.location-search input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  font-size: 13px;
+}
+
+.location-search__hint {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.location-search__results {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-solid);
+  box-shadow: var(--shadow);
+}
+
+.location-search__results button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.location-search__results button:hover {
+  background: var(--bg);
+}
+
+/* Goal progress */
+.goal-progress-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-progress-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.goal-progress-item--done {
+  opacity: 0.55;
+}
+
+.goal-progress-item__title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.goal-progress-item__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.goal-progress-item__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.goal-progress-item__percent {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.goal-progress-item__detail {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}

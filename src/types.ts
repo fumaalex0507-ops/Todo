@@ -71,3 +71,10 @@ export interface WeightEntry {
   weight: number
   createdAt: number
 }
+
+export interface Location {
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+}

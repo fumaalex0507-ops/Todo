@@ -4,7 +4,7 @@ import type { Todo } from '../types'
 interface TodoItemProps {
   todo: Todo
   onToggle: (id: string) => void
-  onEdit: (todo: Todo) => void
+  onEdit?: (todo: Todo) => void
   onDelete: (id: string) => void
 }
 
@@ -40,7 +40,10 @@ export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
         <span aria-hidden="true" />
       </label>
 
-      <div className="todo-item__body" onClick={() => onEdit(todo)}>
+      <div
+        className={`todo-item__body ${onEdit ? '' : 'todo-item__body--static'}`}
+        onClick={onEdit ? () => onEdit(todo) : undefined}
+      >
         <div className="todo-item__meta">
           <span className={`badge badge--priority-${todo.priority}`}>
             {priorityLabel[todo.priority]}

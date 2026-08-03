@@ -1,4 +1,4 @@
-export type TabKey = 'todo' | 'goals' | 'weight'
+export type TabKey = 'dashboard' | 'todo' | 'goals' | 'weight'
 
 interface NavTabsProps {
   active: TabKey
@@ -6,6 +6,7 @@ interface NavTabsProps {
 }
 
 const tabs: { key: TabKey; label: string }[] = [
+  { key: 'dashboard', label: 'ダッシュボード' },
   { key: 'todo', label: 'Todo' },
   { key: 'goals', label: '目標' },
   { key: 'weight', label: '体重管理' },

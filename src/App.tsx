@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useTheme } from './hooks/useTheme'
 import { ThemeToggle } from './components/ThemeToggle'
 import { NavTabs, type TabKey } from './components/NavTabs'
+import { DashboardSection } from './components/DashboardSection'
 import { TodoSection } from './components/TodoSection'
 import { GoalsSection } from './components/GoalsSection'
 import { WeightSection } from './components/WeightSection'
 import './App.css'
 
 const titleByTab: Record<TabKey, string> = {
+  dashboard: 'ダッシュボード',
   todo: 'やることリスト',
   goals: '目標管理',
   weight: '体重管理',
@@ -15,7 +17,7 @@ const titleByTab: Record<TabKey, string> = {
 
 function App() {
   const [theme, setTheme] = useTheme()
-  const [tab, setTab] = useState<TabKey>('todo')
+  const [tab, setTab] = useState<TabKey>('dashboard')
 
   return (
     <div className="app">
@@ -29,6 +31,7 @@ function App() {
       <NavTabs active={tab} onChange={setTab} />
 
       <main className="app__main">
+        {tab === 'dashboard' && <DashboardSection />}
         {tab === 'todo' && <TodoSection />}
         {tab === 'goals' && <GoalsSection />}
         {tab === 'weight' && <WeightSection />}
