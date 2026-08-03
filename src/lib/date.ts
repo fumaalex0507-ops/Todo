@@ -8,7 +8,7 @@ function pad2(n: number) {
   return n.toString().padStart(2, '0')
 }
 
-function toDateStr(d: Date) {
+export function toDateStr(d: Date) {
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
 }
 

@@ -4,6 +4,7 @@ import { ThemeToggle } from './components/ThemeToggle'
 import { NavTabs, type TabKey } from './components/NavTabs'
 import { DashboardSection } from './components/DashboardSection'
 import { TodoSection } from './components/TodoSection'
+import { CalendarSection } from './components/CalendarSection'
 import { GoalsSection } from './components/GoalsSection'
 import { WeightSection } from './components/WeightSection'
 import { SettingsSection } from './components/SettingsSection'
@@ -12,6 +13,7 @@ import './App.css'
 const titleByTab: Record<TabKey, string> = {
   dashboard: 'ダッシュボード',
   todo: 'やることリスト',
+  calendar: 'カレンダー',
   goals: '目標管理',
   weight: '体重管理',
   settings: '設定',
@@ -35,6 +37,7 @@ function App() {
       <main className="app__main">
         {tab === 'dashboard' && <DashboardSection />}
         {tab === 'todo' && <TodoSection />}
+        {tab === 'calendar' && <CalendarSection />}
         {tab === 'goals' && <GoalsSection />}
         {tab === 'weight' && <WeightSection />}
         {tab === 'settings' && <SettingsSection />}

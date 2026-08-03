@@ -80,3 +80,19 @@ export interface Location {
   name: string
   url: string
 }
+
+export interface Event {
+  id: string
+  date: string
+  time: string | null
+  title: string
+  memo: string
+  createdAt: number
+}
+
+export interface EventInput {
+  date: string
+  time: string | null
+  title: string
+  memo: string
+}
