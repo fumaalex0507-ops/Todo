@@ -24,6 +24,53 @@ function hashString(str: string) {
   return Math.abs(hash)
 }
 
+// パレット内の色同士がどれだけ似て見えるかをOKLab色空間の距離で判定する
+function hexToRgb(hex: string): [number, number, number] {
+  const n = parseInt(hex.slice(1), 16)
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+
+function srgbToLinear(c: number) {
+  const v = c / 255
+  return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+}
+
+function rgbToOklab([r, g, b]: [number, number, number]): [number, number, number] {
+  const lr = srgbToLinear(r)
+  const lg = srgbToLinear(g)
+  const lb = srgbToLinear(b)
+
+  const l = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb
+  const m = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb
+  const s = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb
+
+  const l_ = Math.cbrt(l)
+  const m_ = Math.cbrt(m)
+  const s_ = Math.cbrt(s)
+
+  return [
+    0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_,
+    1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_,
+    0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_,
+  ]
+}
+
+function oklabDistance(hexA: string, hexB: string) {
+  const [l1, a1, b1] = rgbToOklab(hexToRgb(hexA))
+  const [l2, a2, b2] = rgbToOklab(hexToRgb(hexB))
+  return Math.sqrt((l1 - l2) ** 2 + (a1 - a2) ** 2 + (b1 - b2) ** 2) * 100
+}
+
+// この距離未満のペアは「違う色だが似て見える」とみなし、同時に使わないようにする
+const SIMILAR_THRESHOLD = 16
+
+const SIMILAR_INDEXES: number[][] = PALETTE.map((color, i) =>
+  PALETTE.reduce<number[]>((acc, other, j) => {
+    if (i !== j && oklabDistance(color.light, other.light) < SIMILAR_THRESHOLD) acc.push(j)
+    return acc
+  }, []),
+)
+
 export function getEventColor(id: string): EventColor {
   return PALETTE[hashString(id) % PALETTE.length]
 }
@@ -40,10 +87,10 @@ export function eventColorStyle(id: string): CSSProperties {
 }
 
 /**
- * 週ごとの予定キー一覧(上から順)を受け取り、同じ週内で色が被らないように調整した
- * キー → 色 のマップを返す。キーにはタイトルを渡すことで、同じタイトルの予定は
- * 全期間を通じて常に同じ色になり、異なるタイトル同士は同じ週内でなるべく色が
- * 被らないようになる。
+ * 週ごとの予定キー一覧(上から順)を受け取り、同じ週内で色(見た目が近い色も含む)が
+ * 被らないように調整したキー → 色 のマップを返す。キーにはタイトルを渡すことで、
+ * 同じタイトルの予定は全期間を通じて常に同じ色になり、異なるタイトル同士は同じ週内で
+ * なるべく色(と近似色)が被らないようになる。
  */
 export function assignEventColors(weeksOfKeys: string[][]): Map<string, EventColor> {
   const assigned = new Map<string, EventColor>()
@@ -56,11 +103,14 @@ export function assignEventColors(weeksOfKeys: string[][]): Map<string, EventCol
       if (existing) usedThisWeek.add(PALETTE.indexOf(existing))
     }
 
+    const conflicts = (idx: number) =>
+      usedThisWeek.has(idx) || SIMILAR_INDEXES[idx].some((i) => usedThisWeek.has(i))
+
     for (const key of keys) {
       if (assigned.has(key)) continue
       let idx = hashString(key) % PALETTE.length
       let attempts = 0
-      while (usedThisWeek.has(idx) && attempts < PALETTE.length) {
+      while (conflicts(idx) && attempts < PALETTE.length) {
         idx = (idx + 1) % PALETTE.length
         attempts++
       }
