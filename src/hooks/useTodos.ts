@@ -19,7 +19,9 @@ export function useTodos() {
   useEffect(() => {
     const monday = mostRecentMonday()
     if (lastCleanup === monday) return
-    setTodos((prev) => prev.filter((todo) => !todo.completed))
+    setTodos((prev) =>
+      prev.filter((todo) => !todo.completed || (todo.dueDate != null && todo.dueDate >= monday)),
+    )
     setLastCleanup(monday)
   }, [lastCleanup, setTodos, setLastCleanup])
 

@@ -591,6 +591,28 @@
   color: var(--overdue);
 }
 
+.todo-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.todo-item__edit {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.todo-item__edit:hover {
+  color: var(--page-theme);
+}
+
 .todo-item__delete {
   flex-shrink: 0;
   width: 24px;
@@ -948,6 +970,12 @@
   font-weight: 600;
 }
 
+.calendar-day__rating {
+  font-size: 8px;
+  color: var(--priority-medium);
+  letter-spacing: -1px;
+}
+
 .calendar-dot {
   width: 5px;
   height: 5px;
@@ -1069,4 +1097,20 @@
   display: flex;
   gap: 6px;
   flex-shrink: 0;
+}
+
+/* Star rating */
+.star-rating {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.star-rating__star {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--priority-medium);
 }

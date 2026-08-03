@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useTodos } from '../hooks/useTodos'
 import { useGoals } from '../hooks/useGoals'
 import { useWeightEntries } from '../hooks/useWeightEntries'
+import { useDailyRatings } from '../hooks/useDailyRatings'
 import { today } from '../lib/date'
 import { computeDateProgress, computeWeightProgress } from '../lib/goalProgress'
 import { WeatherCard } from './WeatherCard'
@@ -9,6 +10,7 @@ import { TodoList } from './TodoList'
 import { GoalProgressList } from './GoalProgressList'
 import { WeightChart } from './WeightChart'
 import { DualProgressBars } from './DualProgressBars'
+import { StarRating } from './StarRating'
 import type { Todo, WeightGoal } from '../types'
 
 const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, low: 2 }
@@ -17,16 +19,17 @@ export function DashboardSection() {
   const { todos, toggleComplete, deleteTodo } = useTodos()
   const { goals, toggleAchieved } = useGoals()
   const { entries } = useWeightEntries()
+  const { ratings, setRating } = useDailyRatings()
+  const todayStr = today()
 
   const todayTodos = useMemo(() => {
-    const t = today()
     return todos
-      .filter((todo) => todo.dueDate === t)
+      .filter((todo) => todo.dueDate === todayStr)
       .sort((a, b) => {
         if (a.completed !== b.completed) return a.completed ? 1 : -1
         return priorityWeight[a.priority] - priorityWeight[b.priority]
       })
-  }, [todos])
+  }, [todos, todayStr])
 
   const activeWeightGoal = useMemo(
     () =>
@@ -63,7 +66,10 @@ export function DashboardSection() {
       <WeatherCard />
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">今日のTodo</h2>
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">今日のTodo</h2>
+          <StarRating value={ratings[todayStr] ?? 0} onChange={(n) => setRating(todayStr, n)} />
+        </div>
         <TodoList todos={todayTodos} onToggle={toggleComplete} onDelete={deleteTodo} />
       </div>
 

@@ -34,18 +34,20 @@ export function GoalList({ goals, period, onToggleAchieved, onEdit, onDelete }: 
             <p className="todo-item__title">{goal.title}</p>
           </div>
 
-          <button type="button" className="btn btn--ghost" onClick={() => onEdit(goal)}>
-            編集
-          </button>
+          <div className="todo-item__actions">
+            <button type="button" className="todo-item__edit" onClick={() => onEdit(goal)}>
+              編集
+            </button>
 
-          <button
-            type="button"
-            className="todo-item__delete"
-            aria-label="削除"
-            onClick={() => onDelete(goal.id)}
-          >
-            ×
-          </button>
+            <button
+              type="button"
+              className="todo-item__delete"
+              aria-label="削除"
+              onClick={() => onDelete(goal.id)}
+            >
+              ×
+            </button>
+          </div>
         </li>
       ))}
     </ul>

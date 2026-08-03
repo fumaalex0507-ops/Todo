@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTodos } from '../hooks/useTodos'
 import { useEvents } from '../hooks/useEvents'
+import { useDailyRatings } from '../hooks/useDailyRatings'
 import { today, toDateStr } from '../lib/date'
 import { fetchHolidays } from '../lib/holidays'
 import { eventColorStyle } from '../lib/eventColor'
@@ -78,6 +79,7 @@ function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
 export function CalendarSection() {
   const { todos, toggleComplete, deleteTodo } = useTodos()
   const { events, addEvent, updateEvent, deleteEvent } = useEvents()
+  const { ratings } = useDailyRatings()
 
   const [viewDate, setViewDate] = useState(() => {
     const t = new Date()
@@ -194,6 +196,9 @@ export function CalendarSection() {
                       onClick={() => setSelectedDate(cell.dateStr)}
                     >
                       <span className="calendar-day__num">{cell.day}</span>
+                      {ratings[cell.dateStr] > 0 && (
+                        <span className="calendar-day__rating">{'★'.repeat(ratings[cell.dateStr])}</span>
+                      )}
                       {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
                     </button>
                   )
