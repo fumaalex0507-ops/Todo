@@ -1,25 +1,15 @@
 import type { CSSProperties } from 'react'
-
-export type TabKey = 'dashboard' | 'todo' | 'calendar' | 'goals' | 'weight' | 'settings'
+import { TABS, type TabKey } from '../tabs'
 
 interface NavTabsProps {
   active: TabKey
   onChange: (tab: TabKey) => void
 }
 
-const tabs: { key: TabKey; label: string }[] = [
-  { key: 'dashboard', label: 'ダッシュボード' },
-  { key: 'todo', label: 'Todo' },
-  { key: 'calendar', label: 'カレンダー' },
-  { key: 'goals', label: '目標' },
-  { key: 'weight', label: '体重管理' },
-  { key: 'settings', label: '設定' },
-]
-
 export function NavTabs({ active, onChange }: NavTabsProps) {
   return (
     <nav className="nav-tabs">
-      {tabs.map((t) => (
+      {TABS.map((t) => (
         <button
           key={t.key}
           type="button"
