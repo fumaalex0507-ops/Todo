@@ -3,6 +3,7 @@ import { useTodos } from '../hooks/useTodos'
 import { useEvents } from '../hooks/useEvents'
 import { today, toDateStr } from '../lib/date'
 import { fetchHolidays } from '../lib/holidays'
+import { eventColorStyle } from '../lib/eventColor'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
 import type { Event } from '../types'
@@ -208,7 +209,11 @@ export function CalendarSection() {
                     ]
                       .filter(Boolean)
                       .join(' ')}
-                    style={{ gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`, gridRow: i + 2 }}
+                    style={{
+                      gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`,
+                      gridRow: i + 2,
+                      ...eventColorStyle(bar.event.id),
+                    }}
                     onClick={() => setSelectedDate(bar.event.date)}
                   >
                     {bar.event.time ? `${bar.event.time} ` : ''}
@@ -238,6 +243,7 @@ export function CalendarSection() {
           <ul className="calendar-event-list">
             {selectedEvents.map((ev) => (
               <li key={ev.id} className="calendar-event-row">
+                <span className="calendar-dot calendar-dot--event" style={eventColorStyle(ev.id)} />
                 <div className="calendar-event-row__info">
                   {ev.endDate && (
                     <span className="calendar-event-row__range">
