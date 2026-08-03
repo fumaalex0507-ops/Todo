@@ -135,15 +135,16 @@ export function CalendarSection() {
           [...bars]
             .sort(
               (a, b) =>
-                a.event.date.localeCompare(b.event.date) || a.event.id.localeCompare(b.event.id),
+                a.event.date.localeCompare(b.event.date) || a.event.title.localeCompare(b.event.title),
             )
-            .map((b) => b.event.id),
+            .map((b) => b.event.title),
         ),
       ),
     [weeksWithBars],
   )
 
-  const colorStyleFor = (id: string) => eventColorStyleFor(eventColorMap.get(id) ?? getEventColor(id))
+  const colorStyleFor = (title: string) =>
+    eventColorStyleFor(eventColorMap.get(title) ?? getEventColor(title))
 
   const selectedTodos = useMemo(
     () => todos.filter((t) => t.dueDate === selectedDate),
@@ -247,7 +248,7 @@ export function CalendarSection() {
                     style={{
                       gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`,
                       gridRow: bar.row + 2,
-                      ...colorStyleFor(bar.event.id),
+                      ...colorStyleFor(bar.event.title),
                     }}
                     onClick={() => setSelectedDate(bar.event.date)}
                   >
@@ -291,7 +292,7 @@ export function CalendarSection() {
           <ul className="calendar-event-list">
             {selectedEvents.map((ev) => (
               <li key={ev.id} className="calendar-event-row">
-                <span className="calendar-dot calendar-dot--event" style={colorStyleFor(ev.id)} />
+                <span className="calendar-dot calendar-dot--event" style={colorStyleFor(ev.title)} />
                 <div className="calendar-event-row__info">
                   {ev.endDate && (
                     <span className="calendar-event-row__range">

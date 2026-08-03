@@ -40,30 +40,32 @@ export function eventColorStyle(id: string): CSSProperties {
 }
 
 /**
- * 週ごとの予定ID一覧(上から順)を受け取り、同じ週内で色が被らないように調整した
- * 予定ID → 色 のマップを返す。同じ予定は全期間を通じて常に同じ色になる。
+ * 週ごとの予定キー一覧(上から順)を受け取り、同じ週内で色が被らないように調整した
+ * キー → 色 のマップを返す。キーにはタイトルを渡すことで、同じタイトルの予定は
+ * 全期間を通じて常に同じ色になり、異なるタイトル同士は同じ週内でなるべく色が
+ * 被らないようになる。
  */
-export function assignEventColors(weeksOfEventIds: string[][]): Map<string, EventColor> {
+export function assignEventColors(weeksOfKeys: string[][]): Map<string, EventColor> {
   const assigned = new Map<string, EventColor>()
 
-  for (const eventIds of weeksOfEventIds) {
+  for (const keys of weeksOfKeys) {
     const usedThisWeek = new Set<number>()
 
-    for (const id of eventIds) {
-      const existing = assigned.get(id)
+    for (const key of keys) {
+      const existing = assigned.get(key)
       if (existing) usedThisWeek.add(PALETTE.indexOf(existing))
     }
 
-    for (const id of eventIds) {
-      if (assigned.has(id)) continue
-      let idx = hashString(id) % PALETTE.length
+    for (const key of keys) {
+      if (assigned.has(key)) continue
+      let idx = hashString(key) % PALETTE.length
       let attempts = 0
       while (usedThisWeek.has(idx) && attempts < PALETTE.length) {
         idx = (idx + 1) % PALETTE.length
         attempts++
       }
       usedThisWeek.add(idx)
-      assigned.set(id, PALETTE[idx])
+      assigned.set(key, PALETTE[idx])
     }
   }
 
