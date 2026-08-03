@@ -2,51 +2,45 @@
   color-scheme: light dark;
   --font: 'Hiragino Sans', 'Yu Gothic', system-ui, -apple-system, sans-serif;
 
-  --bg-gradient: linear-gradient(160deg, #eef2ff 0%, #fdf4ff 45%, #fff7ed 100%);
-  --surface: #ffffffcc;
+  --bg: #fafafa;
   --surface-solid: #ffffff;
-  --text: #1e1b2e;
-  --text-muted: #6b6478;
-  --border: #e5e0f0;
-  --accent: #6366f1;
-  --accent-strong: #4f46e5;
+  --text: #18181b;
+  --text-muted: #71717a;
+  --border: #e4e4e7;
+  --accent: #27272a;
+  --accent-strong: #000000;
   --accent-contrast: #ffffff;
-  --shadow: 0 8px 24px -12px rgba(76, 29, 149, 0.25);
+  --shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.12);
 
-  --priority-high: #f43f5e;
-  --priority-high-bg: #ffe4e8;
-  --priority-medium: #f59e0b;
+  --priority-high: #dc2626;
+  --priority-high-bg: #fee2e2;
+  --priority-medium: #d97706;
   --priority-medium-bg: #fef3c7;
-  --priority-low: #10b981;
-  --priority-low-bg: #d1fae5;
+  --priority-low: #16a34a;
+  --priority-low-bg: #dcfce7;
 
-  --category-bg: #e0e7ff;
-  --category-text: #4338ca;
-  --overdue: #e11d48;
+  --overdue: #dc2626;
 }
 
 :root[data-theme='dark'] {
-  --bg-gradient: linear-gradient(160deg, #14101f 0%, #1a1330 45%, #1f1522 100%);
-  --surface: #241b38cc;
-  --surface-solid: #241b38;
-  --text: #f2eefb;
-  --text-muted: #a99fc2;
-  --border: #362a4d;
-  --accent: #818cf8;
-  --accent-strong: #a5b4fc;
-  --accent-contrast: #1e1b2e;
-  --shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --bg: #0b0b0c;
+  --surface-solid: #19191b;
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --border: #303034;
+  --accent: #e4e4e7;
+  --accent-strong: #ffffff;
+  --accent-contrast: #18181b;
+  --shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.5);
 
-  --priority-high: #fb7185;
-  --priority-high-bg: #3f1725;
+  --priority-high: #f87171;
+  --priority-high-bg: #3f1d1d;
   --priority-medium: #fbbf24;
   --priority-medium-bg: #3a2a0d;
-  --priority-low: #34d399;
-  --priority-low-bg: #0f2e24;
+  --priority-low: #4ade80;
+  --priority-low-bg: #14301f;
 
-  --category-bg: #312a52;
-  --category-text: #c7d2fe;
-  --overdue: #fb7185;
+  --overdue: #f87171;
 }
 
 * {
@@ -61,7 +55,7 @@ body {
 
 body {
   font-family: var(--font);
-  background: var(--bg-gradient);
+  background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;

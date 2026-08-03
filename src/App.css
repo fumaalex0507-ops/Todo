@@ -13,12 +13,10 @@
 }
 
 .app__title h1 {
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 700;
   margin: 0;
-  background: linear-gradient(90deg, var(--accent-strong), #ec4899);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
 }
 
 .app__subtitle {
@@ -50,7 +48,7 @@
 }
 
 .nav-tabs__btn--active {
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  background: var(--accent);
   color: var(--accent-contrast);
 }
 
@@ -80,8 +78,7 @@
 
 /* Form */
 .todo-form {
-  background: var(--surface);
-  backdrop-filter: blur(6px);
+  background: var(--surface-solid);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
@@ -150,7 +147,7 @@
 }
 
 .btn--primary {
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  background: var(--accent);
   color: var(--accent-contrast);
 }
 
@@ -226,7 +223,7 @@
 
 /* Weight chart */
 .weight-chart-card {
-  background: var(--surface);
+  background: var(--surface-solid);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
@@ -452,8 +449,27 @@
 }
 
 .badge--category {
-  background: var(--category-bg);
-  color: var(--category-text);
+  --badge-color: var(--badge-color-light);
+  background: color-mix(in oklab, var(--badge-color) 16%, var(--surface-solid));
+  color: var(--badge-color);
+}
+
+:root[data-theme='dark'] .badge--category {
+  --badge-color: var(--badge-color-dark);
+  background: color-mix(in oklab, var(--badge-color) 28%, var(--surface-solid));
+}
+
+.category-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+  background: var(--badge-color-light);
+}
+
+:root[data-theme='dark'] .category-dot {
+  background: var(--badge-color-dark);
 }
 
 .badge--due {

@@ -1,3 +1,4 @@
+import { categoryColorStyle } from '../lib/categoryColor'
 import type { Todo } from '../types'
 
 interface TodoItemProps {
@@ -46,7 +47,11 @@ export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
           <span className={`badge badge--priority-${todo.priority}`}>
             {priorityLabel[todo.priority]}
           </span>
-          {todo.category && <span className="badge badge--category">{todo.category}</span>}
+          {todo.category && (
+            <span className="badge badge--category" style={categoryColorStyle(todo.category)}>
+              {todo.category}
+            </span>
+          )}
           {todo.dueDate && (
             <span className={`badge badge--due ${overdue ? 'badge--overdue' : ''}`}>
               {overdue ? '期限切れ ' : ''}

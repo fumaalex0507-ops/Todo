@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react'
+import { categoryColorStyle } from '../lib/categoryColor'
 import { CATEGORY_PRESETS } from '../types'
 import type { Priority, Todo, TodoInput } from '../types'
 
@@ -119,6 +120,7 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
             className={`chip chip--sm ${form.category === c ? 'chip--active' : ''}`}
             onClick={() => setForm((f) => ({ ...f, category: c }))}
           >
+            <span className="category-dot" style={categoryColorStyle(c)} />
             {c}
           </button>
         ))}
