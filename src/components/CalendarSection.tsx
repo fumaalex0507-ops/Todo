@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTodos } from '../hooks/useTodos'
 import { useEvents } from '../hooks/useEvents'
 import { today, toDateStr } from '../lib/date'
+import { fetchHolidays } from '../lib/holidays'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
 import type { Event } from '../types'
@@ -42,6 +43,19 @@ export function CalendarSection() {
   })
   const [selectedDate, setSelectedDate] = useState(today)
   const [editingEvent, setEditingEvent] = useState<Event | null>(null)
+  const [holidaysByYear, setHolidaysByYear] = useState<Record<number, Record<string, string>>>({})
+  const fetchedYearsRef = useRef<Set<number>>(new Set())
+
+  useEffect(() => {
+    const year = viewDate.getFullYear()
+    if (fetchedYearsRef.current.has(year)) return
+    fetchedYearsRef.current.add(year)
+    fetchHolidays(year).then((data) => {
+      setHolidaysByYear((prev) => ({ ...prev, [year]: data }))
+    })
+  }, [viewDate])
+
+  const holidays = holidaysByYear[viewDate.getFullYear()] ?? {}
 
   const grid = useMemo(
     () => buildMonthGrid(viewDate.getFullYear(), viewDate.getMonth()),
@@ -123,13 +137,15 @@ export function CalendarSection() {
           {grid.map((cell) => {
             const hasTodo = todosByDate.has(cell.dateStr)
             const hasEvent = eventsByDate.has(cell.dateStr)
+            const holidayName = holidays[cell.dateStr]
             return (
               <button
                 key={cell.dateStr}
                 type="button"
+                title={holidayName}
                 className={[
                   'calendar-day',
-                  cell.weekday === 0 ? 'calendar-day--sun' : '',
+                  cell.weekday === 0 || holidayName ? 'calendar-day--sun' : '',
                   cell.weekday === 6 ? 'calendar-day--sat' : '',
                   !cell.inMonth ? 'calendar-day--muted' : '',
                   cell.dateStr === today() ? 'calendar-day--today' : '',
