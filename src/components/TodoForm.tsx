@@ -120,6 +120,13 @@ export function TodoForm({ editingTodo, templates, onSubmit, onCancelEdit }: Tod
         <button type="submit" className="btn btn--primary">
           {editingTodo ? '更新' : '追加'}
         </button>
+        <button
+          type="button"
+          className="btn btn--ghost"
+          onClick={() => setForm((f) => ({ ...f, title: '' }))}
+        >
+          クリア
+        </button>
         {editingTodo && (
           <button type="button" className="btn btn--ghost" onClick={onCancelEdit}>
             キャンセル
