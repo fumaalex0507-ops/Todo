@@ -23,6 +23,7 @@ interface EventBar {
   event: Event
   startCol: number
   endCol: number
+  row: number
   continuesFromPrev: boolean
   continuesToNext: boolean
 }
@@ -56,7 +57,7 @@ function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
   const weekStart = week[0].dateStr
   const weekEnd = week[6].dateStr
 
-  return events
+  const bars = events
     .filter((e) => e.date <= weekEnd && (e.endDate ?? e.date) >= weekStart)
     .map((e) => {
       const end = e.endDate ?? e.date
@@ -66,15 +67,30 @@ function computeWeekBars(week: DayCell[], events: Event[]): EventBar[] {
         event: e,
         startCol,
         endCol,
+        row: 0,
         continuesFromPrev: e.date < weekStart,
         continuesToNext: end > weekEnd,
       }
     })
     .sort(
       (a, b) =>
-        a.event.date.localeCompare(b.event.date) ||
+        a.startCol - b.startCol ||
+        b.endCol - a.endCol ||
         (a.event.time ?? '').localeCompare(b.event.time ?? ''),
     )
+
+  // 重ならない予定は同じ行を共有し、空いている行があればそこに詰める
+  const rowLastCol: number[] = []
+  for (const bar of bars) {
+    let row = 0
+    while (rowLastCol[row] !== undefined && rowLastCol[row] >= bar.startCol) {
+      row++
+    }
+    rowLastCol[row] = bar.endCol
+    bar.row = row
+  }
+
+  return bars
 }
 
 export function CalendarSection() {
@@ -197,7 +213,7 @@ export function CalendarSection() {
                   )
                 })}
 
-                {bars.map((bar, i) => (
+                {bars.map((bar) => (
                   <div
                     key={bar.event.id}
                     className={[
@@ -209,7 +225,7 @@ export function CalendarSection() {
                       .join(' ')}
                     style={{
                       gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`,
-                      gridRow: i + 2,
+                      gridRow: bar.row + 2,
                       ...eventColorStyle(bar.event.id),
                     }}
                     onClick={() => setSelectedDate(bar.event.date)}
@@ -224,7 +240,7 @@ export function CalendarSection() {
                     className="calendar-day__today-outline"
                     style={{
                       gridColumn: todayCell.weekday + 1,
-                      gridRow: `1 / ${bars.length + 2}`,
+                      gridRow: `1 / ${bars.reduce((m, b) => Math.max(m, b.row), -1) + 3}`,
                     }}
                   />
                 )}
