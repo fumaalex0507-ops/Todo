@@ -6,19 +6,19 @@ export interface CategoryColor {
 }
 
 const PRESET_COLORS: Record<string, CategoryColor> = {
+  運動: { light: '#e34948', dark: '#e66767' },
   勉強: { light: '#2a78d6', dark: '#3987e5' },
-  仕事: { light: '#eb6834', dark: '#d95926' },
-  生活: { light: '#1baf7a', dark: '#199e70' },
-  運動: { light: '#008300', dark: '#008300' },
+  仕事: { light: '#4a3aa7', dark: '#9085e9' },
+  生活: { light: '#008300', dark: '#008300' },
 }
 
 const NEUTRAL: CategoryColor = { light: '#71717a', dark: '#a1a1aa' }
 
 const AUTO_PALETTE: CategoryColor[] = [
+  { light: '#eb6834', dark: '#d95926' },
+  { light: '#1baf7a', dark: '#199e70' },
   { light: '#eda100', dark: '#c98500' },
   { light: '#e87ba4', dark: '#d55181' },
-  { light: '#4a3aa7', dark: '#9085e9' },
-  { light: '#e34948', dark: '#e66767' },
 ]
 
 function hashString(str: string) {
