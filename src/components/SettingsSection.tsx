@@ -1,8 +1,19 @@
 import { useState } from 'react'
 import { useLocations } from '../hooks/useLocations'
-import type { Location } from '../types'
+import type { Location, Theme } from '../types'
 
-export function SettingsSection() {
+interface SettingsSectionProps {
+  theme: Theme
+  onThemeChange: (theme: Theme) => void
+}
+
+const themeOptions: { value: Theme; label: string }[] = [
+  { value: 'system', label: '端末設定' },
+  { value: 'light', label: 'ライト' },
+  { value: 'dark', label: 'ダーク' },
+]
+
+export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) {
   const { locations, addLocation, updateLocation, removeLocation } = useLocations()
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
@@ -18,7 +29,23 @@ export function SettingsSection() {
 
   return (
     <>
-      <p className="app__subtitle">天気の表示地名とリンクを登録・編集できます</p>
+      <p className="app__subtitle">表示テーマや天気の表示地名を登録・編集できます</p>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">表示テーマ</h2>
+        <div className="segmented">
+          {themeOptions.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              className={`segmented__btn ${theme === opt.value ? 'segmented__btn--active' : ''}`}
+              onClick={() => onThemeChange(opt.value)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">地点を追加</h2>

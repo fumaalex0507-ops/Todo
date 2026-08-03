@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useTheme } from './hooks/useTheme'
-import { ThemeToggle } from './components/ThemeToggle'
 import { NavTabs, type TabKey } from './components/NavTabs'
 import { DashboardSection } from './components/DashboardSection'
 import { TodoSection } from './components/TodoSection'
@@ -29,7 +28,6 @@ function App() {
         <div className="app__title">
           <h1>{titleByTab[tab]}</h1>
         </div>
-        <ThemeToggle theme={theme} onChange={setTheme} />
       </header>
 
       <NavTabs active={tab} onChange={setTab} />
@@ -40,7 +38,7 @@ function App() {
         {tab === 'calendar' && <CalendarSection />}
         {tab === 'goals' && <GoalsSection />}
         {tab === 'weight' && <WeightSection />}
-        {tab === 'settings' && <SettingsSection />}
+        {tab === 'settings' && <SettingsSection theme={theme} onThemeChange={setTheme} />}
       </main>
     </div>
   )
