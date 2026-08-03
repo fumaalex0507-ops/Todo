@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import type { Goal, GoalPeriod, TextGoal } from '../types'
+import { useTouchReorder } from '../hooks/useTouchReorder'
 
 interface GoalListProps {
   goals: Goal[]
@@ -10,8 +10,8 @@ interface GoalListProps {
 }
 
 export function GoalList({ goals, period, onEdit, onDelete, onReorder }: GoalListProps) {
-  const [draggedId, setDraggedId] = useState<string | null>(null)
-  const [overId, setOverId] = useState<string | null>(null)
+  const { containerRef, draggedId, overId, startTouch, setDraggedId, setOverId } =
+    useTouchReorder(onReorder)
 
   const filtered = goals.filter(
     (g): g is TextGoal => g.type === 'text' && g.period === period,
@@ -22,10 +22,11 @@ export function GoalList({ goals, period, onEdit, onDelete, onReorder }: GoalLis
   }
 
   return (
-    <ul className="todo-list">
+    <ul className="todo-list" ref={containerRef}>
       {filtered.map((goal) => (
         <li
           key={goal.id}
+          data-drag-id={goal.id}
           className={[
             'todo-item',
             draggedId === goal.id ? 'todo-item--dragging' : '',
@@ -49,7 +50,13 @@ export function GoalList({ goals, period, onEdit, onDelete, onReorder }: GoalLis
             setOverId(null)
           }}
         >
-          <span className="todo-item__handle" aria-hidden="true">⠿</span>
+          <span
+            className="todo-item__handle"
+            aria-hidden="true"
+            onTouchStart={() => startTouch(goal.id)}
+          >
+            ⠿
+          </span>
 
           <div className="todo-item__body">
             <p className="todo-item__title">{goal.title}</p>

@@ -489,6 +489,7 @@
   font-size: 14px;
   line-height: 1;
   align-self: center;
+  touch-action: none;
 }
 
 .todo-list__hint {
@@ -936,8 +937,9 @@
 
 .calendar-day {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   padding: 5px 6px;
   border: 1px solid transparent;
   border-right: 1px solid var(--border);
@@ -945,6 +947,7 @@
   font-size: 11px;
   color: var(--text);
   text-align: left;
+  overflow: hidden;
 }
 
 .calendar-day:nth-child(7n) {
@@ -978,10 +981,20 @@
   font-weight: 600;
 }
 
+.calendar-day__indicators {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .calendar-day__rating {
   font-size: 8px;
   color: var(--priority-medium);
   letter-spacing: -1px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .calendar-dot {

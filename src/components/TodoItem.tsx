@@ -13,6 +13,7 @@ interface TodoItemProps {
   onDragOver?: () => void
   onDrop?: () => void
   onDragEnd?: () => void
+  onHandleTouchStart?: () => void
 }
 
 const priorityLabel: Record<Todo['priority'], string> = {
@@ -45,6 +46,7 @@ export function TodoItem({
   onDragOver,
   onDrop,
   onDragEnd,
+  onHandleTouchStart,
 }: TodoItemProps) {
   const overdue = isOverdue(todo.dueDate, todo.completed)
 
@@ -58,6 +60,7 @@ export function TodoItem({
       ]
         .filter(Boolean)
         .join(' ')}
+      data-drag-id={draggable ? todo.id : undefined}
       draggable={draggable}
       onDragStart={draggable ? onDragStart : undefined}
       onDragOver={
@@ -71,7 +74,15 @@ export function TodoItem({
       onDrop={draggable ? onDrop : undefined}
       onDragEnd={draggable ? onDragEnd : undefined}
     >
-      {draggable && <span className="todo-item__handle" aria-hidden="true">⠿</span>}
+      {draggable && (
+        <span
+          className="todo-item__handle"
+          aria-hidden="true"
+          onTouchStart={onHandleTouchStart}
+        >
+          ⠿
+        </span>
+      )}
 
       <label className="todo-item__checkbox">
         <input

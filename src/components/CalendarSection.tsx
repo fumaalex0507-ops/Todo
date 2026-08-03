@@ -197,10 +197,14 @@ export function CalendarSection() {
                       onClick={() => setSelectedDate(cell.dateStr)}
                     >
                       <span className="calendar-day__num">{cell.day}</span>
-                      {ratings[cell.dateStr] > 0 && (
-                        <span className="calendar-day__rating">{'★'.repeat(ratings[cell.dateStr])}</span>
-                      )}
-                      {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
+                      <span className="calendar-day__indicators">
+                        {ratings[cell.dateStr] > 0 && (
+                          <span className="calendar-day__rating">
+                            {'★'.repeat(ratings[cell.dateStr])}
+                          </span>
+                        )}
+                        {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
+                      </span>
                     </button>
                   )
                 })}
