@@ -6,6 +6,7 @@ import { DashboardSection } from './components/DashboardSection'
 import { TodoSection } from './components/TodoSection'
 import { GoalsSection } from './components/GoalsSection'
 import { WeightSection } from './components/WeightSection'
+import { SettingsSection } from './components/SettingsSection'
 import './App.css'
 
 const titleByTab: Record<TabKey, string> = {
@@ -13,6 +14,7 @@ const titleByTab: Record<TabKey, string> = {
   todo: 'やることリスト',
   goals: '目標管理',
   weight: '体重管理',
+  settings: '設定',
 }
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
         {tab === 'todo' && <TodoSection />}
         {tab === 'goals' && <GoalsSection />}
         {tab === 'weight' && <WeightSection />}
+        {tab === 'settings' && <SettingsSection />}
       </main>
     </div>
   )

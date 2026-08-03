@@ -14,11 +14,15 @@ export function useLocations() {
   const [locations, setLocations] = useLocalStorage<Location[]>(STORAGE_KEY, [])
 
   const addLocation = useCallback(
-    (name: string, latitude: number, longitude: number) => {
-      setLocations((prev) => {
-        if (prev.some((l) => l.name === name)) return prev
-        return [...prev, { id: createId(), name, latitude, longitude }]
-      })
+    (name: string, url: string) => {
+      setLocations((prev) => [...prev, { id: createId(), name, url }])
+    },
+    [setLocations],
+  )
+
+  const updateLocation = useCallback(
+    (id: string, name: string, url: string) => {
+      setLocations((prev) => prev.map((l) => (l.id === id ? { ...l, name, url } : l)))
     },
     [setLocations],
   )
@@ -30,5 +34,5 @@ export function useLocations() {
     [setLocations],
   )
 
-  return { locations, addLocation, removeLocation }
+  return { locations, addLocation, updateLocation, removeLocation }
 }

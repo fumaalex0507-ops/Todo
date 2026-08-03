@@ -535,7 +535,6 @@
 }
 
 .weather-tile {
-  position: relative;
   flex: 1 1 130px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -543,87 +542,83 @@
   background: var(--bg);
 }
 
-.weather-tile__remove {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 18px;
-  height: 18px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.weather-tile--link {
+  display: block;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
 }
 
-.weather-tile__remove:hover {
-  background: var(--priority-high-bg);
-  color: var(--priority-high);
+.weather-tile--link:hover {
+  border-color: var(--accent);
 }
 
 .weather-tile__name {
   margin: 0 0 6px;
   font-size: 13px;
   font-weight: 600;
-  padding-right: 16px;
+  color: var(--text);
 }
 
 .weather-tile__link {
   font-size: 12px;
   font-weight: 600;
   color: var(--accent);
-  text-decoration: none;
 }
 
-.weather-tile__link:hover {
+/* Settings */
+.settings-location-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-location-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.settings-location-row--editing {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.settings-location-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-location-row__name {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-location-row__url {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-location-row__url:hover {
   text-decoration: underline;
 }
 
-.location-search {
-  position: relative;
-}
-
-.location-search input {
-  width: 100%;
-  padding: 7px 10px;
-  border-radius: 7px;
-  border: 1px solid var(--border);
-  background: var(--surface-solid);
-  font-size: 13px;
-}
-
-.location-search__hint {
-  margin: 4px 0 0;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.location-search__results {
-  list-style: none;
-  margin: 4px 0 0;
-  padding: 4px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-solid);
-  box-shadow: var(--shadow);
-}
-
-.location-search__results button {
-  width: 100%;
-  text-align: left;
-  padding: 6px 8px;
-  border: none;
-  background: transparent;
-  border-radius: 6px;
-  font-size: 13px;
-}
-
-.location-search__results button:hover {
-  background: var(--bg);
+.settings-location-row__actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 /* Goal progress */

@@ -75,6 +75,5 @@ export interface WeightEntry {
 export interface Location {
   id: string
   name: string
-  latitude: number
-  longitude: number
+  url: string
 }
