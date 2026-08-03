@@ -57,8 +57,7 @@ export function TodoSection() {
 
   const remainingCount = useMemo(() => todos.filter((t) => !t.completed).length, [todos])
 
-  const reorderable =
-    sortKey === 'manual' && statusFilter === 'all' && categoryFilter === 'all' && !searchQuery.trim()
+  const reorderable = statusFilter === 'all' && categoryFilter === 'all' && !searchQuery.trim()
 
   const handleReorder = (draggedId: string, targetId: string) => {
     const ids = todos.map((t) => t.id)
@@ -68,6 +67,7 @@ export function TodoSection() {
     ids.splice(fromIndex, 1)
     ids.splice(ids.indexOf(targetId), 0, draggedId)
     reorderTodos(ids)
+    if (sortKey !== 'manual') setSortKey('manual')
   }
 
   return (
@@ -101,7 +101,7 @@ export function TodoSection() {
         onSortKeyChange={setSortKey}
       />
 
-      {sortKey === 'manual' && !reorderable && (
+      {!reorderable && (
         <p className="todo-list__hint">絞り込み・検索がない状態でドラッグして並び替えできます</p>
       )}
 
