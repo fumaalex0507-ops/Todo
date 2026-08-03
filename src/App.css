@@ -27,9 +27,9 @@
   position: absolute;
   left: -3px;
   right: -3px;
-  bottom: 2px;
-  height: 34%;
-  background: color-mix(in oklab, var(--accent) 45%, transparent);
+  top: calc(66% - 2px);
+  height: 20%;
+  background: color-mix(in oklab, var(--accent) 70%, transparent);
   border-radius: 3px;
   z-index: -1;
 }
