@@ -145,6 +145,10 @@
   flex: 1 1 120px;
 }
 
+.todo-form__field > span {
+  font-weight: 700;
+}
+
 .todo-form > .todo-form__field {
   flex: initial;
 }
