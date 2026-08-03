@@ -1,21 +1,22 @@
-import type { Goal } from '../types'
+import type { Goal, GoalPeriod } from '../types'
 
 interface GoalListProps {
   goals: Goal[]
+  period: GoalPeriod
   onToggleAchieved: (id: string) => void
   onDelete: (id: string) => void
 }
 
-const periodLabel = { weekly: '週間', monthly: '月間' } as const
+export function GoalList({ goals, period, onToggleAchieved, onDelete }: GoalListProps) {
+  const filtered = goals.filter((g) => g.period === period)
 
-export function GoalList({ goals, onToggleAchieved, onDelete }: GoalListProps) {
-  if (goals.length === 0) {
+  if (filtered.length === 0) {
     return <p className="todo-list__empty">目標はまだありません</p>
   }
 
   return (
     <ul className="todo-list">
-      {goals.map((goal) => (
+      {filtered.map((goal) => (
         <li key={goal.id} className={`todo-item ${goal.achieved ? 'todo-item--done' : ''}`}>
           <label className="todo-item__checkbox">
             <input
@@ -32,9 +33,6 @@ export function GoalList({ goals, onToggleAchieved, onDelete }: GoalListProps) {
                 ? `目標体重 ${goal.targetWeight}kg${goal.targetDate ? `(${goal.targetDate}まで)` : ''}`
                 : goal.title}
             </p>
-            <div className="todo-item__meta">
-              <span className="badge badge--category">{periodLabel[goal.period]}目標</span>
-            </div>
           </div>
 
           <button

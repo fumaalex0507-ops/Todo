@@ -8,8 +8,28 @@ export function GoalsSection() {
   return (
     <>
       <p className="app__subtitle">週間・月間の目標を記録しましょう</p>
-      <GoalForm onSubmit={addGoal} />
-      <GoalList goals={goals} onToggleAchieved={toggleAchieved} onDelete={deleteGoal} />
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">週間目標</h2>
+        <GoalForm period="weekly" onSubmit={addGoal} />
+        <GoalList
+          goals={goals}
+          period="weekly"
+          onToggleAchieved={toggleAchieved}
+          onDelete={deleteGoal}
+        />
+      </div>
+
+      <div className="dashboard-card">
+        <h2 className="dashboard-card__title">月間目標</h2>
+        <GoalForm period="monthly" onSubmit={addGoal} />
+        <GoalList
+          goals={goals}
+          period="monthly"
+          onToggleAchieved={toggleAchieved}
+          onDelete={deleteGoal}
+        />
+      </div>
     </>
   )
 }

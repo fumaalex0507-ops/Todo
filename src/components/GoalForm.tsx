@@ -2,11 +2,11 @@ import { useState } from 'react'
 import type { GoalInput, GoalPeriod } from '../types'
 
 interface GoalFormProps {
+  period: GoalPeriod
   onSubmit: (input: GoalInput) => void
 }
 
-export function GoalForm({ onSubmit }: GoalFormProps) {
-  const [period, setPeriod] = useState<GoalPeriod>('weekly')
+export function GoalForm({ period, onSubmit }: GoalFormProps) {
   const [type, setType] = useState<'weight' | 'text'>('text')
   const [title, setTitle] = useState('')
   const [targetWeight, setTargetWeight] = useState('')
@@ -32,23 +32,6 @@ export function GoalForm({ onSubmit }: GoalFormProps) {
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
       <div className="todo-form__row">
-        <div className="segmented">
-          <button
-            type="button"
-            className={`segmented__btn ${period === 'weekly' ? 'segmented__btn--active' : ''}`}
-            onClick={() => setPeriod('weekly')}
-          >
-            週間
-          </button>
-          <button
-            type="button"
-            className={`segmented__btn ${period === 'monthly' ? 'segmented__btn--active' : ''}`}
-            onClick={() => setPeriod('monthly')}
-          >
-            月間
-          </button>
-        </div>
-
         <div className="segmented">
           <button
             type="button"
