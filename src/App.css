@@ -22,9 +22,36 @@
 }
 
 .app__subtitle {
-  margin: 4px 0 0;
+  margin: 0 0 16px;
   font-size: 14px;
   color: var(--text-muted);
+}
+
+/* Nav tabs */
+.nav-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.nav-tabs__btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nav-tabs__btn--active {
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  color: var(--accent-contrast);
 }
 
 .theme-toggle {
@@ -159,6 +186,144 @@
   background: var(--accent);
   border-color: var(--accent);
   color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.chip--sm {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.todo-form__category-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Segmented control */
+.segmented {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  flex: 1 1 200px;
+}
+
+.segmented__btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: var(--surface-solid);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.segmented__btn--active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* Weight chart */
+.weight-chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.weight-chart {
+  position: relative;
+}
+
+.weight-chart__svg {
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+.weight-chart__axis {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.weight-chart__axis-label {
+  font-size: 10px;
+  fill: var(--text-muted);
+}
+
+.weight-chart__line {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.weight-chart__dot {
+  fill: var(--accent);
+}
+
+.weight-chart__target-line {
+  stroke: var(--priority-medium);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.weight-chart__target-label {
+  font-size: 10px;
+  fill: var(--priority-medium);
+  font-weight: 600;
+}
+
+.weight-chart__crosshair {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.weight-chart__tooltip {
+  position: absolute;
+  transform: translate(-50%, -130%);
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow);
+}
+
+/* Weight log list */
+.weight-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.weight-log__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.weight-log__date {
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.weight-log__value {
   font-weight: 600;
 }
 

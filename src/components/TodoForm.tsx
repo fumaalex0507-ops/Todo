@@ -1,4 +1,5 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useMemo, useState } from 'react'
+import { CATEGORY_PRESETS } from '../types'
 import type { Priority, Todo, TodoInput } from '../types'
 
 interface TodoFormProps {
@@ -19,6 +20,11 @@ const emptyForm: TodoInput = {
 export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: TodoFormProps) {
   const [form, setForm] = useState<TodoInput>(emptyForm)
   const datalistId = useId()
+
+  const categoryOptions = useMemo(() => {
+    const set = new Set<string>([...CATEGORY_PRESETS, ...categories])
+    return Array.from(set)
+  }, [categories])
 
   useEffect(() => {
     if (editingTodo) {
@@ -98,11 +104,24 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
             onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
           />
           <datalist id={datalistId}>
-            {categories.map((c) => (
+            {categoryOptions.map((c) => (
               <option key={c} value={c} />
             ))}
           </datalist>
         </label>
+      </div>
+
+      <div className="todo-form__category-chips">
+        {CATEGORY_PRESETS.map((c) => (
+          <button
+            key={c}
+            type="button"
+            className={`chip chip--sm ${form.category === c ? 'chip--active' : ''}`}
+            onClick={() => setForm((f) => ({ ...f, category: c }))}
+          >
+            {c}
+          </button>
+        ))}
       </div>
 
       <label className="todo-form__field todo-form__field--memo">
