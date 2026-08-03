@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useWeightEntries } from '../hooks/useWeightEntries'
 import { useGoals } from '../hooks/useGoals'
 import { WeightForm } from './WeightForm'
@@ -9,7 +9,8 @@ import { WeightGoalList } from './WeightGoalList'
 
 export function WeightSection() {
   const { entries, addEntry, deleteEntry } = useWeightEntries()
-  const { goals, addGoal, toggleAchieved, deleteGoal } = useGoals()
+  const { goals, addGoal, deleteGoal } = useGoals()
+  const [showGoalForm, setShowGoalForm] = useState(false)
 
   const activeWeightGoal = useMemo(
     () =>
@@ -40,14 +41,22 @@ export function WeightSection() {
       </div>
 
       <div className="dashboard-card">
-        <h2 className="dashboard-card__title">体重目標</h2>
-        <WeightGoalForm latestWeight={latestWeight} onSubmit={addGoal} />
-        <WeightGoalList
-          goals={goals}
-          weightEntries={entries}
-          onToggleAchieved={toggleAchieved}
-          onDelete={deleteGoal}
-        />
+        <div className="dashboard-card__title-row">
+          <h2 className="dashboard-card__title">体重目標</h2>
+          <button type="button" className="btn btn--ghost" onClick={() => setShowGoalForm((v) => !v)}>
+            {showGoalForm ? '閉じる' : '目標を設定'}
+          </button>
+        </div>
+        {showGoalForm && (
+          <WeightGoalForm
+            latestWeight={latestWeight}
+            onSubmit={(input) => {
+              addGoal(input)
+              setShowGoalForm(false)
+            }}
+          />
+        )}
+        <WeightGoalList goals={goals} weightEntries={entries} onDelete={deleteGoal} />
       </div>
 
       <WeightLogList entries={entries} onDelete={deleteEntry} />

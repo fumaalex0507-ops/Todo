@@ -632,6 +632,18 @@
   color: var(--text);
 }
 
+.dashboard-card__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dashboard-card__title-row .dashboard-card__title {
+  margin-bottom: 0;
+}
+
 .weather-tiles {
   display: flex;
   gap: 6px;

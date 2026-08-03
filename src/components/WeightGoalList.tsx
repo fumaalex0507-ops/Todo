@@ -5,11 +5,10 @@ import type { Goal, WeightEntry, WeightGoal } from '../types'
 interface WeightGoalListProps {
   goals: Goal[]
   weightEntries: WeightEntry[]
-  onToggleAchieved: (id: string) => void
   onDelete: (id: string) => void
 }
 
-export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelete }: WeightGoalListProps) {
+export function WeightGoalList({ goals, weightEntries, onDelete }: WeightGoalListProps) {
   const filtered = goals.filter((g): g is WeightGoal => g.type === 'weight')
 
   if (filtered.length === 0) {
@@ -22,16 +21,7 @@ export function WeightGoalList({ goals, weightEntries, onToggleAchieved, onDelet
         const progress = computeWeightProgress(goal, weightEntries)
         const dateProgress = computeDateProgress(goal)
         return (
-          <li key={goal.id} className={`goal-progress-item ${goal.achieved ? 'goal-progress-item--done' : ''}`}>
-            <label className="todo-item__checkbox">
-              <input
-                type="checkbox"
-                checked={goal.achieved}
-                onChange={() => onToggleAchieved(goal.id)}
-              />
-              <span aria-hidden="true" />
-            </label>
-
+          <li key={goal.id} className="goal-progress-item">
             <div className="goal-progress-item__body">
               <p className="goal-progress-item__title">
                 目標体重 {goal.targetWeight}kg({goal.startDate}〜{goal.targetDate})
