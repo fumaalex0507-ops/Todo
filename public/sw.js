@@ -1,4 +1,4 @@
-const CACHE_NAME = 'todo-app-v1'
+const CACHE_NAME = 'todo-app-v2'
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -22,6 +22,22 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return
 
+  // ページ本体(ナビゲーション)は常にネットワークを優先し、最新のHTML/JS/CSSを確実に取得する。
+  // オフライン時のみキャッシュにフォールバックする。
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+          return response
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./'))),
+    )
+    return
+  }
+
+  // 静的アセット(JS/CSS/画像など)はキャッシュ優先で高速表示しつつ、裏側で最新化する。
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const fetchPromise = fetch(event.request)
