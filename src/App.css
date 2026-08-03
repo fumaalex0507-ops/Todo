@@ -388,7 +388,7 @@
 
 .todo-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
@@ -405,7 +405,6 @@
 .todo-item__checkbox {
   position: relative;
   display: inline-flex;
-  margin-top: 2px;
   flex-shrink: 0;
 }
 
