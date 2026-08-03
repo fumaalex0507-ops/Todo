@@ -71,10 +71,13 @@ export function CalendarSection() {
   }, [todos])
 
   const eventsByDate = useMemo(() => {
-    const map = new Map<string, number>()
+    const map = new Map<string, Event[]>()
     events.forEach((e) => {
-      map.set(e.date, (map.get(e.date) ?? 0) + 1)
+      const list = map.get(e.date) ?? []
+      list.push(e)
+      map.set(e.date, list)
     })
+    map.forEach((list) => list.sort((a, b) => (a.time ?? '').localeCompare(b.time ?? '')))
     return map
   }, [events])
 
@@ -136,8 +139,10 @@ export function CalendarSection() {
         <div className="calendar-grid calendar-grid--days">
           {grid.map((cell) => {
             const hasTodo = todosByDate.has(cell.dateStr)
-            const hasEvent = eventsByDate.has(cell.dateStr)
+            const dayEvents = eventsByDate.get(cell.dateStr) ?? []
             const holidayName = holidays[cell.dateStr]
+            const visibleEvents = dayEvents.slice(0, 2)
+            const extraCount = dayEvents.length - visibleEvents.length
             return (
               <button
                 key={cell.dateStr}
@@ -155,11 +160,21 @@ export function CalendarSection() {
                   .join(' ')}
                 onClick={() => setSelectedDate(cell.dateStr)}
               >
-                <span className="calendar-day__num">{cell.day}</span>
-                <span className="calendar-day__dots">
+                <span className="calendar-day__head">
+                  <span className="calendar-day__num">{cell.day}</span>
                   {hasTodo && <span className="calendar-dot calendar-dot--todo" />}
-                  {hasEvent && <span className="calendar-dot calendar-dot--event" />}
                 </span>
+                {visibleEvents.length > 0 && (
+                  <span className="calendar-day__events">
+                    {visibleEvents.map((ev) => (
+                      <span key={ev.id} className="calendar-day__event">
+                        {ev.time ? `${ev.time} ` : ''}
+                        {ev.title}
+                      </span>
+                    ))}
+                    {extraCount > 0 && <span className="calendar-day__event-more">+{extraCount}</span>}
+                  </span>
+                )}
               </button>
             )
           })}

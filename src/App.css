@@ -826,14 +826,15 @@
 .calendar-day {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 2px;
-  padding: 6px 2px;
+  padding: 4px;
   border: 1px solid transparent;
   background: var(--surface-solid);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text);
-  aspect-ratio: 1;
+  min-height: 56px;
+  text-align: left;
 }
 
 .calendar-day--muted {
@@ -858,10 +859,21 @@
   color: var(--accent-contrast);
 }
 
-.calendar-day__dots {
+.calendar-day--selected .calendar-day__event {
+  background: color-mix(in oklab, white 25%, transparent);
+  color: var(--accent-contrast);
+}
+
+.calendar-day__head {
   display: flex;
-  gap: 2px;
-  height: 5px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.calendar-day__num {
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .calendar-dot {
@@ -869,10 +881,31 @@
   height: 5px;
   border-radius: 50%;
   background: var(--progress-weight);
+  flex-shrink: 0;
 }
 
-.calendar-dot--event {
-  background: var(--progress-date);
+.calendar-day__events {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.calendar-day__event {
+  font-size: 9px;
+  line-height: 1.3;
+  padding: 1px 3px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--progress-date) 18%, var(--surface-solid));
+  color: var(--progress-date-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-day__event-more {
+  font-size: 9px;
+  color: var(--text-muted);
+  padding: 0 3px;
 }
 
 .calendar-section-label {
