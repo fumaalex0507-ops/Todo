@@ -1,11 +1,8 @@
 import { useState } from 'react'
+import { today } from '../lib/date'
 
 interface WeightFormProps {
   onSubmit: (date: string, weight: number) => void
-}
-
-function today() {
-  return new Date().toISOString().slice(0, 10)
 }
 
 export function WeightForm({ onSubmit }: WeightFormProps) {

@@ -48,8 +48,9 @@
 }
 
 .nav-tabs__btn--active {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: var(--accent-contrast);
+  box-shadow: 0 4px 12px -4px color-mix(in oklab, var(--accent) 60%, transparent);
 }
 
 .theme-toggle {
@@ -147,8 +148,9 @@
 }
 
 .btn--primary {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: var(--accent-contrast);
+  box-shadow: 0 4px 12px -4px color-mix(in oklab, var(--accent) 60%, transparent);
 }
 
 .btn--ghost {
@@ -197,6 +199,27 @@
   flex-wrap: wrap;
 }
 
+.chip--category {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  color: #fff;
+  background: var(--badge-color-light);
+}
+
+:root[data-theme='dark'] .chip--category {
+  background: var(--badge-color-dark);
+}
+
+.chip--category.chip--active {
+  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 4px var(--badge-color-light);
+}
+
+:root[data-theme='dark'] .chip--category.chip--active {
+  box-shadow: 0 0 0 2px var(--surface-solid), 0 0 0 4px var(--badge-color-dark);
+}
+
 /* Segmented control */
 .segmented {
   display: flex;
@@ -217,7 +240,7 @@
 }
 
 .segmented__btn--active {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: var(--accent-contrast);
 }
 
@@ -449,26 +472,11 @@
 }
 
 .badge--category {
-  --badge-color: var(--badge-color-light);
-  background: color-mix(in oklab, var(--badge-color) 16%, var(--surface-solid));
-  color: var(--badge-color);
+  background: var(--badge-color-light);
+  color: #fff;
 }
 
 :root[data-theme='dark'] .badge--category {
-  --badge-color: var(--badge-color-dark);
-  background: color-mix(in oklab, var(--badge-color) 28%, var(--surface-solid));
-}
-
-.category-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 5px;
-  background: var(--badge-color-light);
-}
-
-:root[data-theme='dark'] .category-dot {
   background: var(--badge-color-dark);
 }
 

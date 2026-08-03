@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useState } from 'react'
 import { categoryColorStyle } from '../lib/categoryColor'
+import { today } from '../lib/date'
 import { CATEGORY_PRESETS } from '../types'
 import type { Priority, Todo, TodoInput } from '../types'
 
@@ -10,16 +11,18 @@ interface TodoFormProps {
   onCancelEdit: () => void
 }
 
-const emptyForm: TodoInput = {
-  title: '',
-  memo: '',
-  dueDate: null,
-  priority: 'medium',
-  category: '',
+function createEmptyForm(): TodoInput {
+  return {
+    title: '',
+    memo: '',
+    dueDate: today(),
+    priority: 'medium',
+    category: '',
+  }
 }
 
 export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: TodoFormProps) {
-  const [form, setForm] = useState<TodoInput>(emptyForm)
+  const [form, setForm] = useState<TodoInput>(createEmptyForm)
   const datalistId = useId()
 
   const categoryOptions = useMemo(() => {
@@ -37,7 +40,7 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
         category: editingTodo.category,
       })
     } else {
-      setForm(emptyForm)
+      setForm(createEmptyForm())
     }
   }, [editingTodo])
 
@@ -45,7 +48,7 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
     event.preventDefault()
     if (!form.title.trim()) return
     onSubmit(form)
-    if (!editingTodo) setForm(emptyForm)
+    if (!editingTodo) setForm(createEmptyForm())
   }
 
   return (
@@ -117,10 +120,10 @@ export function TodoForm({ categories, editingTodo, onSubmit, onCancelEdit }: To
           <button
             key={c}
             type="button"
-            className={`chip chip--sm ${form.category === c ? 'chip--active' : ''}`}
+            className={`chip chip--category ${form.category === c ? 'chip--active' : ''}`}
+            style={categoryColorStyle(c)}
             onClick={() => setForm((f) => ({ ...f, category: c }))}
           >
-            <span className="category-dot" style={categoryColorStyle(c)} />
             {c}
           </button>
         ))}
