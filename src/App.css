@@ -669,6 +669,10 @@
   min-width: 0;
 }
 
+.goal-progress-item__body--standalone {
+  margin-bottom: 14px;
+}
+
 .goal-progress-item__head {
   display: flex;
   justify-content: space-between;

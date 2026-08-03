@@ -3,11 +3,12 @@ import { useTodos } from '../hooks/useTodos'
 import { useGoals } from '../hooks/useGoals'
 import { useWeightEntries } from '../hooks/useWeightEntries'
 import { today } from '../lib/date'
+import { computeWeightProgress } from '../lib/goalProgress'
 import { WeatherCard } from './WeatherCard'
 import { TodoList } from './TodoList'
 import { GoalProgressList } from './GoalProgressList'
 import { WeightChart } from './WeightChart'
-import type { Todo } from '../types'
+import type { Todo, WeightGoal } from '../types'
 
 const priorityWeight: Record<Todo['priority'], number> = { high: 0, medium: 1, low: 2 }
 
@@ -29,9 +30,14 @@ export function DashboardSection() {
   const activeWeightGoal = useMemo(
     () =>
       goals
-        .filter((g) => g.type === 'weight' && !g.achieved)
+        .filter((g): g is WeightGoal => g.type === 'weight' && !g.achieved)
         .sort((a, b) => b.createdAt - a.createdAt)[0],
     [goals],
+  )
+
+  const weightProgress = useMemo(
+    () => (activeWeightGoal ? computeWeightProgress(activeWeightGoal, entries) : null),
+    [activeWeightGoal, entries],
   )
 
   return (
@@ -47,10 +53,24 @@ export function DashboardSection() {
 
       <div className="dashboard-card">
         <h2 className="dashboard-card__title">体重推移</h2>
-        <WeightChart
-          entries={entries}
-          targetWeight={activeWeightGoal?.type === 'weight' ? activeWeightGoal.targetWeight : null}
-        />
+        {activeWeightGoal && weightProgress && (
+          <div className="goal-progress-item__body goal-progress-item__body--standalone">
+            <div className="goal-progress-item__head">
+              <span className="goal-progress-item__title">
+                目標体重 {activeWeightGoal.targetWeight}kg({activeWeightGoal.targetDate}まで)
+              </span>
+              <span className="goal-progress-item__percent">{Math.round(weightProgress.percent)}%</span>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-bar__fill" style={{ width: `${weightProgress.percent}%` }} />
+            </div>
+            <p className="goal-progress-item__detail">
+              開始 {weightProgress.baseline}kg
+              {weightProgress.current != null ? ` → 現在 ${weightProgress.current}kg` : ''}
+            </p>
+          </div>
+        )}
+        <WeightChart entries={entries} targetWeight={activeWeightGoal?.targetWeight ?? null} />
       </div>
 
       <div className="dashboard-card">
