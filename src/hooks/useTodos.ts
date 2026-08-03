@@ -1,8 +1,10 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useLocalStorage } from './useLocalStorage'
+import { mostRecentMonday } from '../lib/date'
 import type { Todo, TodoInput } from '../types'
 
 const STORAGE_KEY = 'todo-app:todos'
+const LAST_CLEANUP_KEY = 'todo-app:last-completed-cleanup'
 
 function createId() {
   return typeof crypto !== 'undefined' && 'randomUUID' in crypto
@@ -12,6 +14,14 @@ function createId() {
 
 export function useTodos() {
   const [todos, setTodos] = useLocalStorage<Todo[]>(STORAGE_KEY, [])
+  const [lastCleanup, setLastCleanup] = useLocalStorage<string | null>(LAST_CLEANUP_KEY, null)
+
+  useEffect(() => {
+    const monday = mostRecentMonday()
+    if (lastCleanup === monday) return
+    setTodos((prev) => prev.filter((todo) => !todo.completed))
+    setLastCleanup(monday)
+  }, [lastCleanup, setTodos, setLastCleanup])
 
   const addTodo = useCallback(
     (input: TodoInput) => {

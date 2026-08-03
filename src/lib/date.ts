@@ -12,6 +12,15 @@ export function toDateStr(d: Date) {
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
 }
 
+export function mostRecentMonday(): string {
+  const now = new Date()
+  const day = now.getDay()
+  const diff = day === 0 ? 6 : day - 1
+  const monday = new Date(now)
+  monday.setDate(now.getDate() - diff)
+  return toDateStr(monday)
+}
+
 export function dateRange(startStr: string, endStr: string): string[] {
   const start = new Date(`${startStr}T00:00:00`)
   const end = new Date(`${endStr}T00:00:00`)
