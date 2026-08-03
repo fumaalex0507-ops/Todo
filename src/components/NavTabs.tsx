@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 export type TabKey = 'dashboard' | 'todo' | 'calendar' | 'goals' | 'weight' | 'settings'
 
 interface NavTabsProps {
@@ -22,6 +24,7 @@ export function NavTabs({ active, onChange }: NavTabsProps) {
           key={t.key}
           type="button"
           className={`nav-tabs__btn ${active === t.key ? 'nav-tabs__btn--active' : ''}`}
+          style={{ '--tab-theme': `var(--theme-${t.key})` } as CSSProperties}
           onClick={() => onChange(t.key)}
         >
           {t.label}

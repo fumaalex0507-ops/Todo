@@ -23,11 +23,11 @@ function App() {
   const [tab, setTab] = useState<TabKey>('dashboard')
 
   return (
-    <div className="app">
+    <div className="app" style={{ '--page-theme': `var(--theme-${tab})` } as CSSProperties}>
       <NavTabs active={tab} onChange={setTab} />
 
       <header className="app__header">
-        <div className="app__title" style={{ '--page-theme': `var(--theme-${tab})` } as CSSProperties}>
+        <div className="app__title">
           <h1>{titleByTab[tab]}</h1>
         </div>
       </header>

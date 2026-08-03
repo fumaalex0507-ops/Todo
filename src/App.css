@@ -95,8 +95,12 @@
 }
 
 .nav-tabs__btn--active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: var(--accent-contrast);
+  background: linear-gradient(
+    135deg,
+    var(--tab-theme),
+    color-mix(in oklab, var(--tab-theme) 75%, black 15%)
+  );
+  color: #fff;
 }
 
 /* Form */
@@ -174,8 +178,12 @@
 }
 
 .btn--primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: var(--accent-contrast);
+  background: linear-gradient(
+    135deg,
+    var(--page-theme),
+    color-mix(in oklab, var(--page-theme) 75%, black 15%)
+  );
+  color: #fff;
 }
 
 .btn--ghost {
@@ -207,9 +215,9 @@
 }
 
 .chip--active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--page-theme);
+  border-color: var(--page-theme);
+  color: #fff;
   font-weight: 600;
 }
 
@@ -225,8 +233,8 @@
 }
 
 .chip--category {
-  padding: 4px 10px;
-  font-size: 11px;
+  padding: 5px 11px;
+  font-size: 13px;
   font-weight: 600;
   border: none;
   color: #fff;
@@ -265,8 +273,12 @@
 }
 
 .segmented__btn--active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: var(--accent-contrast);
+  background: linear-gradient(
+    135deg,
+    var(--page-theme),
+    color-mix(in oklab, var(--page-theme) 75%, black 15%)
+  );
+  color: #fff;
 }
 
 /* Weight chart */
@@ -452,8 +464,8 @@
 }
 
 .todo-item--drag-over {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
+  border-color: var(--page-theme);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--page-theme) 40%, transparent);
 }
 
 .todo-item__handle {
@@ -480,7 +492,7 @@
 .todo-item__checkbox input {
   width: 18px;
   height: 18px;
-  accent-color: var(--accent);
+  accent-color: var(--page-theme);
   cursor: pointer;
 }
 
@@ -620,7 +632,7 @@
 }
 
 .weather-tile--link:hover {
-  border-color: var(--accent);
+  border-color: var(--page-theme);
 }
 
 .weather-tile__name {
@@ -637,7 +649,7 @@
   flex-shrink: 0;
   font-size: 11px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--page-theme);
 }
 
 /* Settings */
@@ -887,12 +899,12 @@
 }
 
 .calendar-day--today {
-  border-color: var(--accent);
+  border-color: var(--page-theme);
 }
 
 .calendar-day--selected {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--page-theme);
+  color: #fff;
 }
 
 .calendar-day__num {
