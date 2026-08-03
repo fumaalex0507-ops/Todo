@@ -233,16 +233,28 @@
 }
 
 .chip--category {
+  --cat-color: var(--badge-color-light);
+  position: relative;
   padding: 4px 10px;
   font-size: 11px;
   font-weight: 600;
-  border: none;
+  border: 1px solid color-mix(in oklab, var(--cat-color) 55%, white 25%);
   color: #fff;
-  background: var(--badge-color-light);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--cat-color) 85%, white 22%) 0%,
+    var(--cat-color) 45%,
+    color-mix(in oklab, var(--cat-color) 80%, black 18%) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 35%, transparent),
+    0 1px 2px color-mix(in oklab, var(--cat-color) 35%, transparent);
+  overflow: hidden;
 }
 
 :root[data-theme='dark'] .chip--category {
-  background: var(--badge-color-dark);
+  --cat-color: var(--badge-color-dark);
 }
 
 .chip--category.chip--active {
@@ -549,12 +561,20 @@
 }
 
 .badge--category {
-  background: var(--badge-color-light);
+  --cat-color: var(--badge-color-light);
   color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--cat-color) 85%, white 22%) 0%,
+    var(--cat-color) 45%,
+    color-mix(in oklab, var(--cat-color) 80%, black 18%) 100%
+  );
+  box-shadow: inset 0 1px 0 color-mix(in oklab, white 30%, transparent);
 }
 
 :root[data-theme='dark'] .badge--category {
-  background: var(--badge-color-dark);
+  --cat-color: var(--badge-color-dark);
 }
 
 .badge--due {
