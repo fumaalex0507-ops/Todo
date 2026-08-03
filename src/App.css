@@ -25,7 +25,7 @@
 .app__title h1::after {
   content: '';
   position: absolute;
-  left: -3px;
+  left: 2px;
   right: -3px;
   top: calc(66% - 2px);
   height: 20%;
