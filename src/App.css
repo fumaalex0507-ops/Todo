@@ -66,10 +66,10 @@
   display: flex;
   gap: 4px;
   margin: 0 0 16px;
-  padding: 3px;
+  padding: 2px;
   background: var(--surface-solid);
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 8px;
   overflow-x: auto;
   scrollbar-width: none;
   position: sticky;
@@ -85,9 +85,9 @@
 .nav-tabs__btn {
   flex: 1 0 auto;
   white-space: nowrap;
-  padding: 7px 12px;
+  padding: 4px 12px;
   border: none;
-  border-radius: 7px;
+  border-radius: 6px;
   background: transparent;
   color: var(--text-muted);
   font-size: 13px;
@@ -233,8 +233,8 @@
 }
 
 .chip--category {
-  padding: 5px 11px;
-  font-size: 13px;
+  padding: 4px 10px;
+  font-size: 11px;
   font-weight: 600;
   border: none;
   color: #fff;

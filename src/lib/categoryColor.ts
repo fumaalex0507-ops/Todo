@@ -6,10 +6,10 @@ export interface CategoryColor {
 }
 
 const PRESET_COLORS: Record<string, CategoryColor> = {
-  運動: { light: '#dc2626', dark: '#ef4444' },
-  勉強: { light: '#1d4ed8', dark: '#3b82f6' },
-  仕事: { light: '#4a3aa7', dark: '#9085e9' },
-  生活: { light: '#008300', dark: '#008300' },
+  運動: { light: '#e11d48', dark: '#fb7185' },
+  勉強: { light: '#2563eb', dark: '#60a5fa' },
+  仕事: { light: '#7c3aed', dark: '#a78bfa' },
+  生活: { light: '#059669', dark: '#34d399' },
 }
 
 const NEUTRAL: CategoryColor = { light: '#71717a', dark: '#a1a1aa' }
