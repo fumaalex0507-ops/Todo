@@ -28,10 +28,44 @@ export function getEventColor(id: string): EventColor {
   return PALETTE[hashString(id) % PALETTE.length]
 }
 
-export function eventColorStyle(id: string): CSSProperties {
-  const color = getEventColor(id)
+export function eventColorStyleFor(color: EventColor): CSSProperties {
   return {
     '--event-color-light': color.light,
     '--event-color-dark': color.dark,
   } as CSSProperties
+}
+
+export function eventColorStyle(id: string): CSSProperties {
+  return eventColorStyleFor(getEventColor(id))
+}
+
+/**
+ * 週ごとの予定ID一覧(上から順)を受け取り、同じ週内で色が被らないように調整した
+ * 予定ID → 色 のマップを返す。同じ予定は全期間を通じて常に同じ色になる。
+ */
+export function assignEventColors(weeksOfEventIds: string[][]): Map<string, EventColor> {
+  const assigned = new Map<string, EventColor>()
+
+  for (const eventIds of weeksOfEventIds) {
+    const usedThisWeek = new Set<number>()
+
+    for (const id of eventIds) {
+      const existing = assigned.get(id)
+      if (existing) usedThisWeek.add(PALETTE.indexOf(existing))
+    }
+
+    for (const id of eventIds) {
+      if (assigned.has(id)) continue
+      let idx = hashString(id) % PALETTE.length
+      let attempts = 0
+      while (usedThisWeek.has(idx) && attempts < PALETTE.length) {
+        idx = (idx + 1) % PALETTE.length
+        attempts++
+      }
+      usedThisWeek.add(idx)
+      assigned.set(id, PALETTE[idx])
+    }
+  }
+
+  return assigned
 }

@@ -4,7 +4,7 @@ import { useEvents } from '../hooks/useEvents'
 import { useDailyRatings } from '../hooks/useDailyRatings'
 import { today, toDateStr } from '../lib/date'
 import { fetchHolidays } from '../lib/holidays'
-import { eventColorStyle } from '../lib/eventColor'
+import { assignEventColors, eventColorStyleFor, getEventColor } from '../lib/eventColor'
 import { TodoList } from './TodoList'
 import { EventForm } from './EventForm'
 import { StarRating } from './StarRating'
@@ -123,6 +123,28 @@ export function CalendarSection() {
     [viewDate],
   )
 
+  const weeksWithBars = useMemo(
+    () => weeks.map((week) => ({ week, bars: computeWeekBars(week, events) })),
+    [weeks, events],
+  )
+
+  const eventColorMap = useMemo(
+    () =>
+      assignEventColors(
+        weeksWithBars.map(({ bars }) =>
+          [...bars]
+            .sort(
+              (a, b) =>
+                a.event.date.localeCompare(b.event.date) || a.event.id.localeCompare(b.event.id),
+            )
+            .map((b) => b.event.id),
+        ),
+      ),
+    [weeksWithBars],
+  )
+
+  const colorStyleFor = (id: string) => eventColorStyleFor(eventColorMap.get(id) ?? getEventColor(id))
+
   const selectedTodos = useMemo(
     () => todos.filter((t) => t.dueDate === selectedDate),
     [todos, selectedDate],
@@ -179,8 +201,7 @@ export function CalendarSection() {
         </div>
 
         <div className="calendar-weeks">
-          {weeks.map((week) => {
-            const bars = computeWeekBars(week, events)
+          {weeksWithBars.map(({ week, bars }) => {
             const todayCell = week.find((c) => c.dateStr === today())
             return (
               <div key={week[0].dateStr} className="calendar-week">
@@ -226,7 +247,7 @@ export function CalendarSection() {
                     style={{
                       gridColumn: `${bar.startCol + 1} / ${bar.endCol + 2}`,
                       gridRow: bar.row + 2,
-                      ...eventColorStyle(bar.event.id),
+                      ...colorStyleFor(bar.event.id),
                     }}
                     onClick={() => setSelectedDate(bar.event.date)}
                   >
@@ -270,7 +291,7 @@ export function CalendarSection() {
           <ul className="calendar-event-list">
             {selectedEvents.map((ev) => (
               <li key={ev.id} className="calendar-event-row">
-                <span className="calendar-dot calendar-dot--event" style={eventColorStyle(ev.id)} />
+                <span className="calendar-dot calendar-dot--event" style={colorStyleFor(ev.id)} />
                 <div className="calendar-event-row__info">
                   {ev.endDate && (
                     <span className="calendar-event-row__range">
