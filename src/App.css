@@ -783,6 +783,10 @@
   border-color: color-mix(in oklab, var(--border) 55%, transparent);
 }
 
+.settings-location-row--editing.settings-location-row--thin {
+  gap: 0;
+}
+
 .template-edit-row__fields {
   display: flex;
   flex-direction: column;
