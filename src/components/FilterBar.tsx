@@ -52,9 +52,7 @@ export function FilterBar({
           aria-label={isFormOpen ? '登録欄を閉じる' : 'タスクを追加'}
           aria-expanded={isFormOpen}
           onClick={onToggleForm}
-        >
-          {isFormOpen ? '−' : '+'}
-        </button>
+        />
       </div>
 
       <div className="filter-bar__controls">

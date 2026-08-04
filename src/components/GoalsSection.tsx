@@ -63,9 +63,7 @@ export function GoalsSection() {
             aria-label={isOpen ? `${title}の入力欄を閉じる` : `${title}を追加`}
             aria-expanded={isOpen}
             onClick={() => toggleForm(period)}
-          >
-            {isOpen ? '−' : '+'}
-          </button>
+          />
         </div>
         {isDeadlineOpen && (
           <label className="dashboard-card__deadline-field">

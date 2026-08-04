@@ -663,23 +663,44 @@
 }
 
 .dashboard-card__add-btn {
+  position: relative;
   flex-shrink: 0;
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
   border-radius: 50%;
   border: none;
   background: var(--page-theme);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: transparent;
 }
 
 .dashboard-card__add-btn:hover {
   filter: brightness(1.08);
+}
+
+.dashboard-card__add-btn::before,
+.dashboard-card__add-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.dashboard-card__add-btn::before {
+  width: 10px;
+  height: 2px;
+}
+
+.dashboard-card__add-btn::after {
+  width: 2px;
+  height: 10px;
+}
+
+.dashboard-card__add-btn[aria-expanded='true']::after {
+  display: none;
 }
 
 .weather-tiles {
