@@ -96,12 +96,15 @@ export function TodoForm({ editingTodo, templates, onSubmit, onCancelEdit }: Tod
           className="filter-bar__select"
           value=""
           onChange={(e) => {
-            if (e.target.value) setForm((f) => ({ ...f, title: e.target.value }))
+            const template = templates.find((t) => t.id === e.target.value)
+            if (template) {
+              setForm((f) => ({ ...f, title: template.title, category: template.category ?? '' }))
+            }
           }}
         >
           <option value="">よく使う項目から選択…</option>
           {templates.map((t) => (
-            <option key={t.id} value={t.title}>
+            <option key={t.id} value={t.id}>
               {t.title}
             </option>
           ))}

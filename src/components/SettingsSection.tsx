@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useLocations } from '../hooks/useLocations'
 import { useTodoTemplates } from '../hooks/useTodoTemplates'
+import { categoryColorStyle } from '../lib/categoryColor'
+import { CATEGORY_PRESETS } from '../types'
 import type { Location, Theme } from '../types'
 
 interface SettingsSectionProps {
@@ -21,6 +23,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
   const [url, setUrl] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [templateTitle, setTemplateTitle] = useState('')
+  const [templateCategory, setTemplateCategory] = useState('')
   const [showLocationForm, setShowLocationForm] = useState(false)
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -35,8 +38,9 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
   const handleTemplateSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (!templateTitle.trim()) return
-    addTemplate(templateTitle)
+    addTemplate(templateTitle, templateCategory)
     setTemplateTitle('')
+    setTemplateCategory('')
   }
 
   return (
@@ -65,6 +69,22 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
           よく使う項目を登録すると、Todo追加時にプルダウンから選べます
         </p>
         <form className="todo-form" onSubmit={handleTemplateSubmit}>
+          <div className="todo-form__field">
+            <span>カテゴリ</span>
+            <div className="todo-form__category-chips">
+              {CATEGORY_PRESETS.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={`chip chip--category ${templateCategory === c ? 'chip--active' : ''}`}
+                  style={categoryColorStyle(c)}
+                  onClick={() => setTemplateCategory((prev) => (prev === c ? '' : c))}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="todo-form__row">
             <input
               className="todo-form__title"
@@ -86,6 +106,11 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
             {templates.map((t) => (
               <li key={t.id} className="settings-location-row">
                 <div className="settings-location-row__info">
+                  {t.category && (
+                    <span className="badge badge--category" style={categoryColorStyle(t.category)}>
+                      {t.category}
+                    </span>
+                  )}
                   <p className="settings-location-row__name">{t.title}</p>
                 </div>
                 <button

@@ -102,4 +102,5 @@ export interface EventInput {
 export interface TodoTemplate {
   id: string
   title: string
+  category: string
 }

@@ -14,8 +14,8 @@ export function useTodoTemplates() {
   const [templates, setTemplates] = useLocalStorage<TodoTemplate[]>(STORAGE_KEY, [])
 
   const addTemplate = useCallback(
-    (title: string) => {
-      setTemplates((prev) => [...prev, { id: createId(), title: title.trim() }])
+    (title: string, category: string) => {
+      setTemplates((prev) => [...prev, { id: createId(), title: title.trim(), category }])
     },
     [setTemplates],
   )
