@@ -3,7 +3,7 @@ import { useLocations } from '../hooks/useLocations'
 import { useTodoTemplates } from '../hooks/useTodoTemplates'
 import { categoryColorStyle } from '../lib/categoryColor'
 import { CATEGORY_PRESETS } from '../types'
-import type { Location, Theme } from '../types'
+import type { Location, Theme, TodoTemplate } from '../types'
 
 interface SettingsSectionProps {
   theme: Theme
@@ -18,10 +18,11 @@ const themeOptions: { value: Theme; label: string }[] = [
 
 export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) {
   const { locations, addLocation, updateLocation, removeLocation } = useLocations()
-  const { templates, addTemplate, deleteTemplate } = useTodoTemplates()
+  const { templates, addTemplate, updateTemplate, deleteTemplate } = useTodoTemplates()
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [editingTemplateId, setEditingTemplateId] = useState<string | null>(null)
   const [templateTitle, setTemplateTitle] = useState('')
   const [templateCategory, setTemplateCategory] = useState('')
   const [showLocationForm, setShowLocationForm] = useState(false)
@@ -103,26 +104,47 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
           <p className="todo-list__empty">まだ登録されていません</p>
         ) : (
           <ul className="settings-location-list">
-            {templates.map((t) => (
-              <li key={t.id} className="settings-location-row">
-                <div className="settings-location-row__info">
-                  {t.category && (
-                    <span className="badge badge--category" style={categoryColorStyle(t.category)}>
-                      {t.category}
-                    </span>
-                  )}
-                  <p className="settings-location-row__name">{t.title}</p>
-                </div>
-                <button
-                  type="button"
-                  className="todo-item__delete"
-                  aria-label="削除"
-                  onClick={() => deleteTemplate(t.id)}
-                >
-                  ×
-                </button>
-              </li>
-            ))}
+            {templates.map((t) =>
+              editingTemplateId === t.id ? (
+                <TemplateEditRow
+                  key={t.id}
+                  template={t}
+                  onSave={(title, category) => {
+                    updateTemplate(t.id, title, category)
+                    setEditingTemplateId(null)
+                  }}
+                  onCancel={() => setEditingTemplateId(null)}
+                />
+              ) : (
+                <li key={t.id} className="settings-location-row">
+                  <div className="settings-location-row__info">
+                    {t.category && (
+                      <span className="badge badge--category" style={categoryColorStyle(t.category)}>
+                        {t.category}
+                      </span>
+                    )}
+                    <p className="settings-location-row__name">{t.title}</p>
+                  </div>
+                  <div className="settings-location-row__actions">
+                    <button
+                      type="button"
+                      className="btn btn--ghost"
+                      onClick={() => setEditingTemplateId(t.id)}
+                    >
+                      編集
+                    </button>
+                    <button
+                      type="button"
+                      className="todo-item__delete"
+                      aria-label="削除"
+                      onClick={() => deleteTemplate(t.id)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </li>
+              ),
+            )}
           </ul>
         )}
       </div>
@@ -239,6 +261,56 @@ function EditRow({ location, onSave, onCancel }: EditRowProps) {
           type="button"
           className="btn btn--primary"
           onClick={() => name.trim() && url.trim() && onSave(name.trim(), url.trim())}
+        >
+          保存
+        </button>
+        <button type="button" className="btn btn--ghost" onClick={onCancel}>
+          キャンセル
+        </button>
+      </div>
+    </li>
+  )
+}
+
+interface TemplateEditRowProps {
+  template: TodoTemplate
+  onSave: (title: string, category: string) => void
+  onCancel: () => void
+}
+
+function TemplateEditRow({ template, onSave, onCancel }: TemplateEditRowProps) {
+  const [title, setTitle] = useState(template.title)
+  const [category, setCategory] = useState(template.category)
+
+  return (
+    <li className="settings-location-row settings-location-row--editing">
+      <div className="todo-form__field">
+        <span>カテゴリ</span>
+        <div className="todo-form__category-chips">
+          {CATEGORY_PRESETS.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`chip chip--category ${category === c ? 'chip--active' : ''}`}
+              style={categoryColorStyle(c)}
+              onClick={() => setCategory((prev) => (prev === c ? '' : c))}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="todo-form__row todo-form__row--details">
+        <label className="todo-form__field">
+          <span>項目名</span>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        </label>
+      </div>
+      <div className="settings-location-row__actions">
+        <button
+          type="button"
+          className="btn btn--primary"
+          onClick={() => title.trim() && onSave(title.trim(), category)}
         >
           保存
         </button>

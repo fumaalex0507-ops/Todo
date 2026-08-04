@@ -20,6 +20,15 @@ export function useTodoTemplates() {
     [setTemplates],
   )
 
+  const updateTemplate = useCallback(
+    (id: string, title: string, category: string) => {
+      setTemplates((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, title: title.trim(), category } : t)),
+      )
+    },
+    [setTemplates],
+  )
+
   const deleteTemplate = useCallback(
     (id: string) => {
       setTemplates((prev) => prev.filter((t) => t.id !== id))
@@ -27,5 +36,5 @@ export function useTodoTemplates() {
     [setTemplates],
   )
 
-  return { templates, addTemplate, deleteTemplate }
+  return { templates, addTemplate, updateTemplate, deleteTemplate }
 }
