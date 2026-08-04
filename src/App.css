@@ -793,6 +793,10 @@
   gap: 0;
 }
 
+.template-edit-row__fields .todo-form__field {
+  flex: initial;
+}
+
 .settings-location-row__info {
   flex: 1;
   min-width: 0;
