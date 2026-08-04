@@ -116,7 +116,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
                   onCancel={() => setEditingTemplateId(null)}
                 />
               ) : (
-                <li key={t.id} className="settings-location-row">
+                <li key={t.id} className="settings-location-row settings-location-row--thin">
                   <div className="settings-location-row__info">
                     {t.category && (
                       <span className="badge badge--category" style={categoryColorStyle(t.category)}>
@@ -128,7 +128,7 @@ export function SettingsSection({ theme, onThemeChange }: SettingsSectionProps) 
                   <div className="settings-location-row__actions">
                     <button
                       type="button"
-                      className="btn btn--ghost"
+                      className="todo-item__edit"
                       onClick={() => setEditingTemplateId(t.id)}
                     >
                       編集
@@ -283,24 +283,24 @@ function TemplateEditRow({ template, onSave, onCancel }: TemplateEditRowProps) {
   const [category, setCategory] = useState(template.category)
 
   return (
-    <li className="settings-location-row settings-location-row--editing">
-      <div className="todo-form__field">
-        <span>カテゴリ</span>
-        <div className="todo-form__category-chips">
-          {CATEGORY_PRESETS.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={`chip chip--category ${category === c ? 'chip--active' : ''}`}
-              style={categoryColorStyle(c)}
-              onClick={() => setCategory((prev) => (prev === c ? '' : c))}
-            >
-              {c}
-            </button>
-          ))}
+    <li className="settings-location-row settings-location-row--editing settings-location-row--thin">
+      <div className="template-edit-row__fields">
+        <div className="todo-form__field">
+          <span>カテゴリ</span>
+          <div className="todo-form__category-chips">
+            {CATEGORY_PRESETS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={`chip chip--category ${category === c ? 'chip--active' : ''}`}
+                style={categoryColorStyle(c)}
+                onClick={() => setCategory((prev) => (prev === c ? '' : c))}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="todo-form__row todo-form__row--details">
         <label className="todo-form__field">
           <span>項目名</span>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />

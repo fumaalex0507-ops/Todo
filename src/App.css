@@ -779,6 +779,16 @@
   gap: 10px;
 }
 
+.settings-location-row--thin {
+  border-color: color-mix(in oklab, var(--border) 55%, transparent);
+}
+
+.template-edit-row__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .settings-location-row__info {
   flex: 1;
   min-width: 0;
