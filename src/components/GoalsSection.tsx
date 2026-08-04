@@ -14,10 +14,18 @@ export function GoalsSection() {
     weekly: false,
     monthly: false,
   })
+  const [openDeadlines, setOpenDeadlines] = useState<Record<GoalPeriod, boolean>>({
+    weekly: false,
+    monthly: false,
+  })
 
   const toggleForm = (period: GoalPeriod) => {
     setOpenForms((prev) => ({ ...prev, [period]: !prev[period] }))
     if (editingGoal?.period === period) setEditingGoal(null)
+  }
+
+  const toggleDeadline = (period: GoalPeriod) => {
+    setOpenDeadlines((prev) => ({ ...prev, [period]: !prev[period] }))
   }
 
   const handleReorder = (draggedId: string, targetId: string) => {
@@ -32,6 +40,7 @@ export function GoalsSection() {
 
   const renderSection = (period: GoalPeriod, title: string) => {
     const isOpen = openForms[period] || editingGoal?.period === period
+    const isDeadlineOpen = openDeadlines[period]
 
     return (
       <div className="dashboard-card">
@@ -40,15 +49,14 @@ export function GoalsSection() {
             {title}
             {deadlines[period] ? `(~${formatMonthDay(deadlines[period]!)})` : ''}
           </h2>
-          <label className="dashboard-card__deadline-field">
-            <span>期限</span>
-            <input
-              type="date"
-              className="dashboard-card__deadline"
-              value={deadlines[period] ?? ''}
-              onChange={(e) => setDeadline(period, e.target.value || null)}
-            />
-          </label>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            aria-expanded={isDeadlineOpen}
+            onClick={() => toggleDeadline(period)}
+          >
+            {isDeadlineOpen ? '閉じる' : '期限設定'}
+          </button>
           <button
             type="button"
             className="dashboard-card__add-btn"
@@ -59,6 +67,17 @@ export function GoalsSection() {
             {isOpen ? '−' : '+'}
           </button>
         </div>
+        {isDeadlineOpen && (
+          <label className="dashboard-card__deadline-field">
+            <span>期限</span>
+            <input
+              type="date"
+              className="dashboard-card__deadline"
+              value={deadlines[period] ?? ''}
+              onChange={(e) => setDeadline(period, e.target.value || null)}
+            />
+          </label>
+        )}
         {isOpen && (
           <GoalForm
             period={period}
