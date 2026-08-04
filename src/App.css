@@ -386,36 +386,6 @@
   box-shadow: var(--shadow);
 }
 
-/* Weight log list */
-.weight-log {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.weight-log__row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--surface-solid);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 7px 10px;
-  font-size: 12px;
-}
-
-.weight-log__date {
-  color: var(--text-muted);
-  flex: 1;
-}
-
-.weight-log__value {
-  font-weight: 600;
-}
-
 .filter-bar__controls {
   display: flex;
   gap: 6px;

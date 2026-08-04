@@ -3,12 +3,11 @@ import { useWeightEntries } from '../hooks/useWeightEntries'
 import { useGoals } from '../hooks/useGoals'
 import { WeightForm } from './WeightForm'
 import { WeightChart } from './WeightChart'
-import { WeightLogList } from './WeightLogList'
 import { WeightGoalForm } from './WeightGoalForm'
 import { WeightGoalList } from './WeightGoalList'
 
 export function WeightSection() {
-  const { entries, addEntry, deleteEntry } = useWeightEntries()
+  const { entries, addEntry } = useWeightEntries()
   const { goals, addGoal, deleteGoal } = useGoals()
   const [showGoalForm, setShowGoalForm] = useState(false)
 
@@ -58,8 +57,6 @@ export function WeightSection() {
         )}
         <WeightGoalList goals={goals} weightEntries={entries} onDelete={deleteGoal} />
       </div>
-
-      <WeightLogList entries={entries} onDelete={deleteEntry} />
     </>
   )
 }
