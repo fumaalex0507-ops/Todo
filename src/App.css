@@ -2,6 +2,13 @@
   max-width: 620px;
   margin: 0 auto;
   padding: 18px 16px 56px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__main {
+  flex: 1 0 auto;
 }
 
 .app__header {
