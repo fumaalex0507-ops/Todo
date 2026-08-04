@@ -784,13 +784,13 @@
 }
 
 .settings-location-row--editing.settings-location-row--thin {
-  gap: 0;
+  gap: 8px;
 }
 
 .template-edit-row__fields {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 8px;
 }
 
 .template-edit-row__fields .todo-form__field {
