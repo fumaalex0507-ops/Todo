@@ -74,7 +74,11 @@ export function GoalsSection() {
               type="date"
               className="dashboard-card__deadline"
               value={deadlines[period] ?? ''}
-              onChange={(e) => setDeadline(period, e.target.value || null)}
+              onChange={(e) => {
+                const value = e.target.value || null
+                setDeadline(period, value)
+                if (value) setOpenDeadlines((prev) => ({ ...prev, [period]: false }))
+              }}
             />
           </label>
         )}
