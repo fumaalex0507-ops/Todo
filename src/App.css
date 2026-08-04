@@ -663,6 +663,17 @@
 
 .dashboard-card__title-row .dashboard-card__title {
   margin-bottom: 0;
+  flex: 1 1 auto;
+}
+
+.dashboard-card__deadline-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
 }
 
 .dashboard-card__deadline {
@@ -673,6 +684,26 @@
   background: var(--surface-solid);
   font-size: 12px;
   color: var(--text-muted);
+}
+
+.dashboard-card__add-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--page-theme);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-card__add-btn:hover {
+  filter: brightness(1.08);
 }
 
 .weather-tiles {
