@@ -204,7 +204,12 @@
 
 .filter-bar__status {
   display: flex;
+  align-items: center;
   gap: 6px;
+}
+
+.filter-bar__add-btn {
+  margin-left: auto;
 }
 
 .chip {

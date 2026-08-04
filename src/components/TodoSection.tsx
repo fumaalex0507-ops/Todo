@@ -13,6 +13,7 @@ export function TodoSection() {
   const { templates } = useTodoTemplates()
 
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
+  const [showForm, setShowForm] = useState(false)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -60,6 +61,7 @@ export function TodoSection() {
   const remainingCount = useMemo(() => todos.filter((t) => !t.completed).length, [todos])
 
   const reorderable = statusFilter === 'all' && categoryFilter === 'all' && !searchQuery.trim()
+  const isFormOpen = showForm || editingTodo !== null
 
   const handleReorder = (draggedId: string, targetId: string) => {
     const ids = todos.map((t) => t.id)
@@ -78,20 +80,6 @@ export function TodoSection() {
         {remainingCount > 0 ? `未完了 ${remainingCount} 件` : 'すべて完了しました 🎉'}
       </p>
 
-      <TodoForm
-        editingTodo={editingTodo}
-        templates={templates}
-        onSubmit={(input) => {
-          if (editingTodo) {
-            updateTodo(editingTodo.id, input)
-            setEditingTodo(null)
-          } else {
-            addTodo(input)
-          }
-        }}
-        onCancelEdit={() => setEditingTodo(null)}
-      />
-
       <FilterBar
         statusFilter={statusFilter}
         onStatusFilterChange={setStatusFilter}
@@ -102,7 +90,32 @@ export function TodoSection() {
         onSearchQueryChange={setSearchQuery}
         sortKey={sortKey}
         onSortKeyChange={setSortKey}
+        isFormOpen={isFormOpen}
+        onToggleForm={() => {
+          setShowForm((v) => !v)
+          if (editingTodo) setEditingTodo(null)
+        }}
       />
+
+      {isFormOpen && (
+        <TodoForm
+          editingTodo={editingTodo}
+          templates={templates}
+          onSubmit={(input) => {
+            if (editingTodo) {
+              updateTodo(editingTodo.id, input)
+              setEditingTodo(null)
+            } else {
+              addTodo(input)
+            }
+            setShowForm(false)
+          }}
+          onCancelEdit={() => {
+            setEditingTodo(null)
+            setShowForm(false)
+          }}
+        />
+      )}
 
       {!reorderable && (
         <p className="todo-list__hint">絞り込み・検索がない状態でドラッグして並び替えできます</p>

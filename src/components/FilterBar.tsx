@@ -10,6 +10,8 @@ interface FilterBarProps {
   onSearchQueryChange: (value: string) => void
   sortKey: SortKey
   onSortKeyChange: (value: SortKey) => void
+  isFormOpen: boolean
+  onToggleForm: () => void
 }
 
 const statusOptions: { value: StatusFilter; label: string }[] = [
@@ -28,6 +30,8 @@ export function FilterBar({
   onSearchQueryChange,
   sortKey,
   onSortKeyChange,
+  isFormOpen,
+  onToggleForm,
 }: FilterBarProps) {
   return (
     <div className="filter-bar">
@@ -42,6 +46,15 @@ export function FilterBar({
             {opt.label}
           </button>
         ))}
+        <button
+          type="button"
+          className="dashboard-card__add-btn filter-bar__add-btn"
+          aria-label={isFormOpen ? '登録欄を閉じる' : 'タスクを追加'}
+          aria-expanded={isFormOpen}
+          onClick={onToggleForm}
+        >
+          {isFormOpen ? '−' : '+'}
+        </button>
       </div>
 
       <div className="filter-bar__controls">
