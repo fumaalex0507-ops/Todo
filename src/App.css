@@ -657,13 +657,14 @@
   color: var(--text-muted);
 }
 
-.dashboard-card__add-btn,
-.dashboard-card__icon-btn {
+.dashboard-card__add-btn {
   flex-shrink: 0;
   width: 26px;
   height: 26px;
   border-radius: 50%;
   border: none;
+  background: var(--page-theme);
+  color: #fff;
   font-size: 16px;
   font-weight: 700;
   line-height: 1;
@@ -672,23 +673,8 @@
   justify-content: center;
 }
 
-.dashboard-card__add-btn {
-  background: var(--page-theme);
-  color: #fff;
-}
-
 .dashboard-card__add-btn:hover {
   filter: brightness(1.08);
-}
-
-.dashboard-card__icon-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  font-size: 13px;
-}
-
-.dashboard-card__icon-btn:hover {
-  background: var(--bg);
 }
 
 .weather-tiles {

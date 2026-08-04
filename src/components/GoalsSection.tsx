@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useGoals } from '../hooks/useGoals'
 import { useGoalDeadlines } from '../hooks/useGoalDeadlines'
 import { formatMonthDay } from '../lib/date'
@@ -18,20 +18,14 @@ export function GoalsSection() {
     weekly: false,
     monthly: false,
   })
-  const deadlineInputRefs = useRef<Record<GoalPeriod, HTMLInputElement | null>>({
-    weekly: null,
-    monthly: null,
-  })
 
   const toggleForm = (period: GoalPeriod) => {
     setOpenForms((prev) => ({ ...prev, [period]: !prev[period] }))
     if (editingGoal?.period === period) setEditingGoal(null)
   }
 
-  const openDeadlinePicker = (period: GoalPeriod) => {
-    setOpenDeadlines((prev) => ({ ...prev, [period]: true }))
-    // 入力欄が描画された直後にネイティブのカレンダーを開く
-    requestAnimationFrame(() => deadlineInputRefs.current[period]?.showPicker?.())
+  const toggleDeadline = (period: GoalPeriod) => {
+    setOpenDeadlines((prev) => ({ ...prev, [period]: !prev[period] }))
   }
 
   const handleReorder = (draggedId: string, targetId: string) => {
@@ -57,12 +51,11 @@ export function GoalsSection() {
           </h2>
           <button
             type="button"
-            className="dashboard-card__icon-btn"
-            aria-label="期限を設定"
+            className="btn btn--ghost"
             aria-expanded={isDeadlineOpen}
-            onClick={() => openDeadlinePicker(period)}
+            onClick={() => toggleDeadline(period)}
           >
-            📅
+            {isDeadlineOpen ? '閉じる' : '期限設定'}
           </button>
           <button
             type="button"
@@ -78,17 +71,10 @@ export function GoalsSection() {
           <label className="dashboard-card__deadline-field">
             <span>期限</span>
             <input
-              ref={(el) => {
-                deadlineInputRefs.current[period] = el
-              }}
               type="date"
               className="dashboard-card__deadline"
               value={deadlines[period] ?? ''}
-              onChange={(e) => {
-                const value = e.target.value || null
-                setDeadline(period, value)
-                if (value) setOpenDeadlines((prev) => ({ ...prev, [period]: false }))
-              }}
+              onChange={(e) => setDeadline(period, e.target.value || null)}
             />
           </label>
         )}
