@@ -135,7 +135,7 @@ export function CalendarSection() {
   const eventColorMap = useMemo(
     () =>
       assignEventColors(
-        weeksWithBars.map(({ bars }) =>
+        weeksWithBars.flatMap(({ bars }) =>
           [...bars]
             .sort(
               (a, b) =>

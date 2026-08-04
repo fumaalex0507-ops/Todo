@@ -87,36 +87,28 @@ export function eventColorStyle(id: string): CSSProperties {
 }
 
 /**
- * 週ごとの予定キー一覧(上から順)を受け取り、同じ週内で色(見た目が近い色も含む)が
- * 被らないように調整したキー → 色 のマップを返す。キーにはタイトルを渡すことで、
- * 同じタイトルの予定は全期間を通じて常に同じ色になり、異なるタイトル同士は同じ週内で
- * なるべく色(と近似色)が被らないようになる。
+ * 月内の予定キー一覧(上から順)を受け取り、パレットに余裕がある限り月内で色(見た目が
+ * 近い色も含む)が被らないように調整したキー → 色 のマップを返す。キーにはタイトルを渡す
+ * ことで、同じタイトルの予定は常に同じ色になる。パレットの空きがなくなった場合は、
+ * その時点で最も衝突の少ない色にフォールバックする(=被りを許容する)。
  */
-export function assignEventColors(weeksOfKeys: string[][]): Map<string, EventColor> {
+export function assignEventColors(orderedKeys: string[]): Map<string, EventColor> {
   const assigned = new Map<string, EventColor>()
+  const usedThisMonth = new Set<number>()
 
-  for (const keys of weeksOfKeys) {
-    const usedThisWeek = new Set<number>()
+  const conflicts = (idx: number) =>
+    usedThisMonth.has(idx) || SIMILAR_INDEXES[idx].some((i) => usedThisMonth.has(i))
 
-    for (const key of keys) {
-      const existing = assigned.get(key)
-      if (existing) usedThisWeek.add(PALETTE.indexOf(existing))
+  for (const key of orderedKeys) {
+    if (assigned.has(key)) continue
+    let idx = hashString(key) % PALETTE.length
+    let attempts = 0
+    while (conflicts(idx) && attempts < PALETTE.length) {
+      idx = (idx + 1) % PALETTE.length
+      attempts++
     }
-
-    const conflicts = (idx: number) =>
-      usedThisWeek.has(idx) || SIMILAR_INDEXES[idx].some((i) => usedThisWeek.has(i))
-
-    for (const key of keys) {
-      if (assigned.has(key)) continue
-      let idx = hashString(key) % PALETTE.length
-      let attempts = 0
-      while (conflicts(idx) && attempts < PALETTE.length) {
-        idx = (idx + 1) % PALETTE.length
-        attempts++
-      }
-      usedThisWeek.add(idx)
-      assigned.set(key, PALETTE[idx])
-    }
+    usedThisMonth.add(idx)
+    assigned.set(key, PALETTE[idx])
   }
 
   return assigned
