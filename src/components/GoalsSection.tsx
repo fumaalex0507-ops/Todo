@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGoals } from '../hooks/useGoals'
 import { useGoalDeadlines } from '../hooks/useGoalDeadlines'
+import { formatMonthDay } from '../lib/date'
 import { GoalForm } from './GoalForm'
 import { GoalList } from './GoalList'
 import type { GoalPeriod, TextGoal } from '../types'
@@ -35,7 +36,10 @@ export function GoalsSection() {
     return (
       <div className="dashboard-card">
         <div className="dashboard-card__title-row">
-          <h2 className="dashboard-card__title">{title}</h2>
+          <h2 className="dashboard-card__title">
+            {title}
+            {deadlines[period] ? `(~${formatMonthDay(deadlines[period]!)})` : ''}
+          </h2>
           <label className="dashboard-card__deadline-field">
             <span>期限</span>
             <input
