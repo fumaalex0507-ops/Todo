@@ -1,4 +1,5 @@
 import { categoryColorStyle } from '../lib/categoryColor'
+import { today } from '../lib/date'
 import type { Todo } from '../types'
 
 interface TodoItemProps {
@@ -29,9 +30,7 @@ function formatDate(dateStr: string) {
 
 function isOverdue(dueDate: string | null, completed: boolean) {
   if (!dueDate || completed) return false
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  return new Date(`${dueDate}T00:00:00`) < today
+  return dueDate < today()
 }
 
 export function TodoItem({

@@ -1,5 +1,13 @@
+const JST_TIME_ZONE = 'Asia/Tokyo'
+
+// システムのタイムゾーンに関わらず、常に日本時間の「今」を返す。
+function nowJST(): Date {
+  const jstString = new Date().toLocaleString('en-US', { timeZone: JST_TIME_ZONE })
+  return new Date(jstString)
+}
+
 export function today() {
-  return new Date().toISOString().slice(0, 10)
+  return toDateStr(nowJST())
 }
 
 export type DateRangeKey = '1w' | '1m' | '3m' | 'thisMonth' | 'all'
@@ -18,7 +26,7 @@ export function formatMonthDay(dateStr: string): string {
 }
 
 export function mostRecentMonday(): string {
-  const now = new Date()
+  const now = nowJST()
   const day = now.getDay()
   const diff = day === 0 ? 6 : day - 1
   const monday = new Date(now)
@@ -39,7 +47,7 @@ export function dateRange(startStr: string, endStr: string): string[] {
 }
 
 export function rangeStartDate(key: DateRangeKey): string | null {
-  const now = new Date()
+  const now = nowJST()
 
   switch (key) {
     case 'all':

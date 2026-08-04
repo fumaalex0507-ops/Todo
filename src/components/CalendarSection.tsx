@@ -103,8 +103,8 @@ export function CalendarSection() {
   const { ratings, setRating } = useDailyRatings()
 
   const [viewDate, setViewDate] = useState(() => {
-    const t = new Date()
-    return new Date(t.getFullYear(), t.getMonth(), 1)
+    const [y, m] = today().split('-').map(Number)
+    return new Date(y, m - 1, 1)
   })
   const [selectedDate, setSelectedDate] = useState(today)
   const [editingEvent, setEditingEvent] = useState<Event | null>(null)
